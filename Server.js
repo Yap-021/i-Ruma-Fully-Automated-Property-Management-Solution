@@ -345,9 +345,11 @@ app.post('/api/apply', upload.single('resume'), async (req, res) => {
 });
 
 /* ── Start server ───────────────────────────────────────────── */
-app.listen(PORT, () => {
+if (process.env.NODE_ENV === 'production') {
+  app.listen(PORT, () => {
     console.log(`✅ i-Ruma mail server running at http://localhost:${PORT}`);
-});
+  });
+}
 
 /*
  * .env file should contain:
