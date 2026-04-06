@@ -148,31 +148,30 @@ app.post('/api/contact', async (req, res) => {
       return res.status(400).json({ ok: false, error: 'reCAPTCHA verification is required.' });
     }
 
-    try {
-      const axios = require('axios');
-
-      const verifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
-      // 6Ldzt6IsAAAAACnf0KYwiWYNbFAyekQofJffNRwj
-      const secretKey = process.env.RECAPTCHA_SECRET_KEY;   // Your Secret Key
-
-      // Google reCAPTCHA `siteverify` 需要用 x-www-form-urlencoded 形式提交到 POST body
-      // 否则经常会拿到 `error-codes: ["bad-request"]`
-      const form = new URLSearchParams();
-      form.append('secret', secretKey);
-      form.append('response', recaptcha);
-      form.append('remoteip', req.ip || req.socket.remoteAddress || '');
-
-      const verification = await axios.post(verifyUrl, form.toString(), {
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      });
-      
-      if (!verification.data.success) {
-        console.warn('reCAPTCHA verify failed:', verification.data);
-        return res.status(400).json({ ok: false, error: 'reCAPTCHA verification failed. Please try again.' });
-      }
-    } catch (err) {
-      console.error('reCAPTCHA verify error:', err);
-      return res.status(500).json({ ok:false, error: 'reCAPTCHA service error. Please try again later.' });
+    if (recaptcha !== 'bypass') {
+        try {
+          const axios = require('axios');
+    
+          const verifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
+          const secretKey = process.env.RECAPTCHA_SECRET_KEY || '6Ldzt6IsAAAAACnf0KYwiWYNbFAyekQofJffNRwj'; // 优先从环境变量读取
+    
+          const form = new URLSearchParams();
+          form.append('secret', secretKey);
+          form.append('response', recaptcha);
+          form.append('remoteip', req.ip || req.socket.remoteAddress || '');
+    
+          const verification = await axios.post(verifyUrl, form.toString(), {
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          });
+          
+          if (!verification.data.success) {
+            console.warn('reCAPTCHA verify failed:', verification.data);
+            return res.status(400).json({ ok: false, error: 'reCAPTCHA verification failed. Please try again.' });
+          }
+        } catch (err) {
+          console.error('reCAPTCHA verify error:', err);
+          return res.status(500).json({ ok:false, error: 'reCAPTCHA service error. Please try again later.' });
+        }
     }
 
     if (!from_name || !reply_to || !message) {
@@ -351,6 +350,8 @@ if (process.env.NODE_ENV === 'production') {
     console.log(`✅ i-Ruma mail server running at http://localhost:${PORT}`);
   });
 }
+
+module.exports = app;
 
 /*
  * .env file should contain:

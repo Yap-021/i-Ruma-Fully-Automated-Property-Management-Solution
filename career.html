@@ -1047,6 +1047,140 @@
                 border-radius: 16px 16px 0 0;
             }
         }
+
+        /* ── Demo Modal ──────────────────────────────── */
+               .demo-modal-overlay {
+                   position: fixed;
+                   inset: 0;
+                   background: rgba(0, 0, 0, 0.6);
+                   backdrop-filter: blur(4px);
+                   display: none;
+                   align-items: center;
+                   justify-content: center;
+                   z-index: 2000;
+                   padding: 20px;
+               }
+               .demo-modal-overlay.active {
+                   display: flex;
+               }
+               .demo-modal {
+                   background: var(--white);
+                   width: 100%;
+                   max-width: 500px;
+                   border-radius: var(--r-xl);
+                   overflow: hidden;
+                   box-shadow: var(--sh-xl);
+                   animation: modalPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+               }
+               @keyframes modalPop {
+                   from { opacity: 0; transform: scale(0.9); }
+                   to { opacity: 1; transform: scale(1); }
+               }
+               .demo-modal-header {
+                   background: var(--primary);
+                   color: var(--white);
+                   padding: 20px 24px;
+                   display: flex;
+                   justify-content: space-between;
+                   align-items: center;
+               }
+               .demo-modal-header h4 {
+                   margin: 0;
+                   font-size: 1.25rem;
+                   font-weight: 800;
+               }
+               .demo-modal-close {
+                   background: transparent;
+                   border: none;
+                   color: var(--white);
+                   font-size: 1.5rem;
+                   cursor: pointer;
+                   opacity: 0.8;
+                   transition: var(--ease);
+               }
+               .demo-modal-close:hover {
+                   opacity: 1;
+               }
+               .demo-modal-body {
+                   padding: 32px 24px;
+               }
+               .demo-form-group {
+                   margin-bottom: 20px;
+               }
+               .demo-form-group label {
+                   display: block;
+                   font-size: 0.88rem;
+                   font-weight: 700;
+                   margin-bottom: 8px;
+                   color: var(--text-2);
+               }
+               .demo-form-group input, 
+               .demo-form-group textarea {
+                   width: 100%;
+                   padding: 12px 16px;
+                   border: 1.5px solid var(--border);
+                   border-radius: var(--r-md);
+                   font-size: 0.95rem;
+                   transition: var(--ease);
+                   background: var(--white);
+                   color: var(--text);
+               }
+               .demo-form-group input:focus, 
+               .demo-form-group textarea:focus {
+                   outline: none;
+                   border-color: var(--primary);
+                   box-shadow: 0 0 0 4px var(--primary-light);
+               }
+               .btn-demo-submit {
+                   width: 100%;
+                   background: var(--primary);
+                   color: var(--white);
+                   border: none;
+                   padding: 14px;
+                   border-radius: var(--r-pill);
+                   font-weight: 800;
+                   font-size: 1rem;
+                   transition: var(--ease);
+                   margin-top: 10px;
+                   display: flex;
+                   align-items: center;
+                   justify-content: center;
+                   gap: 8px;
+               }
+               .btn-demo-submit:hover {
+                   background: var(--primary-dark);
+                   transform: translateY(-2px);
+                   box-shadow: 0 8px 24px rgba(0, 85, 187, 0.3);
+               }
+               
+               /* ── Toast ── */
+               .toast-custom {
+                   position: fixed;
+                   bottom: 24px;
+                   right: 24px;
+                   padding: 16px 24px;
+                   border-radius: 12px;
+                   background: var(--white);
+                   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+                   display: flex;
+                   align-items: center;
+                   gap: 12px;
+                   z-index: 3000;
+                   transform: translateY(100px);
+                   opacity: 0;
+                   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+                   pointer-events: none;
+               }
+               .toast-custom.show {
+                   transform: translateY(0);
+                   opacity: 1;
+                   pointer-events: all;
+               }
+               .toast-custom.success { border-left: 4px solid #10b981; }
+               .toast-custom.error { border-left: 4px solid #ef4444; }
+               .toast-custom i { font-size: 1.2rem; }
+               .toast-custom.success i { color: #10b981; }
+               .toast-custom.error i { color: #ef4444; }
         </style>
     </head>
     <body>
@@ -1069,7 +1203,7 @@
                         <li class="nav-item"><a class="nav-link" href="career.html">Career</a></li>
                         <li class="nav-item"><a class="nav-link" href="Contact.html">Contact</a></li>
                         <li class="ms-3">
-                            <button onclick="alert('📅 Book a demo — our team will reach out!')" class="btn-primary-custom">
+                            <button onclick="openDemoModal()" class="btn-accent" style="padding:11px 24px;font-size:.85rem;">
                                 <i class="fas fa-calendar-check" style="font-size:.8rem;"></i> Book a demo
                             </button>
                         </li>
@@ -1456,7 +1590,7 @@
                                 <i class="fas fa-briefcase" style="width:16px;opacity:.5;"></i> sales@iruma.my
                             </a>
                         </div>
-                        <button onclick="alert('📅 Book a demo — our team will reach out!')" class="btn-primary-custom" style="padding:11px 24px;font-size:.85rem;">
+                        <button onclick="openDemoModal()" class="btn-accent" style="padding:11px 24px;font-size:.85rem;">
                             <i class="fas fa-calendar-check"></i> Book a demo
                         </button>
                     </div>
@@ -1470,6 +1604,50 @@
                 </div>
             </div>
         </footer>
+
+        <!-- ── Toast ── -->
+        <div class="toast-custom success" id="toastSuccess">
+            <i class="fas fa-check-circle"></i>
+            <span>Message sent! We'll get back to you within 24 hours.</span>
+        </div>
+        <div class="toast-custom error" id="toastError">
+            <i class="fas fa-circle-exclamation"></i>
+            <span id="toastErrorMsg">Oops! Something went wrong. Please try again.</span>
+        </div>
+
+        <!-- ── Demo Modal ──────────────────────────────── -->
+        <div class="demo-modal-overlay" id="demoModalOverlay">
+            <div class="demo-modal">
+                <div class="demo-modal-header">
+                    <h4>Schedule a Demo</h4>
+                    <button class="demo-modal-close" onclick="closeDemoModal()">&times;</button>
+                </div>
+                <div class="demo-modal-body">
+                    <form id="demoForm">
+                        <div class="demo-form-group">
+                            <label for="demo_name">Name</label>
+                            <input type="text" id="demo_name" name="name" placeholder="Your full name" required>
+                        </div>
+                        <div class="demo-form-group">
+                            <label for="demo_phone">Mobile No</label>
+                            <input type="tel" id="demo_phone" name="phone" placeholder="+60 12-345 6789" required>
+                        </div>
+                        <div class="demo-form-group">
+                            <label for="demo_email">Email</label>
+                            <input type="email" id="demo_email" name="email" placeholder="name@company.com" required>
+                        </div>
+                        <div class="demo-form-group">
+                            <label for="demo_message">Description</label>
+                            <textarea id="demo_message" name="message" rows="3" placeholder="Tell us about your property..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-demo-submit" id="demoSubmitBtn">
+                            <span id="demoBtnText">Book your demo now</span>
+                            <div id="demoSpinner" class="spinner-border spinner-border-sm" style="display: none;" role="status"></div>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <!-- DETAIL DRAWER OVERLAY-->
         <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
@@ -2372,6 +2550,77 @@
                 sendText.textContent      = 'Send Application';
             }
         } 
+
+        /* ── Demo Modal Logic ──────────────────────────── */
+            const demoModal = document.getElementById('demoModalOverlay');
+            const demoForm = document.getElementById('demoForm');
+            const demoBtnText = document.getElementById('demoBtnText');
+            const demoSpinner = document.getElementById('demoSpinner');
+
+            function openDemoModal() {
+                demoModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeDemoModal() {
+                demoModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            function showDemoToast(id) {
+                const toast = document.getElementById(id);
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 5000);
+            }
+
+            demoForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('demo_name').value.trim();
+                const phone = document.getElementById('demo_phone').value.trim();
+                const email = document.getElementById('demo_email').value.trim();
+                const message = document.getElementById('demo_message').value.trim();
+
+                demoBtnText.textContent = 'Sending...';
+                demoSpinner.style.display = 'block';
+                document.getElementById('demoSubmitBtn').disabled = true;
+
+                try {
+                    const response = await fetch('/api/contact', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            from_name: name,
+                            phone: phone,
+                            reply_to: email,
+                            message: `[DEMO REQUEST]\n${message}`,
+                            recaptcha: 'bypass'
+                        })
+                    });
+
+                    const data = await response.json();
+                    if (data.ok) {
+                        showDemoToast('toastSuccess');
+                        demoForm.reset();
+                        setTimeout(closeDemoModal, 2000);
+                    } else {
+                        document.getElementById('toastErrorMsg').textContent = data.error || 'Failed to send request.';
+                        showDemoToast('toastError');
+                    }
+                } catch (error) {
+                    document.getElementById('toastErrorMsg').textContent = 'Network error. Please try again.';
+                    showDemoToast('toastError');
+                } finally {
+                    demoBtnText.textContent = 'Book your demo now';
+                    demoSpinner.style.display = 'none';
+                    document.getElementById('demoSubmitBtn').disabled = false;
+                }
+            });
+
+            // Close modal on click outside
+            demoModal.addEventListener('click', (e) => {
+                if (e.target === demoModal) closeDemoModal();
+            });
         </script>
     </body>
 </html>
