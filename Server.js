@@ -87,8 +87,8 @@ function emailShell(innerHtml) {
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td>
-                    <!-- Logo text fallback (replace with <img> if you host the logo) -->
-                    <img src="image_icon/i-Ruma Logo_Hori_2026.png" alt="i-Ruma" style="height: 26px; width: auto; max-width: 100px;>"
+                    <span style="font-size:22px;font-weight:700;color:#ffffff;letter-spacing:-0.5px;">i-Ruma</span>
+                    <span style="font-size:12px;color:rgba(255,255,255,0.7);margin-left:8px;">Property Management</span>
                   </td>
                   <td align="right">
                     <span style="font-size:11px;color:rgba(255,255,255,0.6);">hello@i-ruma.com</span>
