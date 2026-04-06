@@ -1,0 +1,2379 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        <title>i-Ruma - Career</title>
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+        <style>
+        /* ══ Tokens ══════════════════════════════════════════════ */
+        :root {
+            --primary:        #0055bb;
+            --primary-dark:   #003d8a;
+            --primary-mid:    #1a5fb4;
+            --primary-light:  #e8f1fd;
+            --primary-xlight: #f0f6ff;
+            --accent:         #f97316;
+            --accent-dark:    #ea6c0a;
+            --white:          #ffffff;
+            --surface:        #f7f9fc;
+            --border:         #e2e8f0;
+            --border-strong:  #c7d8ef;
+            --text:           #111827;
+            --text-2:         #374151;
+            --muted:          #64748b;
+            --green:          #22c55e;
+            --r-sm: 10px; 
+            --r-md: 16px; 
+            --r-lg: 24px; 
+            --r-xl: 32px; 
+            --r-pill: 9999px;
+            --sh-xs: 0 1px 3px rgba(0,0,0,.06);
+            --sh-sm: 0 2px 8px rgba(0,55,140,.07);
+            --sh-md: 0 8px 24px rgba(0,55,140,.10);
+            --sh-lg: 0 16px 48px rgba(0,55,140,.14);
+            --ease:  all .28s cubic-bezier(.4,0,.2,1);
+        }
+ 
+        *, *::before, *::after { 
+            box-sizing: border-box; 
+        }
+
+        html { 
+            scroll-padding-top: 80px; 
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
+        }
+
+        h1,h2,h3,h4,h5,h6 { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            line-height: 1.2; 
+        }
+ 
+        /* ══ Navbar ══════════════════════════════════════════════ */
+        .navbar {
+            background: rgba(255,255,255,.97);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 1px 0 var(--border);
+            padding: .85rem 0;
+            transition: box-shadow .3s;
+        }
+        .logo-img { 
+            height: 36px; 
+            width: auto; 
+            max-width: 180px; 
+        }
+        .nav-link {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600; font-size: .88rem;
+            color: var(--text-2) !important;
+            padding: .4rem .65rem !important;
+            border-radius: var(--r-sm); transition: var(--ease);
+        }
+        .nav-link:hover { 
+            color: var(--primary) !important; 
+            background: var(--primary-xlight); 
+        }
+        .nav-link.active { 
+            color: var(--primary) !important; 
+        }
+ 
+        /* ══ Buttons ══════════════════════════════════════════════ */
+        .btn-primary-custom {
+            background: var(--primary); 
+            color: var(--white); 
+            border: none;
+            padding: 12px 28px; 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700; 
+            font-size: .88rem; 
+            border-radius: var(--r-pill);
+            transition: var(--ease); 
+            cursor: pointer;
+            display: inline-flex; 
+            align-items: center; 
+            gap: 8px; 
+            text-decoration: none;
+        }
+        .btn-primary-custom:hover {
+            background: var(--primary-dark); 
+            color: var(--white);
+            transform: translateY(-2px); 
+            box-shadow: 0 10px 28px rgba(0,55,140,.30);
+        }
+        .btn-outline-white {
+            background: transparent; 
+            color: var(--white);
+            border: 1.5px solid rgba(255,255,255,.55); 
+            padding: 12px 28px;
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            font-weight: 700; 
+            font-size: .88rem;
+            border-radius: var(--r-pill); 
+            transition: var(--ease); 
+            cursor: pointer;
+            display: inline-flex; 
+            align-items: center; 
+            gap: 8px;
+        }
+        .btn-outline-white:hover {
+            background: rgba(255,255,255,.15); 
+            border-color: rgba(255,255,255,.8);
+            transform: translateY(-2px);
+        }
+        .btn-accent {
+            background: var(--accent); 
+            color: var(--white); 
+            border: none;
+            padding: 12px 28px; 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700; 
+            font-size: .88rem; 
+            border-radius: var(--r-pill);
+            transition: var(--ease); 
+            cursor: pointer;
+            display: inline-flex; 
+            align-items: center; 
+            gap: 8px; 
+            text-decoration: none;
+        }
+        .btn-accent:hover {
+            background: var(--accent-dark); 
+            color: var(--white);
+            transform: translateY(-2px); 
+            box-shadow: 0 10px 28px rgba(249,115,22,.35);
+        }
+ 
+        /* ══ Section label ════════════════════════════════════════ */
+        .section-label {
+            display: inline-flex; 
+            align-items: center; 
+            gap: 6px;
+            background: var(--primary-light); 
+            color: var(--primary);
+            padding: 5px 14px; 
+            border-radius: var(--r-pill);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: .72rem; 
+            font-weight: 800; 
+            letter-spacing: .8px; 
+            text-transform: uppercase;
+        }
+ 
+        /* ══ Page hero ════════════════════════════════════════════ */
+        .page-hero {
+            background:
+                radial-gradient(ellipse 70% 60% at 75% 110%, rgba(249,115,22,.14) 0%, transparent 60%),
+                radial-gradient(ellipse 55% 70% at -5% 20%,  rgba(255,255,255,.05) 0%, transparent 55%),
+                linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, #1e7fcb 100%);
+            padding: 80px 0 70px; 
+            color: var(--white); 
+            position: relative; 
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: ''; 
+            position: absolute; 
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+            background-size: 48px 48px; 
+            pointer-events: none;
+        }
+        .breadcrumb-custom { 
+            font-size: .82rem; 
+            opacity: .7; 
+        }
+        .breadcrumb-custom a { 
+            color: rgba(255,255,255,.8); 
+            text-decoration: none; 
+        }
+        .breadcrumb-custom a:hover { 
+            color: var(--white); 
+        }
+ 
+        /* ══ Culture stat chip ════════════════════════════════════ */
+        .culture-chip {
+            background: rgba(255,255,255,.1);
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 16px; 
+            padding: 1.2rem 1.5rem; 
+            text-align: center;
+            transition: var(--ease);
+        }
+        .culture-chip:hover { 
+            background: rgba(255,255,255,.18); 
+            transform: translateY(-3px); 
+        }
+        .culture-chip .num { 
+            font-size: 2rem; 
+            font-weight: 800; 
+            line-height: 1; 
+            font-family: 'Plus Jakarta Sans',sans-serif; 
+        }
+        .culture-chip .lbl { 
+            font-size: .78rem; 
+            opacity: .75; 
+            margin-top: 4px; 
+        }
+ 
+        /* ══ Perk cards ═══════════════════════════════════════════ */
+        .perk-card {
+            border-radius: var(--r-lg) !important;
+            border: 1px solid var(--border) !important;
+            box-shadow: var(--sh-xs) !important;
+            transition: var(--ease);
+        }
+        .perk-card:hover { 
+            transform: translateY(-6px); 
+            box-shadow: var(--sh-lg) !important; 
+            border-color: var(--border-strong) !important; 
+        }
+        .icon-box {
+            width: 56px; 
+            height: 56px; 
+            background: var(--primary-light);
+            border-radius: 15px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            flex-shrink: 0; 
+            transition: var(--ease);
+        }
+        .perk-card:hover .icon-box { 
+            background: var(--primary); 
+        }
+        .perk-card:hover .icon-box i { 
+            color: var(--white) !important; 
+        }
+ 
+        /* ══ Filter tabs ══════════════════════════════════════════ */
+        .filter-tab {
+            background: transparent; 
+            border: 1px solid var(--border);
+            color: var(--muted); 
+            padding: 8px 20px; 
+            border-radius: var(--r-pill);
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            font-size: .82rem; 
+            font-weight: 600;
+            cursor: pointer; 
+            transition: var(--ease);
+        }
+        .filter-tab:hover { 
+            border-color: var(--primary); 
+            color: var(--primary); 
+            background: var(--primary-xlight); 
+        }
+        .filter-tab.active { 
+            background: var(--primary); 
+            border-color: var(--primary); 
+            color: var(--white); 
+        }
+ 
+        /* ══ JOB CARD ═════════════════════════════════════════════ */
+        .job-card {
+            background: var(--white);
+            border: 1px solid var(--border) !important;
+            border-left: 4px solid var(--primary) !important;
+            border-radius: var(--r-lg) !important;
+            box-shadow: var(--sh-xs);
+            transition: var(--ease);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .job-card::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(120deg, transparent 60%, rgba(0,85,187,.03) 100%);
+            opacity: 0; 
+            transition: opacity .3s;
+        }
+        .job-card:hover {
+            transform: translateX(5px);
+            box-shadow: var(--sh-md) !important;
+            border-color: var(--border-strong) !important;
+            border-left-color: var(--primary) !important;
+        }
+        .job-card:hover::after { 
+            opacity: 1; 
+        }
+        .job-card:hover .job-arrow { 
+            transform: translateX(4px); 
+            color: var(--primary); 
+        }
+ 
+        .job-badge {
+            display: inline-flex; 
+            align-items: center; 
+            gap: 5px;
+            padding: 4px 11px; 
+            border-radius: var(--r-pill);
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            font-size: .72rem; font-weight: 700;
+        }
+        .badge-type { 
+            background: var(--primary-light); 
+            color: var(--primary); 
+        }
+        .badge-loc  { 
+            background: #fef3c7; 
+            color: #92400e; 
+        }
+        .badge-dept { 
+            background: #f0fdf4; 
+            color: #166534; 
+        }
+        .badge-intern { 
+            background: #fdf2f8; 
+            color: #9d174d; 
+        }
+        .badge-exp  { 
+            background: #fff7ed; 
+            color: #9a3412; 
+        }
+ 
+        .job-arrow { 
+            color: var(--muted); 
+            transition: var(--ease); 
+            font-size: .9rem; 
+        }
+ 
+        /* ══ DETAIL DRAWER ════════════════════════════════════════ */
+        .drawer-overlay {
+            position: fixed; 
+            inset: 0;
+            background: rgba(17,24,39,.5);
+            backdrop-filter: blur(4px);
+            z-index: 1050;
+            opacity: 0; 
+            pointer-events: none;
+            transition: opacity .35s ease;
+        }
+        .drawer-overlay.open { 
+            opacity: 1; 
+            pointer-events: all; 
+        }
+ 
+        .drawer {
+            position: fixed; 
+            top: 0; 
+            right: 0; 
+            bottom: 0;
+            width: min(680px, 100vw);
+            background: var(--white);
+            z-index: 1060;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform .4s cubic-bezier(.4,0,.2,1);
+            box-shadow: -8px 0 40px rgba(0,0,0,.15);
+            display: flex; 
+            flex-direction: column;
+        }
+        .drawer.open { 
+            transform: translateX(0); 
+        }
+        .drawer-header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 55%, #1e7fcb 100%);
+            color: var(--white); 
+            padding: 2rem 2rem 1.8rem;
+            position: sticky; 
+            top: 0; 
+            z-index: 10;
+            flex-shrink: 0;
+        }
+        .drawer-close {
+            background: rgba(255,255,255,.15); 
+            border: 1px solid rgba(255,255,255,.2);
+            color: var(--white); 
+            width: 36px; 
+            height: 36px; 
+            border-radius: 10px;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            cursor: pointer; 
+            transition: var(--ease); 
+            flex-shrink: 0;
+        }
+        .drawer-close:hover { 
+            background: rgba(255,255,255,.28); 
+        }
+        .drawer-body { 
+            padding: 2rem; 
+            flex: 1; 
+        }
+        /* Drawer content sections */
+        .detail-section { 
+            margin-bottom: 2rem; 
+            padding-bottom: 2rem; 
+            border-bottom: 1px solid var(--border); 
+        }
+        .detail-section:last-child { 
+            border-bottom: 0; 
+            margin-bottom: 0; 
+            padding-bottom: 0; 
+        }
+        .detail-section-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800; 
+            font-size: .82rem; 
+            letter-spacing: .9px;
+            text-transform: uppercase; 
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex; 
+            align-items: center; 
+            gap: 8px;
+        }
+        .detail-section-title::after {
+            content: ''; 
+            flex: 1; 
+            height: 1px; 
+            background: var(--primary-light);
+        }
+        .detail-list {
+            list-style: none;
+            padding-left: 1.1rem;
+            margin: 0;
+        }
+        .detail-list li {
+            position: relative;
+            padding: .35rem 0;
+            color: var(--text-2);
+            font-size: .92rem;
+            line-height: 1.6;
+            margin-left: 0.4rem;
+            display: block;
+        }
+        .detail-list li::before {
+            content: '\25E6';
+            position: absolute;
+            left: -1.1rem;
+            top: .45rem;
+            color: var(--primary);
+            font-size: 1rem;
+            line-height: 1;
+        }
+        .detail-list.sub-list {
+            padding-left: 1.4rem;
+            margin-top: 0.1rem;
+        }
+        .detail-list.sub-list li::before {
+            content: '\2022';
+            left: -1rem;
+            font-size: .94rem;
+            top: .45rem;
+            color: var(--primary);
+        }
+        .detail-list.sub-list li {
+            padding: .2rem 0;
+            font-size: .9rem;
+            margin-left: 0.2rem;
+        }
+        .detail-list .bullet {
+            display: none !important;
+        }
+        .detail-list li .item-text b,
+        .detail-list li .item-text strong {
+            font-weight: 700;
+            color: var(--text);
+        }
+        /* Week timeline */
+        .timeline { 
+            position: relative; 
+            padding-left: 1.6rem; 
+        }
+        .timeline::before {
+            content: ''; 
+            position: absolute; 
+            left: 7px; 
+            top: 8px; 
+            bottom: 8px;
+            width: 2px; 
+            background: var(--primary-light); 
+            border-radius: 2px;
+        }
+        .timeline-item { 
+            position: relative; 
+            margin-bottom: 1.2rem; 
+        }
+        .timeline-item::before {
+            content: ''; 
+            position: absolute; 
+            left: -1.6rem; 
+            top: 6px;
+            width: 14px; 
+            height: 14px; 
+            border-radius: 50%;
+            background: var(--primary-light); 
+            border: 2px solid var(--primary);
+        }
+        .timeline-item-title {
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            font-weight: 700; 
+            font-size: .88rem;
+            color: var(--primary); 
+            margin-bottom: .4rem;
+        }
+        .timeline-item-body { 
+            font-size: .88rem; 
+            color: var(--muted); 
+            line-height: 1.65; 
+        }
+        /* Tech table */
+        .tech-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            font-size: .88rem; 
+        }
+        .tech-table th {
+            text-align: left; 
+            padding: 8px 12px; 
+            background: var(--primary-light);
+            color: var(--primary); 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700; 
+            font-size: .76rem; 
+            letter-spacing: .5px; 
+            text-transform: uppercase;
+        }
+        .tech-table th:first-child { 
+            border-radius: 8px 0 0 8px; 
+        }
+        .tech-table th:last-child  {
+             border-radius: 0 8px 8px 0;
+        }
+        .tech-table td { 
+            padding: 9px 12px; 
+            border-bottom: 1px solid var(--border); 
+            color: var(--text-2); 
+            vertical-align: top; 
+        }
+        .tech-table tr:last-child td { 
+            border-bottom: 0; 
+        }
+        .tech-table td:first-child { 
+            font-weight: 600; 
+            color: var(--text); 
+            white-space: nowrap; 
+        }
+        /* Salary pill */
+        .salary-pill {
+            display: inline-flex; 
+            align-items: center; 
+            gap: 6px;
+            background: linear-gradient(90deg, #dcfce7, #bbf7d0);
+            color: #166534; 
+            border: 1px solid #86efac;
+            padding: 6px 16px; 
+            border-radius: var(--r-pill);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: .82rem; 
+            font-weight: 700;
+        }
+        /* Apply CTA in drawer */
+        .drawer-apply {
+            position: sticky; bottom: 0;
+            background: var(--white);
+            border-top: 1px solid var(--border);
+            padding: 1.2rem 2rem;
+            display: flex; 
+            align-items: center; 
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        /* ══ Culture / media placeholder ════════════════════════ */
+        .media-placeholder-light {
+            background: var(--surface); 
+            border: 2px dashed var(--border);
+            border-radius: var(--r-xl); 
+            min-height: 300px;
+            display: flex; 
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center; 
+            color: var(--muted);
+        }
+        /* ══ CTA banner ═══════════════════════════════════════════ */
+        .cta-banner {
+            background: linear-gradient(135deg, var(--primary) 0%, #1a5fb4 100%);
+            border-radius: var(--r-xl); 
+            color: var(--white);
+        }
+ 
+                /* ── Footer ──────────────────────────────────── */
+                footer {
+                    background: var(--white);
+                    color: #64748b;
+                    position: relative;
+                }
+
+                footer::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 1px;
+                    background: #e2e8f0;
+                }
+
+                footer h6 {
+                    color: #111827;
+                    font-weight: 700;
+                    letter-spacing: .05em;
+                    font-size: .8rem;
+                    text-transform: uppercase;
+                }
+
+                footer a {
+                    color: #64748b;
+                    text-decoration: none;
+                    transition: color .2s;
+                }
+
+                footer a:hover {
+                    color: #0055bb;
+                }
+
+                .footer-divider {
+                    border-color: #e2e8f0;
+                }
+
+                .footer-social-link {
+                    width: 34px;
+                    height: 34px;
+                    border-radius: 8px;
+                    background: transparent;
+                    border: 1px solid #e2e8f0;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #374151;
+                    font-size: .8rem;
+                    text-decoration: none;
+                    transition: all .2s ease;
+                }
+
+                .footer-social-link.facebook:hover {
+                    background: #1877f2;
+                    border-color: #1877f2;
+                    color: var(--white);
+                    transform: translateY(-2px);
+                }
+
+                .footer-social-link.instagram:hover {
+                    background: linear-gradient(
+                        45deg,
+                        #f09433,
+                        #e6683c,
+                        #dc2743,
+                        #cc2366,
+                        #bc1888
+                    );
+                    border-color: transparent;
+                    color: var(--white);
+                }
+
+                .footer-social-link.linkedin:hover {
+                    background: #0a66c2;
+                    border-color: #0a66c2;
+                    color: var(--white);
+                }
+
+                .logo-img-footer {
+                    height: 100px;
+                    width: auto;
+                    max-width: 160px;
+                }
+ 
+        /* ══ Reveal ═══════════════════════════════════════════════ */
+        .reveal { 
+            opacity: 0; 
+            transform: translateY(22px); 
+            transition: opacity .6s ease, transform .6s ease; 
+        }
+        .reveal.visible { 
+            opacity: 1; 
+            transform: none; 
+        }
+        /* ══ Prevent body scroll when drawer open ════════════════ */
+        body.drawer-open { 
+            overflow: hidden; 
+        }
+
+        .apply-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(17,24,39,.45);
+            backdrop-filter: blur(3px);
+            z-index: 1200;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .3s ease;
+        }
+        .apply-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .apply-compose {
+            position: fixed;
+            bottom: 0;
+            right: 32px;
+            width: 560px;
+            max-width: calc(100vw - 16px);
+            background: #fff;
+            border-radius: 12px 12px 0 0;
+            box-shadow: 0 -4px 40px rgba(0,0,0,.22), 0 0 0 1px rgba(0,0,0,.08);
+            z-index: 1300;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(100%);
+            transition: transform .38s cubic-bezier(.4,0,.2,1);
+            max-height: 92vh;
+            overflow: hidden;
+        }
+        .apply-compose.open {
+            transform: translateY(0);
+        }
+
+        .compose-header {
+            background: #404040;
+            color: #fff;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 12px 12px 0 0;
+        }
+        .compose-header-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: .88rem; 
+            font-weight: 700;
+            display: flex; 
+            align-items: center; 
+            gap: 8px;
+        }
+        .compose-header-title .job-tag {
+            font-size: .72rem; 
+            font-weight: 600;
+            background: rgba(255,255,255,.15);
+            padding: 2px 8px; 
+            border-radius: 999px;
+            max-width: 200px; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            white-space: nowrap;
+        }
+        .compose-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .compose-header-btn {
+            background: transparent; 
+            border: none;
+            color: rgba(255,255,255,.75);
+            width: 28px; 
+            height: 28px; 
+            border-radius: 50%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            cursor: pointer; 
+            font-size: .8rem;
+            transition: background .2s, color .2s;
+        }
+        .compose-header-btn:hover {
+            background: rgba(255,255,255,.15);
+            color: #fff;
+        }
+        .compose-body {
+            overflow-y: auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .compose-field {
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+            padding: 10px 16px;
+            border-bottom: 1px solid #e8eaed;
+            font-size: .88rem;
+        }
+        .compose-field-label {
+            color: #5f6368; 
+            font-size: .82rem;
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            font-weight: 600;
+            flex-shrink: 0; width: 52px;
+        }
+        .compose-field input, .compose-field .field-input {
+            flex: 1; 
+            border: none; 
+            outline: none;
+            font-size: .88rem; 
+            font-family: 'DM Sans', sans-serif;
+            color: #202124; 
+            background: transparent; 
+            padding: 0;
+        }
+        .compose-field .field-value {
+            font-weight: 500;
+        }
+        .compose-field input::placeholder {
+            color: #b0bec8;
+        }
+        .compose-subject input {
+            font-size: .92rem;
+            font-weight: 600;
+            color: #202124;
+        }
+        .compose-message {
+            flex: 1;
+            padding: 14px 16px;
+            min-height: 160px;
+        }
+        .compose-message textarea {
+            width: 100%; 
+            min-height: 140px;
+            border: none; 
+            outline: none; 
+            resize: none;
+            font-size: .9rem; 
+            font-family: 'DM Sans', sans-serif;
+            color: #202124; 
+            line-height: 1.6; 
+            background: transparent;
+        }
+        .compose-message textarea::placeholder {
+            color: #b0bec8;
+        }
+        .compose-attach-area {
+            padding: 0 16px 10px;
+        }
+        .compose-attach-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 7px 14px;
+            border: 1.5px dashed #c7d8ef;
+            border-radius: 10px; 
+            background: #f7f9fc;
+            color: #0055bb; 
+            font-size: .82rem; 
+            font-weight: 600;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            cursor: pointer; 
+            transition: all .2s; 
+            width: 100%;
+        }
+        .compose-attach-btn:hover {
+            background: #e8f1fd;
+            border-color: #0055bb;
+        }
+        #resumeInput {
+            display: none;
+        }
+        .file-preview {
+            display: none; 
+            align-items: center; 
+            gap: 10px;
+            background: #f0f6ff; 
+            border: 1px solid #c7d8ef;
+            border-radius: 10px; 
+            padding: 10px 14px; 
+            margin-top: 8px;
+            font-size: .82rem;
+        }
+        .file-preview.show {
+            display: flex;
+        }
+        .file-preview .file-icon {
+            width: 36px; 
+            height: 36px; 
+            border-radius: 8px;
+            background: #0055bb; 
+            color: #fff;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: .8rem;
+            flex-shrink: 0;
+        }
+        .file-preview .file-name {
+            flex: 1;
+            font-weight: 600;
+            color: #111827;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .file-remove {
+            background: transparent;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            font-size: .85rem;
+            padding: 2px 6px;
+            border-radius: 6px;
+            transition: background .2s;
+        }
+        .file-remove:hover {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .compose-footer {
+            padding: 12px 16px;
+            display: flex; 
+            align-items: center; 
+            gap: 12px;
+            border-top: 1px solid #e8eaed;
+            flex-shrink: 0;
+        }
+        .compose-send-btn {
+            background: #0055bb; 
+            color: #fff; 
+            border: none;
+            padding: 9px 22px; 
+            border-radius: 999px;
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            font-weight: 700; 
+            font-size: .85rem;
+            cursor: pointer; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 7px;
+            transition: all .25s;
+        }
+        .compose-send-btn:hover {
+            background: #003d8a;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(0,55,140,.3);
+        }
+        .compose-send-btn:disabled {
+            opacity: .65;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .compose-send-spinner {
+            width: 14px; 
+            height: 14px;
+            border: 2px solid rgba(255,255,255,.4); 
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: composeSpin .7s linear infinite;
+            display: none;
+        }
+        @keyframes composeSpin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .compose-error {
+            display: none;
+            font-size: .78rem;
+            color: #dc2626;
+            padding: 0 16px 8px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .compose-error.show {
+            display: block;
+        }
+        .apply-toast {
+            position: fixed; 
+            bottom: 32px; 
+            right: 32px; 
+            z-index: 9999;
+            background: #111827; 
+            color: #fff;
+            padding: 14px 22px; 
+            border-radius: 14px;
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            font-weight: 600; 
+            font-size: .88rem;
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+            box-shadow: 0 12px 36px rgba(0,0,0,.2);
+            transform: translateY(80px); 
+            opacity: 0;
+            transition: all .4s cubic-bezier(.4,0,.2,1);
+            pointer-events: none; 
+            max-width: 360px;
+        }
+        .apply-toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .apply-toast i {
+            color: #4ade80;
+        }
+        
+        /* ══ Mobile ═══════════════════════════════════════════════ */
+        @media (max-width: 575.98px) {
+            .page-hero { 
+                padding: 60px 0 50px; 
+            }
+            .drawer-header { 
+                padding: 1.4rem; 
+            }
+            .drawer-body { 
+                padding: 1.4rem; 
+            }
+            .drawer-apply { 
+                padding: 1rem 1.4rem; 
+            }
+            .apply-compose {
+                right: 0;
+                left: 0;
+                width: 100%;
+                border-radius: 16px 16px 0 0;
+            }
+        }
+        </style>
+    </head>
+    <body>
+        <!-- NavBar -->
+        <nav class="navbar navbar-expand-lg sticky-top">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                <img src="image_icon/i-Ruma Logo_Hori_2026.png" alt="i-Ruma" class="logo-img"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block'">
+                <span style="display:none;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.4rem;color:var(--primary);">i-Ruma</span>
+                </a>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-center gap-1">
+                        <li class="nav-item"><a class="nav-link" href="index.html#services">Services</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html#about">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="iot.html">IoT</a></li>
+                        <li class="nav-item"><a class="nav-link" href="career.html">Career</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Contact.html">Contact</a></li>
+                        <li class="ms-3">
+                            <button onclick="alert('📅 Book a demo — our team will reach out!')" class="btn-primary-custom">
+                                <i class="fas fa-calendar-check" style="font-size:.8rem;"></i> Book a demo
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Hero -->
+         <section class="page-hero">
+            <div class="container position-relative">
+                <nav aria-label="breadcrumb" class="breadcrumb-custom mb-4">
+                    <a href="index.html">Home</a>
+                    <span class="mx-2 opacity-50">/</span>
+                    <span>Careers</span>
+                </nav>
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-7 reveal">
+                        <div class="section-label mb-3" style="background: rgba(255,255,255,.15); color:var(--white);">
+                            <i class="fas fa-users me-1"></i> Join the Team
+                        </div>
+                        <h1 style="font-size:clamp(2rem,4.5vw,3rem); font-weight:800; line-height:1.18;">
+                            Build the future of property management
+                        </h1>
+                        <p class="lead mt-4 opacity-90" style="max-width:520px">
+                            We're on a mission to automate property management across Malaysia. Come help us
+                            build technology that impacts thousands of property managers every day.
+                        </p>
+                        <div class="mt-5 d-flex flex-wrap gap-3">
+                            <a href="#open-roles" class="btn btn-light btn-lg px-5 rounded-pill fw-bold">
+                                <i class="fas fa-arrow-down me-2 text-primary"></i> See open roles
+                            </a>
+                            <a href="mailto:hello@i-ruma.com" class="btn-outline-white btn-lg">
+                                Send your CV →
+                            </a>                        
+                        </div>
+                    </div>
+                    <div class="col-lg-5 reveal" style="transition-delay:.15s">
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="culture-chip">
+                                    <div class="num">50+</div>
+                                    <div class="lbl">Team members</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="culture-chip">
+                                    <div class="num">5★</div>
+                                    <div class="lbl">Glassdoor rating</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="culture-chip">
+                                    <div class="num">🇲🇾</div>
+                                    <div class="lbl">Based in KL</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="culture-chip">
+                                    <div class="num">Hybrid</div>
+                                    <div class="lbl">Work Model</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </section>
+         <!-- Why Join Us -->
+        <section class="py-5 bg-white">
+            <div class="container py-3">
+                <div class="text-center mb-5 reveal">
+                    <div class="section-label mx-auto mb-3">Why iRuma</div>
+                    <h2 class="display-5 fw-bold">Why you'll love working here</h2>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-6 col-md-6 reveal">
+                        <div class="card perk-card h-100">
+                            <div class="card-body p-5 d-flex flex-column">
+                                <div class="icon-box mb-4">
+                                    <i class="fas fa-rocket fa-lg text-primary"></i>
+                                </div>
+                                <h5 class="fw-bold mb-2">High Impact Work</h5>
+                                <p class="text-muted mb-0 flex-grow-1">Your code and ideas ship to 3,500 +
+                                    property managers across Malaysia within days, not quarters.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 reveal" style="transition-delay:.1s">
+                        <div class="card perk-card h-100">
+                            <div class="card-body p-5 d-flex flex-column">
+                                <div class="icon-box mb-4">
+                                    <i class="fas fa-graduation-cap fa-lg text-primary"></i>
+                                </div>
+                                <h5 class="fw-bold mb-2">Learning &amp; Growth</h5>
+                                <p class="text-muted mb-0 flex-grow-1">
+                                    Annual learning budget, conference sponsorship, and a culture that celebrates curiosity.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 reveal" style="transition-delay:.2s">
+                        <div class="card perk-card h-100">
+                            <div class="card-body p-5 d-flex flex-column">
+                                <div class="icon-box mb-4">
+                                    <i class="fas fa-laptop-house fa-lg text-primary"></i>
+                                </div>
+                                <h5 class="fw-bold mb-2">Flexible &amp; Hybrid</h5>
+                                <p class="text-muted mb-0 flex-grow-1">Work from our KL office or remotely — 
+                                    we care about output, not facetime.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 reveal" style="transition-delay:.05s">
+                        <div class="card perk-card h-100">
+                            <div class="card-body p-5 d-flex flex-column">
+                                <div class="icon-box mb-4">
+                                    <i class="fas fa-coins fa-lg text-primary"></i>
+                                </div>
+                                <h5 class="fw-bold mb-2">Competitive Pay</h5>
+                                <p class="text-muted mb-0 flex-grow-1">Market-rate salaries, annual performance bonuses
+                                    and an ESOP scheme for senior hires.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Open Roles -->
+         <section class="py-5 bg-light" id="open-roles">
+            <div class="container py-3">
+                <div class="text-center mb-5 reveal">
+                    <div class="section-label mx-auto mb-3">Open Roles</div>
+                    <h2 class="display-5 fw-bold">We're hiring across teams</h2>
+                    <p class="text-muted mt-2">
+                        Can't find the right role?
+                        <a href="mailto:hello@i-ruma.com" class="text-primary fw-semibold">
+                            Send us your CV anyway.
+                        </a>
+                    </p>
+                </div>
+                <div class="d-flex flex-wrap gap-2 justify-content-center mb-5 reveal">
+                    <button class="filter-tab active" onclick="filterJobs(this,'all')">All roles</button>
+                    <button class="filter-tab" onclick="filterJobs(this, 'internship')">Internship</button>
+                    <button class="filter-tab" onclick="filterJobs(this, 'full-time')">Full Time</button>
+                </div>
+
+                <!-- Job Listings -->
+                <div class="row g-4" id="job-list">
+
+                    <!-- JOB 1: Internship -->
+                    <div class="job-item reveal" data-dept="internship" onclick="openDrawer('intern')">
+                        <div class="job-card p-4">
+                            <div class="row align-items-center g-3">
+                                <div class="col-md-8">
+                                    <div class="d-flex align-items-center gap-3 mb-2">
+                                        <div style="width:44px;height:44px;background:var(--primary-light);
+                                            border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                            
+                                            <i class="fas fa-code text-primary"></i>
+                                        </div>
+                                        <h5 class="fw-bold mb-0">Software Development Intern</h5>
+                                    </div>
+                                    <div class="d-flex flex-wrap gap-2 mb-2">
+                                        <span class="job-badge badge-intern">Internship · 3 months</span>
+                                        <span class="job-badge badge-loc">
+                                            <i class="fas fa-location-dot me-1"></i>Kuala Lumpur
+                                        </span>
+                                        <span class="job-badge badge-dept">Engineering</span>
+                                    </div>
+                                    <p class="text-muted small mb-0">Build a cross-platform mobile application using .NET MAUI —
+                                        from onboarding through to app store deployment.
+                                    </p>
+                                </div>
+                                <div class="col-md-4 d-flex align-items-center justify-content-md-end gap-3">
+                                    <span class="text-muted small">Click to view details</span>
+                                    <i class="fas fa-chevron-right job-arrow"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- JOB 2: Full Time -->
+                    <!-- 1. Full Stack Developer -->
+                    <div class="job-item reveal" data-dept="full-time" style="transition-delay:.07s;" onclick="openDrawer('fullstack')">
+                        <div class="job-card p-4">
+                            <div class="row align-items-center g-3">
+                                <div class="col-md-8">
+                                    <div class="d-flex align-items-center gap-3 mb-2">
+                                        <div style="width:44px;height:44px;background:var(--primary-light);
+                                            border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                            
+                                            <i class="fas fa-layer-group text-primary"></i>
+                                        </div>
+                                        <h5 class="fw-bold mb-0">Full Stack Developer
+                                            <span style="font-size:.85rem;color:var(--muted);font-weight:500;">
+                                                (.NET / MAUI / MSSQL)
+                                            </span>
+                                        </h5>
+                                    </div>
+                                    <div class="d-flex flex-wrap gap-2 mb-2">
+                                        <span class="job-badge badge-type">Full-time</span>
+                                        <span class="job-badge badge-exp">Mid-Senior · 2+ years</span>
+                                        <span class="job-badge badge-loc">
+                                            <i class="fas fa-location-dot me-1"></i>Kuala Lumpur
+                                        </span>
+                                        <span class="job-badge badge-dept">Engineering</span>
+                                    </div>
+                                    <p class="text-muted small mb-0">
+                                        Design, build, and maintain scalable web and mobile apps across the full Microsoft technology stack.
+                                    </p>
+                                </div>
+                                <div class="col-md-4 d-flex align-items-center justify-content-md-end gap-3">
+                                    <span class="text-muted small">Click to view details</span>
+                                    <i class="fas fa-chevron-right job-arrow"></i> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 2. Sales & Marketing Executive -->
+                    <div class="job-item reveal" data-dept="full-time" style="transition-delay:.14s" onclick="openDrawer('sales')">
+                        <div class="job-card p-4">
+                            <div class="row align-items-center g-3">
+                                <div class="col-md-8">
+                                    <div class="d-flex align-items-center gap-3 mb-2">
+                                        <div style="width:44px;height:44px;background:var(--primary-light);
+                                            border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                            
+                                            <i class="fas fa-chart-line text-primary"></i>
+                                        </div>
+                                        <h5 class="fw-bold mb-0">Sales &amp; Marketing Executive 
+                                            <span style="font-size:.85rem;color:var(--muted);font-weight:500;">
+                                                (Property Management Technology)
+                                            </span>
+                                        </h5>
+                                    </div>
+                                    <div class="d-flex flex-wrap gap-2 mb-2">
+                                        <span class="job-badge badge-type">Full-time</span>
+                                        <span class="job-badge badge-exp">4+ years B2B Sales</span>
+                                        <span class="job-badge badge-loc">
+                                            <i class="fas fa-location-dot me-1"></i>KL / Selangor
+                                        </span>
+                                        <span class="job-badge badge-dept">Sales</span>
+                                    </div>
+                                    <p class="text-muted small mb-0">Leverage your property management network to drive
+                                        adoption of iRuma's solutions across Malaysia.
+                                    </p>
+                                </div>
+                                <div class="col-md-4 d-flex align-items-center justify-content-md-end gap-3">
+                                    <span class="text-muted small">Click to view details</span>
+                                    <i class="fas fa-chevron-right job-arrow"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!-- CULTURE -->
+        <section style="padding:80px 0;background:var(--white);border-top:1px solid var(--border);">
+            <div class="container">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-6 reveal">
+                        <div class="section-label mb-4">Life at iRuma</div>
+                        <h2 class="display-5 fw-bold mb-4">A team that builds together</h2>
+                        <p class="text-muted fs-5 mb-3">
+                            We're diverse, fast-moving team united by a single goal: making pro perty management
+                            effortless for every Malaysian JMB, property manager and resident.
+                        </p>
+                        <p class="text-muted mb-4">
+                            From hackathons and team lunches to internal demo days and learning 
+                            sessions — we invest in the people who make it all happen
+                        </p>
+                        <a href="mailto:hello@i-ruma.com" class="btn-accent">
+                            <i class="fas fa-envelope"></i> Reach out to us
+                        </a>
+                    </div>
+                    <div class="col-lg-6 reveal" style="transition-delay:.12s">
+                        <div class="media-placeholder-light p-5">
+                            <i class="fas fa-camera fa-3x mb-3 text-primary" style="opacity:.3;"></i>
+                            <p class="fw-semibold mb-1">Team / office photo goes here</p>
+                            <p class="small text-muted mb-0">Revommended: 800x520px JPG/WebP</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>  
+
+        <!-- CTA -->
+        <section style="padding:56px 0;background:var(--surface);border-top:1px solid var(--border);">
+            <div class="container reveal">
+                <div class="cta-banner p-5 text-center">
+                    <h2 class="display-6 fw-bold mb-3">Don't see the right role?</h2>
+                    <p style="opacity:.8;font-size:1.05rem;" class="mb-4">
+                        We always want to hear from talented people. Send us your CV and we'll be in touch.
+                    </p>
+                    <a href="mailto:hello@i-ruma.com" class="btn btn-light btn-lg px-5 rounded-pill fw-bold d-inline-flex align-items-center gap-2">
+                        <i class="fas fa-paper-plane text-primary"></i> Send your CV
+                    </a>
+                </div>
+            </div>
+        </section>
+        <!-- ═══════ FOOTER ═══════════════════════════════════════════════════════════════ -->
+        <footer class="py-5" id="contact">
+            <div class="container">
+                <div class="row g-4 pb-4">
+                    <div class="col-lg-2 col-md-4">
+                        <div style="max-width:240px;">
+                            <img src="image_icon/i-Ruma Logo_Vertical_2026.png" alt="i-Ruma" class="logo-img-footer mb-3"
+                                onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                            <span style="display:none;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem;color:var(--white);">i-Ruma</span>
+                            <p class="small mt-2 mb-3" style="line-height:1.7;">
+                                Leading fully automated property management solution in Malaysia.
+                            </p>
+                            <div class="d-flex gap-2">
+                                <a href="https://www.facebook.com/irumapms" class="footer-social-link facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="https://www.instagram.com/irumapms/" class="footer-social-link instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="https://www.linkedin.com/company/i-ruma" class="footer-social-link linkedin" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <h6 class="mb-3">Explore</h6>
+                        <ul class="list-unstyled small" style="line-height:2.3; margin-bottom:0;">
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#about">About Us</a></li>
+                            <li><a href="#services">Services</a></li>
+                            <li><a href="Contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <h6 class="mb-3">Support</h6>
+                        <ul class="list-unstyled small" style="line-height:2.3; margin-bottom:0;">
+                            <li>
+                                <a href="tel:+6019-399 3191" class="d-flex align-items-center gap-2">
+                                <i class="fab fa-whatsapp" style="width:16px;opacity:.5;"></i> +60 16-631 9373
+                            </a>
+                            </li>
+                            <li>
+                                <a href="mailto:hello@i-ruma.com" class="d-flex align-items-center gap-2">
+                                    <i class="fas fa-envelope" style="width:16px;opacity:.5;"></i> hello@i-ruma.com
+                                </a>
+                            </li>
+                        </ul>
+                        <h6 class="mt-3">Career</h6>
+                        <ul class="list-unstyled small" style="line-height:2.3; margin-bottom:0;">
+                            <li><a href="career.html">Join us</a></li>
+                        </ul>
+                        <h6 class="mt-3">IoT</h6>
+                        <ul class="list-unstyled small" style="line-height:2.3; margin-bottom:0;">
+                            <li><a href="iot.html">i-Ruma IoT</a></li>
+                        </ul>
+                        <h6 class="mt-3">FAQ</h6>
+                        <ul class="list-unstyled small" style="line-height:2.3; margin-bottom:0;">
+                            <li><a href="https://www.propertyme.com/faq" target="_blank">PropertyMe FAQ</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <h6 class="mb-3">Company</h6>
+                        <ul class="list-unstyled small" style="line-height:2.3; margin-bottom:0;">
+                            <li><a href="https://i-ruma.com/Refund.html">Refund Policy</a></li>
+                            <li><a href="https://i-ruma.com/privacy.html">Privacy Policy</a></li>
+                            <li><a href="https://i-ruma.com/policy.html">i-Ruma Policy</a></li>
+                            <li><a href="https://i-ruma.com/Terms.html">Terms of Service</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <h6 class="mb-3">Get in Touch</h6>
+                        <div class="d-flex flex-column gap-2 small mb-4">
+                            <a href="mailto:hello@i-ruma.com" class="d-flex align-items-center gap-2">
+                                <i class="fas fa-envelope" style="width:16px;opacity:.5;"></i> hello@i-ruma.com
+                            </a>
+                            <a href="tel:+6019-399 3191" class="d-flex align-items-center gap-2">
+                                <i class="fab fa-whatsapp" style="width:16px;opacity:.5;"></i> +60 19-399 3191
+                            </a>
+                            <a href="mailto:sales@iruma.my" class="d-flex align-items-center gap-2">
+                                <i class="fas fa-briefcase" style="width:16px;opacity:.5;"></i> sales@iruma.my
+                            </a>
+                        </div>
+                        <button onclick="alert('📅 Book a demo — our team will reach out!')" class="btn-primary-custom" style="padding:11px 24px;font-size:.85rem;">
+                            <i class="fas fa-calendar-check"></i> Book a demo
+                        </button>
+                    </div>
+                </div>
+
+                <hr class="footer-divider my-4">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2" style="background:rgba(105, 105, 105);padding:12px 16px;border-radius:12px;">
+                    <p class="small mb-0" style="color:rgba(255,255,255,.9);">
+                        © 2026 i-Ruma Solutions Sdn. Bhd. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- DETAIL DRAWER OVERLAY-->
+        <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+        <!-- DRAWER PANEL -->
+        <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+            <!-- DRAWER HEADER (filled by JS) -->
+            <div class="drawer-header" id="drawerHeader"></div>
+            <!-- DRAWER BODY (filled by JS) -->
+            <div class="drawer-body" id="drawerBody"></div>
+            <!-- APPLY CTA (filled by JS) -->
+            <div class="drawer-apply" id="drawerApply"></div>
+        </div>
+
+        <!-- ============================ GMAIL-STYLE APPLY MODAL ================================== -->
+        <!-- Apply overlay backdrop -->
+        <div class="apply-overlay" id="applyOverlay" onclick="closeApply()"></div>
+
+        <!-- Gmail-style compose window -->
+        <div class="apply-compose" id="applyCompose" role="dialog" aria-modal="true" aria-labelledby="composeTitle">
+            <div class="compose-header">
+                <div class="compose-header-title">
+                    <i class="fas fa-pen-to-square" style="font-size:.8rem;opacity:.8;"></i>
+                    New Application
+                    <span class="job-tag" id="composeJobTag">—</span>
+                </div>
+            <div class="compose-header-actions">
+                <button class="compose-header-btn" onclick="closeApply()" title="Close" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="compose-body">
+            <div class="compose-field">
+                <span class="compose-field-label">To</span>
+                <span class="field-value">yongqi060121@gmail.com</span>
+            </div>
+            <div class="compose-field compose-subject">
+                <span class="compose-field-label">Subject</span>
+                <input type="text" id="composeSubject" readonly>
+            </div>
+            <div class="compose-field">
+                <span class="compose-field-label">From</span>
+                <input type="email" id="composeEmail" placeholder="your@email.com" autocomplete="email">
+            </div>
+            <div class="compose-field">
+                <span class="compose-field-label">Name</span>
+                <input type="text" id="composeName" placeholder="Your full name">
+            </div>
+            <div class="compose-message">
+                <textarea id="composeMessage" placeholder="Write a short message to the hiring team — 
+                    introduce yourself, mention your experience...">
+                </textarea>
+            </div>
+            <div class="compose-error" id="composeError"></div>
+
+            <div class="compose-attach-area">
+                <button type="button" class="compose-attach-btn" onclick="document.getElementById('resumeInput').click()">
+                    <i class="fas fa-paperclip"></i> 
+                    Attach Resume (PDF or Word, max 10 MB)
+                </button>
+                <input type="file" id="resumeInput" accept=".pdf,.doc,.docx" onchange="handleFileSelect(this)">
+                    <div class="file-preview" id="filePreview">
+                        <div class="file-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                    <div class="flex-grow-1 overflow-hidden">
+                        <div class="file-name" id="fileName">—</div>
+                        <div class="file-size" id="fileSize">—</div>
+                    </div>
+                    <button class="file-remove" onclick="removeFile()" title="Remove file">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="compose-footer">
+            <button class="compose-send-btn" id="composeSendBtn" onclick="submitApplication()">
+                <span class="compose-send-spinner" id="composeSendSpinner"></span>
+                <i class="fas fa-paper-plane" id="composeSendIcon"></i>
+                <span id="composeSendText">Send Application</span>
+            </button>
+            <span style="font-size:.78rem;color:#9ca3af;margin-left:auto;">
+            <i class="fas fa-lock" style="font-size:.65rem;"></i> Secure · Sent to i-Ruma HR
+                </span>
+            </div>
+        </div>
+
+        <!-- SUCCESS TOAST -->
+        <div class="apply-toast" id="applyToast">
+            <i class="fas fa-check-circle"></i>
+            <span>Application sent! We'll be in touch within 2-3 business days.</span>
+        </div>
+
+        <!-- BOOTSTRAP JS (JOB DATA + DRAWER LOGIC)-->
+        <script>
+            /* ══════════════════════════════════════════════════════════
+                ⚙️  CONFIG — point to your Express server
+                Local dev:   http://localhost:3000
+                Production:  https://yourdomain.com
+            ══════════════════════════════════════════════════════════ */
+            const API_BASE = 'http://localhost:3000';
+
+            /* SCROLL REVEAL */
+            const revealObs = new IntersectionObserver(
+                entries => entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('visible');
+                        revealObs.unobserve(e.target);
+                    }
+                }),
+                { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+            );
+            document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+            /* NAVBAR SCROLL */
+            const nav = document.querySelector('.navbar');
+            window.addEventListener('scroll', () => {
+                nav.style.boxShadow = window.scrollY > 20 
+                    ? '0 2px 20px rgba(0,55,140,.12)' 
+                    : '0 1px 0 var(--border)';
+            }, {passive: true});
+
+            /* FILTER TABS */
+            function filterJobs(btn, dept) {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                btn.classList.add('active');
+                document.querySelectorAll('.job-item').forEach(item => {
+                    item.style.display = (dept === 'all' || item.dataset.dept === dept) ? '' : 'none';
+                });
+            }
+            /* JOB DATA */
+            const JOBS = {
+
+                intern: {
+                    title: 'Software Development Intern',
+                    type: 'Internship · 3 months',
+                    loc: 'Kuala Lumpur',
+                    dept: 'Engineering',
+                    email: 'yongqi060121@gmail.com',
+                    overview: 'As a Software Development Intern, you will work on building a cross-platform ' + 
+                    'mobile application using .NET MAUI. Your tasks will include designing, developing, testing ' +
+                    'and deploying the application. You will collaborate with the development team to implement new ' +
+                    'features, optimize performance and ensure the app aligns with the project\'s goals',
+                    timeline: [
+                        {
+                            label: 'Month 1 — Onboarding & Foundation',
+                            objective: 'Learn MAUI fundamentals, set up the environment, and build a simple prototype.',
+                            weeks: [
+                                {
+                                    title: 'Week 1 — Setup & Basics',
+                                    items: [
+                                        'Install and configure Visual Studio 2022+ with .NET MAUI workloads.',
+                                        'Complete MAUI documentation tutorials (layout, controls, data binding).',
+                                        'Create a "Hello World" app with basic UI elements (buttons, labels, entries).',
+                                        'Learn debugging tools (Hot Reload, Live Visual Tree).'
+                                    ]
+                                },
+                                {
+                                    title: 'Week 2: MVVM & Navigation',
+                                    items: [
+                                        'Study the MVVM (Model-View-ViewModel) pattern.',
+                                        'Build a multi-page app with Shell navigation (tabs, flyout menus).',
+                                        'Implement simple data binding (e.g., user input → displayed output).',
+                                        'Integrate a basic REST API call (e.g., fetch data from a public API).'
+                                    ]
+                                },
+                                {
+                                    title: 'Week 3: Platform-Specific Features',
+                                    items: [
+                                        'Explore MAUI\'s platform-specific code (e.g., camera access, permissions).',
+                                        'Build a prototype app with camera integration (take/display photos).',
+                                        'Learn dependency injection for platform services.'
+                                    ]
+                                },
+                                {
+                                    title: 'Week 4: Mini Project',
+                                    items: [
+                                        {
+                                            text: 'Develop a <b>To-Do List App</b> with CRUD operations:',
+                                            subItems: [
+                                                'Use MSSQL for persistence.',
+                                                'Add swipe-to-delete functionality.',
+                                                'Style the UI with MAUI\'s theming tools.'
+                                            ]
+                                        },
+                                        {
+                                            text: 'Code review with mentor.'
+                                        }
+                                    ]
+                                },
+                            ]
+                        },
+                        {
+                            label: 'Month 2: Core Feature Development',
+                            objective: 'Build core app features, integrate APIs, and refine UI/UX.',
+                            weeks: [
+                                {
+                                    title: 'Week 5-6: App Architecture',
+                                    items: [
+                                        'Set up a clean architecture (e.g., Repository pattern, API service layer).',
+                                        'Integrate a backend API (e.g., Firebase, Azure, or custom).',
+                                        'Implement authetication (e.g., OAuth2, JWT).',
+                                        'Add error handling and logging.'
+                                    ]
+                                },
+                                {
+                                    title: 'Week 7-8 UI/UX Refinement',
+                                    items: [
+                                        'Design responsive layouts for phones/tablets.',
+                                        'Implement custom controls (e.g., charts, animations).',
+                                        'Use MAUI Community Toolkit for pre-built components.',
+                                        'Conduct usability testing with mock users.'
+                                    ]
+                                },
+                                {
+                                    title: 'Week 9: Performance & Optimization',
+                                    items:[
+                                        'Profile app performance (memeory leaks, CPU usage).',
+                                        'Optimize image loading and data caching.',
+                                        'Implement lazy loading for lists/collections.'
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            label: 'Month 3: Advanced Features & Deployment Prep',
+                            objective: 'Polish the app, add advanced features, and prepare for release.',
+                            weeks: [
+                                {
+                                    title: 'Week 10: Offline Support',
+                                    items: [
+                                        'Implement offline data sync (e.g., LiteDB, Entity Framework Core).',
+                                        'Add network connectivity checks.'
+                                    ]
+                                },
+                                {
+                                    title: 'Week 11: Push Notifications',
+                                    items: [
+                                        'Integrate push notifications via Firebase Cloud Messaging (FCM).',
+                                        'Test notifications on Android/iOS.'
+                                    ]
+                                },
+                                {
+                                    title: 'Week 12: Testing & Deployment',
+                                    items: [
+                                        'Write unit tests (xUnit/NUnit) and UI tests (Appium/MAUI.UITest).',
+                                        'Prepare app store assets (icons, screenshots, descriptions).',
+                                        'Build release packages (APK/IPA) and test on real devices.',
+                                        'Submit to Google Play Store/Apple App Store (if company policy allows).'
+                                    ]
+                                }
+                            ]
+                        },
+                    ],
+                    ongoing: [
+                        'Weekly team standups and code reviews',
+                        'Document code and write technical summarizes',
+                        'Track progress in the project management tool (advised by Arissa)',
+                    ],
+                    deliverables:[
+                        'Complete app source code with documentation',
+                        'Presentation to the team demostrating features and learnings',
+                        'Retrospective report on challenges and solutions',
+                    ],
+                    checkpoints: [
+                        'End of Month 1: Functional prototype (To-Do List App)',
+                        'End of Month 2: Core App features integrated with backend',
+                        'End of Month 3: App ready for deployment with test cases',
+                    ],
+                },
+
+                fullstack: {
+                    title: 'Full Stack Developer',
+                    sub: '.NET / MAUI / MSSQL',
+                    type: 'Full-time',
+                    exp: 'Mid-Senior · 2+ years',
+                    loc: 'Kuala Lumpur',
+                    dept: 'Engineering',
+                    email: 'yongqi060121@gmail.com',
+                    overview: 'We are seeking a talented <strong>Full Stack Developer</strong> to design, build, and maintain ' +
+                    'scalable web and mobile applications using the Microsoft technology stack. You will work ' +
+                    'across the entire development lifecycle — from concept and database design to deployment ' +
+                    'and user experience — delivering solutions that power our business and delight our users.<br><br>' +
+                    'This role is ideal for a developer who enjoys working with <strong> .NET for backend services, ' +
+                    'MSSQL for data management, Bootstrap for responsive web UIs,</strong> and <strong>.NET MAUI for ' +
+                    'cross-platform mobile apps.</strong>',
+
+                    responsibilities: {
+                        'A. Backend Development': [
+                            'Design, develop, and maintain robust RESTful APIs and backend services ' +
+                            'using <b>ASP.NET Core, C#</b> and <b>.NET 6/8</b>.',
+                            'Implement secure authentication / authorisation using <b>JWT, OAuth 2.0</b>, ' +
+                            'or <b>IdentityServer</b>.',
+                            'Optimise database schemas, write efficient stored procedures, and manage ' +
+                            'data migrations in <b>MSSQL (Microsoft SQL Server)</b>.',
+                            'Ensure performance, scalability, and reliability through caching, asyn ' +
+                            'programming, and background services.',
+                        ],
+                        'B. Frontend & Web Development': [
+                            'Build responsive, accessible web interfaces using <strong>HTML5, CSS3, JavaScript/' +
+                            'TypeScript</strong> and <strong>BootStrap 5</strong>.',
+                            'Intergrate frontend components with backend APIs using <b>fetch, Axios,</b> or <b>Blazor</b> (optional).',
+                            'Collaborate with UI/UX designers to implement pixel-perfect, mobile-first designs.',
+                        ],
+                        'C. Mobile Development (.NET MAUI)': [
+                            'Develop and maintain cross-platform mobile apps for <b>iOS, Android, Windows</b>, ' +
+                            'and <b>macOS</b> using <b>.NET MAUI</b>.',
+                            'Implement native device features (camera, GPS, notifications) via MAUI Essentials ' +
+                            'and platform-specific APIs',
+                            'Ensure seamless synchronisation between mobile apps and backend services',
+                        ],
+                        'D. DevOps & Quality': [
+                            'Write clean, testable code with unit and integration tests using <b>xUnit, NUnit</b>, or <b>MSTest</b>.',
+                            'Participate in CI/CD pipelines using <b>Azure DevOps, Github Actions</b>, or similar tools',
+                            'Monitor application health, troubleshoot issues, and implement logging with ' +
+                            '<b>Serilog / Application Insights</b>, or similar.',
+                            'Follow secure coding practices and conduct code reviews to maintain high quality standards.',
+                        ],
+                        'E. Collaboration & Communication': [
+                            'Work closely with product managers, designers, and fellow engineers in an Agile/Scrum environment.',
+                            'Document technical specifications, API contracts (OpenAPI/Swagger), and user guides.',
+                            'Mentor junior developers and contribute to team knowledge sharing.'
+                        ],
+                    },
+                    techTable: [
+                        ['Backend',       'C#, .NET 6/8, ASP.NET Core, Web API, Entity Framework Core'],
+                        ['Database',      'Microsoft SQL Server, T-SQL, Stored Procedures, EF Core Migrations'],
+                        ['Frontend Web',  'HTML5, CSS3, JavaScript/TypeScript, Bootstrap 5, jQuery (optional)'],
+                        ['Mobile',        '.NET MAUI, XAML, MVVM pattern, Platform-specific APIs'],
+                        ['Tools',         'Visual Studio 2022, Git, Azure DevOps / GitHub, Postman'],
+                        ['DevOps',        'Docker (basic), CI/CD concepts, Azure App Services (preferred)'],
+                    ],
+                    techTableDetail: {
+                        'Core Competencies': [
+                            'Strong understanding of <b>object-oriented programming, design patterns,</b> and <b>SOLD principles</b>.',
+                            'Experience with <b>relational database design</b>, indexing, query optimization, and transaction management.',
+                            'Proficiency in building <b>responsive UIs</b> that work across desktop, tablet, and mobile browsers.',
+                            'Familiarity with <b>mobile app lifecycle</b>, offline sync, and platform conventions (iOS/Android).',
+                            'Knowledge of <b>REST API design</b>, versioning, and documentation best practices.',
+                            'Ability to debug complex issues across frontend, backend, and mobile layers.'
+                        ],
+                        'Soft Skills': [
+                            'Excellent problem-solving and analytical thinking.',
+                            'Strong communication skills—able to explain technical concepts to non-technical stakeholders.',
+                            'Self-motivated, adaptable, and thrive in collaborative, fast-paced environments.',
+                            'Commitment to continuous learning and staying current with emerging technologies.'
+                        ],
+                    },
+                    niceToHave: [
+                        'Experience with <b>Blazor</b> (WebAssembly or Server) for component-based web UIs.',
+                        'Familiarity with <b>Azure services</b>: App Services, Functions, SQL Database, KeyVault, Application Insights.',
+                        'Knowledge of <b>microservices architecture</b>, message queues (Azure Service Bus, RabbitMQ), or event-driven design.',
+                        'Exposure to <b>testing frameworks</b>: Playwright/Cypress for E2E testing, Moq/NSubstitue for mocking.',
+                        'Understanding of <b>accessibility standards</b> (WCAG) and <b>SEO best practices</b>.',
+                        'Experience with <b>Agile/Scrum methodologies</b> and tools like Jira or Azure Boards.',
+                        'Contributions to open-source projects or a public GitHub portfolio.',
+                    ],
+                    offers: [
+                        'Competitive salary and performance-based bonuses',
+                        'Health, dental, and vision insurance coverage',
+                        'Professional development budget for courses, certifications, and conferences',
+                        'Modern tech stack and tools — no legacy baggage',
+                        'Collaborative, inclusive culture with regular team events and hackathons',
+                        'Opportunity to shape product direction and technical strategy',
+                    ],
+                },
+
+                sales: {
+                    title: 'Sales & Marketing Executive',
+                    sub: 'Property Management Technology',
+                    type: 'Full-time',
+                    exp: '4+ years B2B Sales',
+                    salary: 'RM 4,000 + Uncapped Commission',
+                    loc: 'KL / Selangor',
+                    dept: 'Sales',
+                    email: 'yongqi060121@gmail.com',
+                    overview: 'Your primary goal is to leverage your <b>existing network within the property management ' +
+                    'sector</b> to drive immediate adoption of our solutions. You will bridge the gap between our technical ' +
+                    'team and key decision-makers in property management firms, strata management committees, and property developers.',
+                    responsibilities: {
+                        '1. Network Activation (Priority #1)': [
+                            '<b>Activate existing relationships</b> with Property Managers, Facility Directors, Strata Management Committees, ' +
+                            'and Property Developers',
+                            'Secure introductory meetings within the first <b>30 days</b> using your personal network',
+                            'Identify key influencers within property management associations who can advocate for our brand',
+                        ],
+                        '2. B2B Sales & Business Development': [
+                            'Sell our technology solutions to property management companies (B2B)',
+                            'Conduct product demonstrations tailored to operational pain points (tenant communication, ' +
+                            'maintenance tracking, financial reporting)',
+                            'Manage the full sales cycle from lead generation to contract negotiation and closure',
+                        ],
+                        '3. Strategic Marketing': [
+                            'Represent the company at property management expos, strata conferences, and real estate networking events',
+                            'Provide feedback to the product team (based on client interactions) to ensure our roadmap aligns with market needs',
+                            'Co-create case studies with early adopters from your network to build social proof',
+                        ],
+                    },
+                    mandatory: [
+                        {
+                            title: '1. Established Property Management Network',
+                            description: 'You must possess an active contact list of decision-makers in the property industry. Specifically: ',
+                            items: [
+                                'Property Management Firms (Residential/Commercial)',
+                                'Strata / Body Corporate Management Companies',
+                                'Property Developers with Management Divisions',
+                                'Facility Management Providers'
+                            ],
+                        },
+                        {
+                            title: '2. Industry Knowledge',
+                            items: [
+                                'Deep understanding of property management workflows (e-Community, maintenance, arrears collection, financial accounting).',
+                                'Familiarity with the challenges property managers face regarding <b>communication tools, data management, and operational efficiency</b>.'
+                            ],
+                        },
+                        {
+                            title: '3. Sales Track Record',
+                            items: [
+                                'Proven history of meeting or exceeding B2B sales targets.',
+                                'Experience selling <b>SaaS, Technology, or Business Services</b> to the property sector is highly preferred.'
+                            ],
+                        }
+                    ],
+
+                    skills: [
+                        '<b>Communication:</b> Ability to translate technical features (e.g., API integrations, secure email system) into business benefits',
+                        '<b>Negotiation:</b> Strong contract negotiation skills with a focus on long-term partnerships',
+                        '<b>Tech-Savvy:</b> Comfortable discussing technical concepts with IT managers within property firms',
+                    ],
+                    offers: [
+                        '<b>High earning potential:</b> Competitive base salary + aggressive commission structure',
+                        '<b>Product Confidence:</b> Sell a robust, stable product built on enterprise-grade technology (.NET/MSSQL)',
+                        '<b>Autonomy:</b> to manage your own pipeline and strategy',
+                        '<b>Support:</b> Backed by a dedicated technical team for pre-sales support and implementation',
+                        '<b>Growth:</b> Opportunity to lead the sales department as we scale',
+                    ],
+                },
+            };
+
+            /* RENDER HELPERS */
+            function renderList(items) {
+                return `<ul class="detail-list">
+                    ${items.map(i => {
+                        if (typeof i === 'object') {
+                            return `<li><span class="bullet"></span>
+                                    <span class="item-text">${i.text}</span>
+                                    ${i.subItems ? `<ul class="detail-list sub-list">
+                                        ${i.subItems.map(sub =>`
+                                            <li>
+                                                <span class="bullet"></span>
+                                                <span class="item-text">${sub}</span>
+                                            </li>
+                                        `).join('')}
+                                    </ul>` : ''}
+                                </li>`;
+                        } else {
+                            return `<li>
+                                <span class="bullet"></span>
+                                <span class="item-text">${i}</span>
+                            </li>`;
+                        }
+                    }).join('')}
+                </ul>`;
+            }
+
+            function sectionTitle(icon, text) {
+                return `<div class="detail-section-title"><i class="fas ${icon}"></i> ${text}</div>`;
+            }
+
+            function renderWeeks(weeks) {
+                return weeks.map(week => `
+                    <div style="margin-bottom:.8rem">
+                        <div style="font-weight:600;margin-bottom:.2rem;">
+                            ${week.title}
+                        </div>
+                            ${renderList(week.items)}
+                        </div>
+                `).join('');
+            }
+
+            /* BUILD DRAWER CONTENT PER JOB */
+            function buildContent(id) {
+                const j = JOBS[id];
+                let header = '', body = '';
+
+                /* INTERN */
+                if (id === 'intern') {
+                    header = `
+                        <div class="d-flex align-items-start justify-content-between gap-3">
+                            <div>
+                                <div class="d-flex flex-wrap gap-2 mb-2">
+                                    <span class="job-badge badge-intern" style="font-size:.72rem;">
+                                        Internship · 3 months
+                                    </span>
+                                    <span class="job-badge badge-loc" style="font-size:.72rem;">
+                                        <i class="fas fa-location-dot me-1"></i>${j.loc}
+                                    </span>
+                                </div>
+                                <h2 id="drawerTitle" style="font-size:1.5rem;font-weight:800;margin:0;">
+                                    ${j.title}
+                                </h2>
+                                <p style="opacity:.75;font-size:.88rem;margin-top:.4rem;">
+                                    Engineering · NET MAUI Cross-Platform Mobile
+                                </p>
+                            </div>
+                            <button class="drawer-close" onclick="closeDrawer()" aria-label="Close">
+                                <i class= "fas fa-times"></i>
+                            </button>
+                        </div>`;
+
+                    body = `
+                        <div class="detail-section">
+                            ${sectionTitle('fa-bullseye', 'About the Role')}
+                            <p style="color:var(--text-2);font-size:.93rem;line-height:1.75;">
+                                ${j.overview}
+                            </p>
+                        </div>
+                        
+                        <div class="detail-section">
+                            ${sectionTitle('fa-road', '3-Month Programme RoadMap')}
+                            <div class="timeline">
+                                ${j.timeline.map (t => `
+                                <div class="timeline-item">
+                                    <div class="timeline-item-title">${t.label}</div>
+                                    ${t.objective ? `
+                                        <div class="timeline-item-objective">
+                                            ${t.objective}
+                                        </div>
+                                    ` : ''}
+                                    <div class="timeline-item-body">
+                                        ${renderWeeks(t.weeks)}
+                                    </div>
+                                </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            ${sectionTitle('fa-repeat', 'Ongoing Weekly Tasks')}
+                            ${renderList(j.ongoing)}
+                        </div>
+                        
+                        <div class="detail-section">
+                            ${sectionTitle('fa-box-archive', 'Final Deliverables')}
+                            ${renderList(j.deliverables)}
+                        </div>
+                        
+                        <div class="detail-section">
+                            ${sectionTitle('fa-flag-checkered', 'Evaluation Checkpoints')}
+                            ${renderList(j.checkpoints)}
+                            <p style="font-size:.85rem;color:var(--muted);margin-top:.8rem;">
+                                <i class="fas fa-user-tie me-1 text-primary"></i>
+                                <strong>Mentorship:</strong> Regular 1:1 sessions for feedback, troubleshooting, and career guidance.
+                            </p>
+                        </div>`;
+                }
+
+                /* FULL STACK */
+                else if (id === 'fullstack') {
+                    header = `
+                        <div class="d-flex align-items-start justify-content-between gap-3">
+                            <div>
+                                <div class="d-flex flex-wrap gap-2 mb-2">
+                                    <span class="job-badge badge-type" style="font-size:.72rem;">
+                                        Full-time
+                                    </span>
+                                    <span class="job-badge badge-exp" style="font-size:.72rem;">
+                                        Mid–Senior · 2+ years
+                                    </span>
+                                    <span class="job-badge badge-loc" style="font-size:.72rem;">
+                                        <i class="fas fa-location-dot me-1"></i>
+                                        ${j.loc}
+                                    </span>
+                                </div>
+                                <h2 id="drawerTitle" style="font-size:1.5rem;font-weight:800;margin:0;">
+                                    ${j.title}
+                                </h2>
+                                <p style="opacity:.75;font-size:.88rem;margin-top:.4rem;">
+                                    ${j.sub}
+                                </p>
+                            </div>
+                            <button class="drawer-close" onclick="closeDrawer()" aria-label="Close">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>`;
+
+                    const respHtmlResponsibility = Object.entries(j.responsibilities).map(([k,v]) => `
+                        <div style="margin-bottom:1.2rem;">
+                            <p style="font-weight:700;font-size:.88rem;color:var(--text);margin-bottom:.5rem;">
+                                ${k}
+                            </p>
+                            ${renderList(v)}
+                        </div>`).join('');
+
+                    const respHtmlSkills = Object.entries(j.techTableDetail).map(([k,v]) => `
+                        <div style="margin-bottom:1.2rem;">
+                            <p style="font-weight:700;font-size:.88rem;color:var(--text);margin-bottom:.5rem;">
+                                ${k}
+                            </p>
+                            ${renderList(v)}
+                        </div>`).join('');
+                            
+                    body = `
+                        <div class="detail-section">
+                            ${sectionTitle('fa-bullseye', 'About the Role')}
+                            <p style="color:var(--text-2);font-size:.93rem;line-height:1.75;">
+                                ${j.overview}
+                            </p>
+                        </div>
+                            
+                        <div class="detail-section">
+                            ${sectionTitle('fa-list-check', 'Key Responsibilities')}
+                            ${respHtmlResponsibility}
+                        </div>
+                            
+                        <div class="detail-section">
+                            ${sectionTitle('fa-wrench', 'Required Skills & Qualifications')}
+                            <table class="tech-table">
+                                <thead><tr><th>Category</th><th>Technologies</th></tr></thead>
+                                <tbody>
+                                    ${j.techTable.map(([cat,tech]) => `<tr><td>${cat}</td><td>${tech}</td></tr>`).join('')}
+                                </tbody>
+                            </table>
+                            <br>
+                            ${respHtmlSkills}
+                        </div>
+                            
+                        <div class="detail-section">
+                            ${sectionTitle('fa-star', 'Preferred Qualifications (Nice to Have)')}
+                            ${renderList(j.niceToHave)}
+                        </div>
+                            
+                        <div class="detail-section">
+                            ${sectionTitle('fa-gift', 'What We Offer')}
+                            ${renderList(j.offers)}
+                        </div>`;
+                }
+
+                /* SALES */
+                else if (id === 'sales') {
+                    header = `
+                        <div class="d-flex align-items-start justify-content-between gap-3">
+                            <div>
+                                <div class="d-flex flex-wrap gap-2 mb-2">
+                                    <span class="job-badge badge-type" style="font-size:.72rem;">
+                                         Full-time
+                                    </span>
+                                    <span class="job-badge badge-exp" style="font-size:.72rem;">
+                                        4+ years B2B Sales
+                                    </span>
+                                    <span class="job-badge badge-loc" style="font-size:.72rem">
+                                        <i class="fas fa-location-dot me-1"></i>
+                                            ${j.loc}
+                                    </span>
+                                </div>
+                                <h2 id="drawerTitle" style="font-size:1.5rem;font-weight:800;margin:0;">
+                                    ${j.title}
+                                </h2>
+                                <p style="opacity:.75;font-size:.88rem;margin-top:.4rem;">
+                                    ${j.sub}
+                                </p>
+                                <span class="salary-pill mt-2 d-inline-flex">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    ${j.salary}
+                                </span>
+                            </div>
+                            <button class="drawer-close" onclick="closeDrawer()" aria-label="Close">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>`;
+
+                    const respHtml = Object.entries(j.responsibilities).map(([k,v]) => `
+                        <div style="margin-bottom:1.2rem">
+                            <p style="font-weight:700;font-size:.88rem;color:var(--text);margin-bottom:.5rem;">
+                                ${k}
+                            </p>
+                            ${renderList(v)}
+                        </div>`).join('');
+
+                    const respHtmlMandatory = j.mandatory.map(section => `
+                        <div style="margin-bottom:1.2rem;">
+                            <p style="font-weight:700;font-size:.88rem;color:var(--text);margin-bottom:.3rem;">
+                                ${section.title}
+                            </p>
+                            
+                            ${section.description ? `
+                                <p style="font-size:.85rem;color:var(--text-muted);margin-bottom:.5rem;">
+                                    ${section.description}
+                                </p>
+                            ` : ''}
+                            
+                            ${renderList(section.items)}
+                            
+                        </div>
+                    `).join('');
+                        
+                    body = `
+                        <div class="detail-section">
+                            ${sectionTitle('fa-crosshairs', 'The Mission')}
+                            <p style="color:var(--text-2);font-size:.93rem;line-height:1.75">
+                                ${j.overview}
+                            </p>
+                        </div>
+
+                        <div class="detail-section">
+                            ${sectionTitle('fa-list-check', 'Key Responsibilities')}
+                            ${respHtml}
+                        </div>
+                                
+                        <div class="detail-section">
+                            ${sectionTitle('fa-shield-halved', 'Mandatory Requirements')}
+                            <p style="font-size:.82rem;color:var(--accent-dark);font-weight:700;margin-bottom:.6rem;">
+                                <i class="fas fa-triangle-exclamation me-1"></i>
+                                 Non-negotiable — please read carefully before applying.
+                            </p>
+                            ${respHtmlMandatory}
+                        </div>
+                                
+                        <div class="detail-section">
+                            ${sectionTitle('fa-bolt', 'Skills & Competencies')}
+                            ${renderList(j.skills)}
+                        </div>
+                                
+                        <div class="detail-section">
+                            ${sectionTitle('fa-gift', 'What We Offer')}
+                            ${renderList(j.offers)}
+                        </div>`;
+                }
+
+                const apply = `
+                    <div class="d-flex align-items-center gap-3 flex-wrap">
+                        <button onclick="openApply('${id}')" class="btn-primary-custom">
+                            <i class="fas fa-papper-plane"></i>
+                            Apply Now
+                        </button>
+                        <p class="small text-muted mb-0">We'll respond within 2–3 business days</p>
+                    </div>`;
+                        
+                return { header, body, apply };
+            }
+
+            /* OPEN / CLOSE DRAWER */
+            function openDrawer(id) {
+                const { header, body, apply } = buildContent(id);
+                document.getElementById('drawerHeader').innerHTML = header;
+                document.getElementById('drawerBody').innerHTML = body;
+                document.getElementById('drawerApply').innerHTML = apply;
+
+                document.getElementById('drawerOverlay').classList.add('open');
+                document.getElementById('drawer').classList.add('open');
+                document.body.classList.add('drawer-open');
+
+                // Focus first focusable element
+                setTimeout(() => {
+                    const close = document.querySelector('.drawer-close');
+                    if (close) close.focus();
+                }, 420);
+            }
+
+            function closeDrawer() {
+                document.getElementById('drawerOverlay').classList.remove('open');
+                document.getElementById('drawer').classList.remove('open');
+                document.body.classList.remove('drawer-open');
+            }
+
+            function openApply(jobId) {
+                const job = JOBS[jobId];
+                if (!job) return;
+
+                const title = job.title + (job.sub ? ` (${job.sub})` : '');
+                document.getElementById('composeJobTag').textContent = job.type || 'Position';
+                document.getElementById('composeSubject').value = `Application: ${title}`;
+
+                document.getElementById('composeEmail').value = '';
+                document.getElementById('composeName').value = '';
+                document.getElementById('composeMessage').value = '';
+                removeFile();
+                clearError();
+
+                document.getElementById('applyOverlay').classList.add('open');
+                document.getElementById('applyCompose').classList.add('open');
+
+                setTimeout(() => document.getElementById('composeEmail').focus(), 350);
+            }
+
+            function closeApply(){
+                document.getElementById('applyOverlay').classList.remove('open');
+                document.getElementById('applyCompose').classList.remove('open');
+            }
+
+            // Close on ESC
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+            function handleFileSelect(input) {
+                const file = input.files[0];
+                if (!file) return;
+
+                if (file.size > 10 * 1024 * 1024) {
+                    showError('File too large — maximum size is 10 MB.');
+                    input.value = '';
+                    return;
+                }
+
+                document.getElementById('fileName').textContent = file.name;
+                document.getElementById('fileSize').textContent = formatSize(file.size);
+                document.getElementById('filePreview').classList.add('show');
+                clearError();
+            }
+
+            function removeFile() {
+                document.getElementById('resumeInput').value = '';
+                document.getElementById('filePreview').classList.remove('show');
+                document.getElementById('fileName').textContent = '—';
+                document.getElementById('fileSize').textContent = '—';
+            }
+
+            function formatSize(bytes) {
+                if (bytes < 1024) return bytes + 'B'
+                if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + 'KB';
+                return (bytes / (1024 * 1024)).toFixed(1) + 'MB';
+            }
+
+            function showError(msg) {
+                const el = document.getElementById('composeError');
+                el.textContent = msg;
+                el.classList.add('show');
+            }
+ 
+            function clearError() {
+                const el = document.getElementById('composeError');
+                el.textContent = '';
+                el.classList.remove('show');
+            }
+
+            async function submitApplication() {
+                clearError();
+ 
+                const email   = document.getElementById('composeEmail').value.trim();
+                const name    = document.getElementById('composeName').value.trim();
+                const subject = document.getElementById('composeSubject').value.trim();
+                const message = document.getElementById('composeMessage').value.trim();
+                const file    = document.getElementById('resumeInput').files[0];
+ 
+                /* Validation */
+                if (!name || !email) {
+                    showError('Please fill in your name and email address.');
+                    return;
+                }
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    showError('Please enter a valid email address.');
+                    return;
+                }
+ 
+                /* Build multipart form data (supports file upload) */
+                const formData = new FormData();
+                formData.append('applicant_name',  name);
+                formData.append('applicant_email', email);
+                formData.append('job_title',       subject.replace('Application: ', ''));
+                formData.append('message',         message);
+                if (file) formData.append('resume', file);
+ 
+                /* Loading state */
+                const sendBtn     = document.getElementById('composeSendBtn');
+                const sendSpinner = document.getElementById('composeSendSpinner');
+                const sendIcon    = document.getElementById('composeSendIcon');
+                const sendText    = document.getElementById('composeSendText');
+                sendBtn.disabled          = true;
+                sendSpinner.style.display = 'block';
+                sendIcon.style.display    = 'none';
+                sendText.textContent      = 'Sending…';
+ 
+                try {
+                    const res  = await fetch(`${API_BASE}/api/apply`, {
+                    method: 'POST',
+                    body: formData   /* No Content-Type header — browser sets it with boundary */
+                    });
+                    const data = await res.json();
+ 
+                    if (data.ok) {
+                        closeApply();
+                        /* Show success toast */
+                        const toast = document.getElementById('applyToast');
+                        toast.classList.add('show');
+                        setTimeout(() => toast.classList.remove('show'), 5000);
+                    } else {
+                        showError(data.error || 'Failed to send. Please try again.');
+                    }
+ 
+                } catch (err) {
+                    console.error('Apply error:', err);
+                    showError('Cannot reach the server. Please email us directly at hello@i-ruma.com');
+                } finally {
+                /* Always restore button */
+                sendBtn.disabled          = false;
+                sendSpinner.style.display = 'none';
+                sendIcon.style.display    = 'inline';
+                sendText.textContent      = 'Send Application';
+            }
+        } 
+        </script>
+    </body>
+</html>
+
+

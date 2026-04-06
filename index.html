@@ -1,0 +1,1849 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <title>i-Ruma | Fully Automated Property Management Solution</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+
+        <style>
+            /* ══════════════════════════════════════════════
+               DESIGN TOKENS
+            ══════════════════════════════════════════════ */
+              :root {
+                  --primary: #0055bb;
+                  --primary-dark: #003d8a;
+                  --primary-mid: #1a5fb4;
+                  --primary-light: #e8f1fd;
+                  --primary-xlight: #f0f6ff;
+                  --accent: #f97316;
+                  --accent-dark: #ea6c0a;
+                  --white: #ffffff;
+                  --surface: #f7f9fc;
+                  --surface-2: #eef3fa;
+                  --border: #e2e8f0;
+                  --border-strong: #c7d8ef;
+                  --text: #111827;
+                  --text-2: #374151;
+                  --muted: #64748b;
+                  --muted-light: #94a3b8;
+                  --r-sm: 10px;
+                  --r-md: 16px;
+                  --r-lg: 24px;
+                  --r-xl: 32px;
+                  --r-pill: 9999px;
+                  --sh-xs: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+                  --sh-sm: 0 2px 8px rgba(0,55,140,.07);
+                  --sh-md: 0 8px 24px rgba(0,55,140,.10);
+                  --sh-lg: 0 16px 48px rgba(0,55,140,.14);
+                  --sh-xl: 0 24px 64px rgba(0,55,140,.18);
+                  --ease: all .28s cubic-bezier(.4,0,.2,1);
+                  --ease-bounce: all .4s cubic-bezier(.34,1.56,.64,1);
+              }
+
+              *, *::before, *::after {
+                  box-sizing: border-box;
+              }
+
+              html {
+                  scroll-padding-top: 80px;
+              }
+
+              body {
+                  font-family: 'DM Sans', sans-serif;
+                  color: var(--text);
+                  scroll-behavior: smooth;
+                  -webkit-font-smoothing: antialiased;
+                  line-height: 1.6;
+              }
+
+              h1, h2, h3, h4, h5, h6 {
+                  font-family: 'Plus Jakarta Sans', sans-serif;
+                  line-height: 1.2;
+              }
+
+              img {
+                  max-width: 100%;
+              }
+
+              /* ── Navbar ─────────────────────────────────── */
+              .navbar {
+                  background: rgba(255,255,255,.97);
+                  backdrop-filter: blur(12px);
+                  box-shadow: 0 1px 0 var(--border);
+                  padding: .85rem 0;
+                  transition: box-shadow .3s;
+              }
+
+              .logo-img {
+                  height: 36px;
+                  width: auto;
+                  max-width: 180px;
+              }
+
+              .nav-link {
+                  font-family: 'Plus Jakarta Sans', sans-serif;
+                  font-weight: 600;
+                  font-size: .88rem;
+                  color: var(--text-2) !important;
+                  padding: .4rem .65rem !important;
+                  border-radius: var(--r-sm);
+                  transition: var(--ease);
+              }
+
+                  .nav-link:hover {
+                      color: var(--primary) !important;
+                      background: var(--primary-xlight);
+                  }
+
+              /* ── Buttons ─────────────────────────────────── */
+              .btn-primary-custom {
+                  background: var(--primary);
+                  color: var(--white);
+                  border: none;
+                  padding: 12px 28px;
+                  font-family: 'Plus Jakarta Sans', sans-serif;
+                  font-weight: 700;
+                  font-size: .88rem;
+                  border-radius: var(--r-pill);
+                  transition: var(--ease);
+                  cursor: pointer;
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  text-decoration: none;
+              }
+
+                  .btn-primary-custom:hover {
+                      background: var(--primary-dark);
+                      color: var(--white);
+                      transform: translateY(-2px);
+                      box-shadow: 0 10px 28px rgba(0,55,140,.30);
+                  }
+
+              .btn-outline-white {
+                  background: transparent;
+                  color: var(--white);
+                  border: 1.5px solid rgba(255,255,255,.55);
+                  padding: 12px 28px;
+                  font-family: 'Plus Jakarta Sans', sans-serif;
+                  font-weight: 700;
+                  font-size: .88rem;
+                  border-radius: var(--r-pill);
+                  transition: var(--ease);
+                  cursor: pointer;
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+              }
+
+                  .btn-outline-white:hover {
+                      background: rgba(255,255,255,.15);
+                      border-color: rgba(255,255,255,.8);
+                      transform: translateY(-2px);
+                  }
+
+              .btn-accent {
+                  background: var(--accent);
+                  color: var(--white);
+                  border: none;
+                  padding: 12px 28px;
+                  font-family: 'Plus Jakarta Sans', sans-serif;
+                  font-weight: 700;
+                  font-size: .88rem;
+                  border-radius: var(--r-pill);
+                  transition: var(--ease);
+                  cursor: pointer;
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  text-decoration: none;
+              }
+
+                  .btn-accent:hover {
+                      background: var(--accent-dark);
+                      color: var(--white);
+                      transform: translateY(-2px);
+                      box-shadow: 0 10px 28px rgba(249,115,22,.35);
+                  }
+
+              /* ── Section label ───────────────────────────── */
+              .section-label {
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 6px;
+                  background: var(--primary-light);
+                  color: var(--primary);
+                  padding: 5px 14px;
+                  border-radius: var(--r-pill);
+                  font-family: 'Plus Jakarta Sans', sans-serif;
+                  font-size: .72rem;
+                  font-weight: 800;
+                  letter-spacing: .8px;
+                  text-transform: uppercase;
+              }
+
+              /* ── Icon box  ← WAS MISSING, caused icons to float ── */
+              .icon-box {
+                  width: 56px;
+                  height: 56px;
+                  background: var(--primary-light);
+                  border-radius: 15px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  flex-shrink: 0;
+                  transition: var(--ease);
+              }
+
+              .card-hover:hover .icon-box {
+                  background: var(--primary);
+              }
+
+                  .card-hover:hover .icon-box i {
+                      color: var(--white) !important;
+                  }
+
+              /* ── Hero ────────────────────────────────────── */
+              .hero {
+                  background: radial-gradient(ellipse 80% 60% at 70% 120%, rgba(249,115,22,.14) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at -10% 20%, rgba(255,255,255,.06) 0%, transparent 55%), linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 45%, #1e7fcb 100%);
+                  padding: 110px 0 100px;
+                  color: var(--white);
+                  position: relative;
+                  overflow: hidden;
+              }
+                  /* Subtle grid texture */
+                  .hero::before {
+                      content: '';
+                      position: absolute;
+                      inset: 0;
+                      background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+                      background-size: 48px 48px;
+                      pointer-events: none;
+                  }
+                  /* Ambient orb */
+                  .hero::after {
+                      content: '';
+                      position: absolute;
+                      width: 480px;
+                      height: 480px;
+                      bottom: -160px;
+                      right: -120px;
+                      border-radius: 50%;
+                      background: radial-gradient(circle, rgba(249,115,22,.18) 0%, transparent 70%);
+                      filter: blur(40px);
+                      pointer-events: none;
+                  }
+
+              .hero-badge {
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  background: rgba(255,255,255,.12);
+                  backdrop-filter: blur(10px);
+                  border: 1px solid rgba(255,255,255,.22);
+                  color: var(--white);
+                  padding: 7px 16px;
+                  border-radius: var(--r-pill);
+                  font-family: 'Plus Jakarta Sans', sans-serif;
+                  font-size: .78rem;
+                  font-weight: 700;
+                  letter-spacing: .4px;
+                  margin-bottom: 1.5rem;
+              }
+
+              .hero-badge-dot {
+                  width: 7px;
+                  height: 7px;
+                  background: #4ade80;
+                  border-radius: 50%;
+                  box-shadow: 0 0 0 3px rgba(74,222,128,.25);
+                  animation: pulseDot 2s ease infinite;
+              }
+
+              @keyframes pulseDot {
+                  0%,100% {
+                      box-shadow: 0 0 0 3px rgba(74,222,128,.25);
+                  }
+
+                  50% {
+                      box-shadow: 0 0 0 6px rgba(74,222,128,.1);
+                  }
+              }
+
+              .hero h1 {
+                  font-size: clamp(2.1rem, 4.5vw, 3.2rem);
+                  font-weight: 800;
+                  line-height: 1.14;
+                  letter-spacing: -.6px;
+              }
+
+              .hero-lead {
+                  font-size: 1.05rem;
+                  opacity: .88;
+                  max-width: 500px;
+                  line-height: 1.7;
+              }
+
+              .hero-stat-card {
+                  background: rgba(255,255,255,.1);
+                  backdrop-filter: blur(16px);
+                  border: 1px solid rgba(255,255,255,.18);
+                  border-radius: var(--r-xl);
+                  padding: 2.2rem 2rem;
+                  position: relative;
+                  overflow: hidden;
+                  z-index: 1;
+              }
+
+                  .hero-stat-card::before {
+                      content: '';
+                      position: absolute;
+                      top: -40px;
+                      right: -40px;
+                      width: 130px;
+                      height: 130px;
+                      border-radius: 50%;
+                      background: rgba(255,255,255,.06);
+                  }
+
+              .hero-mini-stat {
+                  background: rgba(255,255,255,.14);
+                  border: 1px solid rgba(255,255,255,.12);
+                  border-radius: 16px;
+                  padding: 1.3rem 1rem;
+                  text-align: center;
+                  transition: var(--ease);
+              }
+
+                  .hero-mini-stat:hover {
+                      background: rgba(255,255,255,.22);
+                      transform: translateY(-3px);
+                  }
+
+                  .hero-mini-stat h3 {
+                      font-size: 2rem;
+                      font-weight: 800;
+                      margin: 0;
+                      line-height: 1;
+                      letter-spacing: -.5px;
+                  }
+
+                  .hero-mini-stat small {
+                      opacity: .75;
+                      font-size: .78rem;
+                      display: block;
+                      margin-top: 5px;
+                      font-weight: 500;
+                  }
+                
+                .hero-analytics-graph {
+                    position: absolute;
+                    top: 12px;
+                    right: 12px;
+                    width: 135px;
+                    height: 92px;
+                    background: rgba(255,255,255,.15);
+                    border: 1px solid rgba(255,255,255,.30);
+                    backdrop-filter: blur(10px);
+                    border-radius: 12px;
+                    padding: 7px;
+                    overflow: hidden;
+                    z-index: 0;
+                    pointer-events: none;
+                    box-shadow: 0 7px 16px rgba(0,0,0,.15)
+                }
+
+                .hero-analytics-graph svg {
+                    width: 100%;
+                    height: 100%;
+                }
+
+                @keyframes growPath {
+                    0% { stroke-dashoffset: 120; }
+                    50% { stroke-dashoffset: 0; }
+                    100% { stroke-dashoffset: 0; }
+                }
+
+                @keyframes plusePoint {
+                    0%, 100% { transform: translateY(0); opacity: 0.65; }
+                    50% { transform: translateY(-6px); opacity: 1; }
+                }
+
+                .hero-analytics-graph .trend-path {
+                    stroke: #45fdff;
+                    stroke-width: 2.4;
+                    fill: none;
+                    stroke-dasharray: 300;
+                    stroke-dashoffset: 300;
+                    animation: growPath 60s ease-out infinite;
+                }
+
+                .hero-analytics-graph .trend-point {
+                    fill: #50e6ff;
+                    animation: plusePoint 10s ease-in-out forwards; 
+                }
+
+              /* ── Section rhythm ──────────────────────────── */
+              .section-py {
+                  padding-top: 88px;
+                  padding-bottom: 88px;
+              }
+
+              .section-py-sm {
+                  padding-top: 56px;
+                  padding-bottom: 56px;
+              }
+
+              .section-ruled {
+                  border-top: 1px solid var(--border);
+              }
+
+              /* ── Stat cards ──────────────────────────────── */
+              .stat-card {
+                  border-radius: var(--r-lg) !important;
+                  border: 0 !important;
+                  box-shadow: var(--sh-xs) !important;
+                  background: var(--white);
+                  transition: var(--ease);
+                  position: relative;
+                  overflow: hidden;
+              }
+
+                  .stat-card::after {
+                      content: '';
+                      position: absolute;
+                      bottom: 0;
+                      left: 0;
+                      right: 0;
+                      height: 3px;
+                      background: linear-gradient(90deg, var(--primary) 0%, #1e7fcb 100%);
+                      transform: scaleX(0);
+                      transform-origin: left;
+                      transition: transform .35s ease;
+                  }
+
+                  .stat-card:hover {
+                      transform: translateY(-8px);
+                      box-shadow: var(--sh-lg) !important;
+                  }
+
+                      .stat-card:hover::after {
+                          transform: scaleX(1);
+                      }
+
+              .stat-icon-wrap {
+                  width: 120px;
+                  height: 120px;
+                  background: var(--primary-light);
+                  border-radius: 24px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin: 0 auto 1.2rem;
+                  transition: var(--ease);
+              }
+
+                  .stat-icon-wrap img {
+                      width: auto !important;
+                      height: auto !important;
+                      max-width: 88%;
+                      max-height: 88%;
+                      object-fit: contain;
+                      transition: transform .3s ease;
+                  }
+
+              .stat-card:hover .stat-icon-wrap {
+                  background: var(--primary);
+              }
+
+                  .stat-card:hover .stat-icon-wrap img {
+                      filter: none;
+                      transform: scale(1.06);
+                  }
+
+              .stat-number {
+                  font-size: 2.8rem;
+                  font-weight: 800;
+                  color: var(--primary);
+                  line-height: 1;
+                  letter-spacing: -.5px;
+                  display: inline;
+              }
+
+              /* ── Trust banner ────────────────────────────── */
+              .trust-banner {
+                  background: linear-gradient(135deg, var(--primary-xlight) 0%, #dbeafe 100%);
+                  border: 1px solid var(--border-strong);
+                  border-radius: var(--r-xl);
+                  position: relative;
+                  overflow: hidden;
+              }
+
+                  .trust-banner::after {
+                      content: '';
+                      position: absolute;
+                      top: -60px;
+                      right: -60px;
+                      width: 200px;
+                      height: 200px;
+                      border-radius: 50%;
+                      background: radial-gradient(circle, rgba(0,85,187,.08) 0%, transparent 70%);
+                  }
+
+              /* ── Cards ───────────────────────────────────── */
+              .card-hover {
+                  border-radius: var(--r-lg) !important;
+                  border: 1px solid var(--border) !important;
+                  box-shadow: var(--sh-xs) !important;
+                  transition: var(--ease);
+              }
+
+                  .card-hover:hover {
+                      transform: translateY(-7px);
+                      box-shadow: var(--sh-lg) !important;
+                      border-color: var(--border-strong) !important;
+                  }
+
+              /* ── Gradient text ───────────────────────────── */
+              .gradient-text {
+                  background: linear-gradient(90deg, var(--primary) 0%, #1a8fd1 60%, var(--accent) 100%);
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  background-clip: text;
+              }
+
+              /* ── Video placeholder ───────────────────────── */
+              .video-placeholder {
+                  background: var(--primary-xlight);
+                  border: 2px dashed var(--border-strong);
+                  border-radius: var(--r-xl);
+                  cursor: pointer;
+                  transition: var(--ease);
+              }
+
+                  .video-placeholder:hover {
+                      background: var(--primary-light);
+                      border-color: var(--primary);
+                      box-shadow: var(--sh-md);
+                  }
+
+              .play-btn-ring {
+                  width: 80px;
+                  height: 80px;
+                  border-radius: 50%;
+                  background: var(--primary);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin: 0 auto 1.5rem;
+                  box-shadow: 0 0 0 12px rgba(0,85,187,.12), 0 0 0 24px rgba(0,85,187,.06);
+                  transition: var(--ease-bounce);
+              }
+
+              .video-placeholder:hover .play-btn-ring {
+                  transform: scale(1.12);
+                  box-shadow: 0 0 0 16px rgba(0,85,187,.14), 0 0 0 32px rgba(0,85,187,.06);
+              }
+
+              /* ── Automations ─────────────────────────────── */
+              .automations-heading {
+                  font-size: clamp(1.7rem, 3vw, 2.2rem);
+                  font-weight: 800;
+                  color: var(--text);
+                  line-height: 1.18;
+              }
+
+              .automations-heading-underline {
+                  display: block;
+                  width: 44px;
+                  height: 4px;
+                  background: linear-gradient(90deg, var(--accent) 0%, #fb923c 100%);
+                  border-radius: 2px;
+                  margin: 14px 0 22px;
+              }
+
+              .automations-subtitle {
+                  font-size: 1.15rem;
+                  font-weight: 600;
+                  color: var(--primary-mid);
+                  line-height: 1.55;
+                  margin-bottom: 1rem;
+              }
+
+              .automations-body {
+                  color: var(--muted);
+                  font-size: .96rem;
+                  line-height: 1.82;
+              }
+
+              .gradient-card {
+                  background: linear-gradient(135deg, #7c3aed 0%, #c026d3 45%, #f97316 100%);
+                  border-radius: var(--r-xl);
+                  min-height: 340px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  overflow: hidden;
+                  position: relative;
+                  box-shadow: var(--sh-lg);
+              }
+
+                  .gradient-card::before {
+                      content: '';
+                      position: absolute;
+                      inset: 0;
+                      background: radial-gradient(ellipse at 20% 80%, rgba(255,255,255,.12) 0%, transparent 50%), radial-gradient(ellipse at 80% 10%, rgba(255,255,255,.08) 0%, transparent 40%);
+                  }
+
+              .gradient-card-text {
+                  font-size: 3rem;
+                  font-weight: 900;
+                  color: rgba(255,255,255,.5);
+                  letter-spacing: -1.5px;
+                  text-align: center;
+                  padding: 2rem;
+                  font-family: 'Plus Jakarta Sans', sans-serif;
+                  position: relative;
+                  text-shadow: 0 2px 20px rgba(0,0,0,.15);
+              }
+
+              /* ── Media placeholder ───────────────────────── */
+              .media-placeholder-light {
+                  background: var(--surface);
+                  border: 2px dashed var(--border);
+                  border-radius: var(--r-xl);
+                  min-height: 300px;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center;
+                  color: var(--muted-light);
+                  transition: var(--ease);
+              }
+
+                  .media-placeholder-light:hover {
+                      border-color: var(--border-strong);
+                      color: var(--muted);
+                  }
+
+              /* ── Marquee ─────────────────────────────────── */
+              .marquee-wrapper {
+                  width: 100%;
+                  overflow: hidden;
+                  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+                  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+              }
+
+              .marquee-track {
+                  display: flex;
+                  width: max-content;
+              }
+
+              .marquee-inner {
+                  display: flex;
+                  gap: 10px;
+                  padding: 6px;
+                  flex-shrink: 0;
+              }
+
+              .marquee-left {
+                  animation: scrollLeft 36s linear infinite;
+              }
+
+                  .marquee-left:hover {
+                      animation-play-state: paused;
+                  }
+
+              .marquee-right {
+                  animation: scrollRight 36s linear infinite;
+              }
+
+                  .marquee-right:hover {
+                      animation-play-state: paused;
+                  }
+
+              @keyframes scrollLeft {
+                  from {
+                      transform: translateX(0);
+                  }
+
+                  to {
+                      transform: translateX(-50%);
+                  }
+              }
+
+              @keyframes scrollRight {
+                  from {
+                      transform: translateX(-50%);
+                  }
+
+                  to {
+                      transform: translateX(0);
+                  }
+              }
+
+              @media (prefers-reduced-motion: reduce) {
+                  .marquee-left, .marquee-right {
+                      animation: none;
+                  }
+              }
+
+              .partner-badge {
+                  background: var(--white);
+                  border: 1px solid var(--border);
+                  border-radius: var(--r-md);
+                  padding: 9px 18px;
+                  font-family: 'Plus Jakarta Sans', sans-serif;
+                  font-size: .8rem;
+                  font-weight: 700;
+                  color: var(--text-2);
+                  white-space: nowrap;
+                  transition: var(--ease);
+                  box-shadow: var(--sh-xs);
+              }
+
+                  .partner-badge:hover {
+                      border-color: var(--primary);
+                      color: var(--primary);
+                      box-shadow: var(--sh-sm);
+                      transform: translateY(-2px);
+                  }
+
+              .partner-logo {
+                  width: 88px;
+                  height: 44px;
+                  object-fit: contain;
+                  border-radius: 10px;
+                  border: 1px solid var(--border);
+                  background: var(--white);
+                  box-shadow: var(--sh-xs);
+                  transition: var(--ease);
+              }
+
+                  .partner-logo:hover {
+                      box-shadow: var(--sh-md);
+                      transform: translateY(-2px);
+                  }
+
+              .value-icon {
+                  width: 68px;
+                  height: 68px;
+                  border-radius: 16px;
+                  background: rgba(255,255,255,0.18);
+                  backdrop-filter: blur(10px);
+                  border: 1px solid rgba(255,255,255,0.22);
+                  box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  opacity: 0;
+                  transform: translateY(18px) scale(0.94);
+                  animation: fadeUp 0.9s ease forwards;
+              }
+
+              .value-icon:nth-child(1) { animation-delay: 0.2s; }
+              .value-icon:nth-child(2) { animation-delay: 0.35s; }
+              .value-icon:nth-child(3) { animation-delay: 0.5s; }
+              .value-icon:nth-child(4) { animation-delay: 0.65s; }
+              .value-icon:nth-child(5) { animation-delay: 0.8s; }
+
+              /* ── Value statement icon rail ───────────────── */
+              .value-icon-rail-wrap {
+                  min-height: 260px;
+                  position: relative;
+              }
+
+              .value-icon-rail {
+                  position: absolute;
+                  top: 26%;
+                  right: -8%;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 16px;
+                  transform: rotate(18deg);
+              }
+
+              .value-icon-item {
+                  width: 68px;
+                  height: 68px;
+                  border-radius: 16px;
+                  background: rgba(255,255,255,0.18);
+                  backdrop-filter: blur(10px);
+                  border: 1px solid rgba(255,255,255,0.22);
+                  box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  opacity: 0;
+                  transform: translateX(58px) translateY(18px) scale(0.92);
+                  transition: transform .55s cubic-bezier(.2,.7,.1,1), opacity .5s ease;
+                  transition-delay: var(--icon-delay, 0ms);
+                  will-change: transform, opacity;
+              }
+
+              /* 有动画能力时才先隐藏，避免触发失败导致整组看不见 */
+              .value-icon-rail.with-motion .value-icon-item {
+                  opacity: 0;
+                  transform: translateX(58px) translateY(18px) scale(0.92);
+              }
+
+              .value-icon-rail:not(.with-motion) .value-icon-item {
+                  opacity: 1;
+                  transform: translateX(0) translateY(0) scale(1);
+              }
+
+              .value-icon-item i {
+                  color: #fff;
+                  font-size: 1.12rem;
+              }
+
+              .value-icon-item:nth-child(1) { --icon-delay: 80ms; }
+              .value-icon-item:nth-child(2) { --icon-delay: 160ms; }
+              .value-icon-item:nth-child(3) { --icon-delay: 240ms; }
+              .value-icon-item:nth-child(4) { --icon-delay: 320ms; }
+              .value-icon-item:nth-child(5) { --icon-delay: 400ms; }
+
+              .value-icon-rail.is-active .value-icon-item {
+                  opacity: 1;
+                  transform: translateX(0) translateY(0) scale(1);
+              }
+
+              .value-icon-rail:hover .value-icon-item,
+              .value-icon-rail:focus-within .value-icon-item {
+                  transform: translateX(-6px) scale(1.03);
+              }
+
+              .value-tagline {
+                  opacity: 0;
+                  transform: scale(0.94);
+                  animation: pulseText 0.8s ease forwards;
+                  animation-delay: 0.2s;
+              }
+
+              @keyframes fadeUp {
+                  to {
+                      opacity: 1;
+                      transform: translateY(0) scale(1);
+                  }
+              }
+
+              @keyframes pulseText {
+                  0% { opacity: 0; transform: translateY(8px) scale(0.9); }
+                  70% { opacity: 1; transform: translateY(0) scale(1.03); }
+                  100% { opacity: 1; transform: translateY(0) scale(1); }
+              }
+
+              /* ── App download ────────────────────────────── */
+              .app-download-section {
+                  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 55%, #1e7fcb 100%);
+                  position: relative;
+                  overflow: hidden;
+                  padding: 80px 0;
+              }
+
+                  .app-download-section::before {
+                      content: '';
+                      position: absolute;
+                      inset: 0;
+                      background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+                      background-size: 40px 40px;
+                  }
+
+                  .app-download-section::after {
+                      content: '';
+                      position: absolute;
+                      width: 400px;
+                      height: 400px;
+                      top: -100px;
+                      right: -80px;
+                      border-radius: 50%;
+                      background: radial-gradient(circle, rgba(249,115,22,.18) 0%, transparent 65%);
+                      filter: blur(40px);
+                      pointer-events: none;
+                  }
+
+              .app-store-btn {
+                  display: inline-flex;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 12px;
+                  padding: 12px 20px;
+                  min-height: 64px;
+                  color: var(--white);
+                  text-decoration: none;
+                  transition: var(--ease);
+                  min-width: 170px;
+                  font-weight: 700;
+              }
+
+              .app-store-btn img {
+                  height: 46px;
+                  width: auto;
+              }
+
+              .app-store-btn .store-icon {
+                  font-size: 1.8rem;
+                  line-height: 1;
+              }
+
+              .app-store-btn .store-text {
+                  text-align: left;
+              }
+
+              .app-store-btn .sub {
+                  display: block;
+                  font-size: .68rem;
+                  opacity: .75;
+                  font-weight: 400;
+              }
+
+              .app-store-btn .main {
+                  display: block;
+                  font-size: .92rem;
+                  font-weight: 700;
+                  font-family: 'Plus Jakarta Sans', sans-serif;
+              }
+
+              .app-rating-badge {
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 6px;
+                  background: rgba(255,255,255,.1);
+                  border: 1px solid rgba(255,255,255,.15);
+                  border-radius: var(--r-pill);
+                  padding: 5px 14px;
+                  font-size: .78rem;
+                  color: rgba(255,255,255,.85);
+                  font-weight: 600;
+              }
+
+                  .app-rating-badge .stars {
+                      color: #fbbf24;
+                  }
+
+                              /* ── Footer ──────────────────────────────────── */
+                footer {
+                    background: var(--white);
+                    color: #64748b;
+                    position: relative;
+                }
+
+                footer::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 1px;
+                    background: #e2e8f0;
+                }
+
+                footer h6 {
+                    color: #111827;
+                    font-weight: 700;
+                    letter-spacing: .05em;
+                    font-size: .8rem;
+                    text-transform: uppercase;
+                }
+
+                footer a {
+                    color: #64748b;
+                    text-decoration: none;
+                    transition: color .2s;
+                }
+
+                footer a:hover {
+                    color: #0055bb;
+                }
+
+                .footer-divider {
+                    border-color: #e2e8f0;
+                }
+
+                .footer-social-link {
+                    width: 34px;
+                    height: 34px;
+                    border-radius: 8px;
+                    background: transparent;
+                    border: 1px solid #e2e8f0;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #374151;
+                    font-size: .8rem;
+                    text-decoration: none;
+                    transition: all .2s ease;
+                }
+
+                .footer-social-link.facebook:hover {
+                    background: #1877f2;
+                    border-color: #1877f2;
+                    color: var(--white);
+                    transform: translateY(-2px);
+                }
+
+                .footer-social-link.instagram:hover {
+                    background: linear-gradient(
+                        45deg,
+                        #f09433,
+                        #e6683c,
+                        #dc2743,
+                        #cc2366,
+                        #bc1888
+                    );
+                    border-color: transparent;
+                    color: var(--white);
+                }
+
+                .footer-social-link.linkedin:hover {
+                    background: #0a66c2;
+                    border-color: #0a66c2;
+                    color: var(--white);
+                }
+
+                .logo-img-footer {
+                    height: 100px;
+                    width: auto;
+                    max-width: 160px;
+                }
+
+              /* ── Scroll reveal ───────────────────────────── */
+              .reveal {
+                  opacity: 0;
+                  transform: translateY(24px);
+                  transition: opacity .65s cubic-bezier(.4,0,.2,1), transform .65s cubic-bezier(.4,0,.2,1);
+              }
+
+                  .reveal.visible {
+                      opacity: 1;
+                      transform: none;
+                  }
+
+              /* ── Mobile ──────────────────────────────────── */
+              @media (max-width: 767.98px) {
+                  .hero {
+                      padding: 70px 0 60px;
+                  }
+
+                  .section-py {
+                      padding-top: 60px;
+                      padding-bottom: 60px;
+                  }
+
+                  .hero h1 {
+                      font-size: 2rem;
+                  }
+
+                  .app-store-btn {
+                      min-width: 140px;
+                  }
+
+                  .value-icon-rail {
+                      right: 2%;
+                      top: 22%;
+                      transform: rotate(14deg) scale(.9);
+                  }
+
+                  .value-icon-item {
+                      width: 60px;
+                      height: 60px;
+                  }
+              }
+
+              .icon-box i {
+                  transition: transform .3s;
+              }
+
+              .card-hover:hover .icon-box i {
+                  transform: scale(1.2);
+              }
+
+              button:active {
+                  transform: scale(0.97);
+              }
+        </style>
+    </head>
+    <body>
+
+        <!-- ═══════ NAVBAR ═══════════════════════════════════════════════════════════ -->
+        <nav class="navbar navbar-expand-lg sticky-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="image_icon/i-Ruma Logo_Hori_2026.png" alt="i-Ruma" class="logo-img"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block'">
+                    <span style="display:none;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.4rem;color:var(--primary);">i-Ruma</span>
+                </a>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-center gap-1">
+                        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="iot.html">IoT</a></li>
+                        <li class="nav-item"><a class="nav-link" href="career.html">Career</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Contact.html">Contact</a></li>
+                        <li class="ms-3">
+                            <button onclick="alert('📅 Book a demo — our team will reach out!')" class="btn-primary-custom">
+                                <i class="fas fa-calendar-check" style="font-size:.8rem;"></i> Book a demo
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- ═══════ HERO ══════════════════════════════════════════════════════════════ -->
+        <section class="hero" id="home">
+            <div class="container position-relative" style="z-index:1;">
+                <div class="row align-items-center g-5">
+
+                    <div class="col-lg-7 reveal">
+                        <div class="hero-badge">
+                            <span class="hero-badge-dot"></span>
+                            🇲🇾 &nbsp;#1 PropTech Platform in Malaysia
+                        </div>
+                        <h1>LEADING fully automated<br>property management<br>solution</h1>
+                        <p class="hero-lead mt-4">
+                            Successfully manage over <strong>300 strata properties</strong> &amp; empower
+                            <strong>3,500+ property managers</strong> across Malaysia.
+                        </p>
+                        <div class="mt-5 d-flex flex-wrap gap-3">
+                            <button onclick="alert('✨ Free demo booked — we\'ll contact you shortly')"
+                                    class="btn btn-light btn-lg px-5 rounded-pill fw-bold d-inline-flex align-items-center gap-2">
+                                <i class="fas fa-calendar-check text-primary"></i> Book a demo — it's free
+                            </button>
+                            <button onclick="alert('Explore: automation, accounting, inspections')" class="btn-outline-white btn-lg">
+                                Explore more →
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5 reveal" style="transition-delay:.18s">
+                        <div class="hero-stat-card text-center">
+                            <div style="width:52px;height:52px;background:rgba(255,255,255,.15);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
+                                <i class="fas fa-chart-line fa-lg"></i>
+                            </div>
+                            <p class="fw-bold fs-5 mb-1">Real-time portfolio insights</p>
+                            <p style="opacity:.65;font-size:.85rem;margin-bottom:1.5rem;">Live data across your entire portfolio</p>
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <div class="hero-mini-stat">
+                                        <h3 class="count-up" data-target="20">0</h3>
+                                        <small>Dashboard widgets</small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="hero-mini-stat">
+                                        <h3 class="count-up" data-target="56">0</h3>
+                                        <small>Live stats tracked</small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="hero-mini-stat">
+                                        <h3 class="count-up" data-target="300">0</h3>
+                                        <small>Properties managed</small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="hero-mini-stat">
+                                        <h3>3,500+</h3>
+                                        <small>Property managers</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hero-analytics-graph" aria-hidden="true">
+                                <svg viewBox="0 0 230 160" preserveAspectRatio="none">
+                                    <path class="trend-path" d="M8,138 L60,101 L102,119 L144,80 L185,93 L225,41" />
+                                    <circle class="trend-point" cx="60" cy="101" r="4"></circle>
+                                    <circle class="trend-point" cx="102" cy="119" r="4"></circle>
+                                    <circle class="trend-point" cx="144" cy="80" r="4"></circle>
+                                    <circle class="trend-point" cx="185" cy="93" r="4"></circle>
+                                    <circle class="trend-point" cx="225" cy="41" r="5"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════ STATS ══════════════════════════════════════════════════════════════ -->
+        <section class="section-py bg-white section-ruled" id="services">
+            <div class="container">
+                <div class="text-center mb-5 reveal">
+                    <div class="section-label mx-auto mb-3">By the numbers</div>
+                    <h2 class="display-6 fw-bold">Trusted across Malaysia</h2>
+                </div>
+                <div class="row g-4 text-center">
+
+                    <div class="col-md-4 reveal">
+                        <div class="card stat-card h-100">
+                            <div class="card-body py-5 d-flex flex-column align-items-center">
+                                <div class="stat-icon-wrap">
+                                    <img src="image/Buildings.png" alt="Properties"
+                                         style="width:150px;height:150px;object-fit:contain;"
+                                         onerror="this.replaceWith(Object.assign(document.createElement('i'),{className:'fas fa-building fa-lg text-primary'}))">
+                                </div>
+                                <div class="d-flex align-items-baseline gap-1">
+                                    <span class="stat-number count-up" data-target="200">0</span>
+                                    <span class="fw-bold text-primary fs-4">+</span>
+                                </div>
+                                <p class="text-muted mt-2 mb-0 small">Strata properties subscribed to iRuma</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 reveal" style="transition-delay:.1s">
+                        <div class="card stat-card h-100">
+                            <div class="card-body py-5 d-flex flex-column align-items-center">
+                                <div class="stat-icon-wrap">
+                                    <img src="image/Resident.png" alt="Residents"
+                                         style="width:200px;height:200px;object-fit:contain;"
+                                         onerror="this.replaceWith(Object.assign(document.createElement('i'),{className:'fas fa-users fa-lg text-primary'}))">
+                                </div>
+                                <div class="d-flex align-items-baseline gap-1">
+                                    <span class="stat-number count-up" data-target="100">0</span>
+                                    <span class="fw-bold text-primary fs-4">+</span>
+                                </div>
+                                <p class="text-muted mt-2 mb-0 small">Resident associations subscribed</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 reveal" style="transition-delay:.2s">
+                        <div class="card stat-card h-100">
+                            <div class="card-body py-5 d-flex flex-column align-items-center">
+                                <div class="stat-icon-wrap">
+                                    <img src="image/Partner.png" alt="Partners"
+                                         style="width:130px;height:130px;object-fit:contain;"
+                                         onerror="this.replaceWith(Object.assign(document.createElement('i'),{className:'fas fa-handshake fa-lg text-primary'}))">
+                                </div>
+                                <div class="d-flex align-items-baseline gap-1">
+                                    <span class="stat-number count-up" data-target="80">0</span>
+                                    <span class="fw-bold text-primary fs-4">+</span>
+                                </div>
+                                <p class="text-muted mt-2 mb-0 small">Partners &amp; integrations</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════ TRUST BANNER ════════════════════════════════════════════════════════ -->
+        <section class="section-py-sm bg-surface section-ruled">
+            <div class="container">
+                <div class="trust-banner p-5 reveal">
+                    <div class="row align-items-center g-4 position-relative" style="z-index:1;">
+                        <div class="col-lg-7">
+                            <h2 class="display-6 fw-bold text-dark mb-3 lh-sm">
+                                Most popular online card-based fully automated
+                                <span class="gradient-text">property management solution</span>
+                            </h2>
+                            <p class="fs-5 mb-0 fw-semibold" style="color:var(--primary);">
+                                Trusted by <strong>3,500+</strong> property managers across Malaysia
+                            </p>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="d-flex flex-column gap-2 align-items-lg-end">
+                                <span class="badge fs-6 px-4 py-2" style="background:var(--primary);border-radius:var(--r-sm);">
+                                    ⭐ Rated #1 PropTech Platform
+                                </span>
+                                <span class="badge fs-6 px-4 py-2 bg-warning text-dark" style="border-radius:var(--r-sm);">
+                                    🏆 Best PropTech Malaysia 2024
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════ ABOUT / WHY iRUMA ═══════════════════════════════════════════════════ -->
+        <section class="section-py bg-white section-ruled" id="about">
+            <div class="container">
+                <div class="text-center mb-5 reveal">
+                    <div class="section-label mx-auto mb-3">Why iRuma</div>
+                    <h2 class="display-5 fw-bold">Why choose iRuma?</h2>
+                    <p class="text-muted mt-3 mx-auto" style="max-width:620px;line-height:1.75;">
+                        Whether you're managing 50 or 5,000 properties, iRuma is the
+                        <strong class="gradient-text">cloud-based property management system</strong> built to scale.
+                        <br>With powerful features for
+                        <strong>leasing</strong>, <strong>inspections</strong>, <strong>maintenance</strong>
+                        and property management accounting software — it's everything you need in one platform.
+                        <br>The key benefits of using Malaysia's best property management software include:
+                    </p>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-lg-4 col-md-6 reveal">
+                        <div class="card card-hover h-100">
+                            <div class="card-body p-5 d-flex flex-column">
+                                <div class="icon-box mb-4">
+                                    <i class="fas fa-cloud-upload-alt fa-lg text-primary"></i>
+                                </div>
+                                <h5 class="fw-bold mb-2">Reduced Costs</h5>
+                                <p class="text-muted mb-0 flex-grow-1">
+                                    Data is stored securely in the cloud, saving you thousands in hardware and labour costs alone.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 reveal" style="transition-delay:.1s">
+                        <div class="card card-hover h-100">
+                            <div class="card-body p-5 d-flex flex-column">
+                                <div class="icon-box mb-4">
+                                    <i class="fas fa-chart-line fa-lg text-primary"></i>
+                                </div>
+                                <h5 class="fw-bold mb-2">Scalability</h5>
+                                <p class="text-muted mb-0 flex-grow-1">
+                                    Automated solutions and trust accounting tools mean you'll have plenty of time to focus on growing your portfolio across Malaysia.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 reveal" style="transition-delay:.2s">
+                        <div class="card card-hover h-100">
+                            <div class="card-body p-5 d-flex flex-column">
+                                <div class="icon-box mb-4">
+                                    <i class="fas fa-lock fa-lg text-primary"></i>
+                                </div>
+                                <h5 class="fw-bold mb-2">Accessibility &amp; Security</h5>
+                                <p class="text-muted mb-0 flex-grow-1">
+                                    Access property data online in real-time from anywhere. Advanced security measures ensure total peace of mind.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5 text-center reveal">
+                    <button onclick="alert('✨ Free demo booked — we\'ll contact you shortly')" class="btn-primary-custom">
+                        <i class="fas fa-calendar-check"></i> Book a demo
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════ VIDEO ═══════════════════════════════════════════════════════════════ -->
+        <section class="section-py bg-surface section-ruled">
+            <div class="container text-center">
+                <div class="section-label mx-auto mb-3">See it in action</div>
+                <h2 class="display-5 fw-bold mb-2">Malaysia's best fully automated</h2>
+                <h2 class="display-5 fw-bold mb-5">property management solution</h2>
+                <div class="video-placeholder p-5 mx-auto reveal" style="max-width:740px;"
+                     onclick="alert('🎥 Video demo — request a full walkthrough')">
+                    <div class="play-btn-ring">
+                        <i class="fas fa-play text-white" style="font-size:1.3rem;margin-left:3px;"></i>
+                    </div>
+                    <p class="fw-bold fs-5 mb-1" style="color:var(--text-2);">Watch the platform overview</p>
+                    <p class="text-muted small mb-0">3 min · No signup required</p>
+                </div>
+                <button onclick="alert('Interactive features: inspections, maintenance, leasing')"
+                        class="btn btn-link text-primary fw-bold mt-4 fs-6 text-decoration-none">
+                    Explore all features →
+                </button>
+            </div>
+        </section>
+
+        <!-- ═══════ AUTOMATIONS ══════════════════════════════════════════════════════════ -->
+        <section class="section-py bg-white section-ruled">
+            <div class="container">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-6 reveal">
+                        <div class="section-label mb-3">Automations</div>
+                        <h2 class="automations-heading">Say goodbye to<br>admin fatigue</h2>
+                        <span class="automations-heading-underline"></span>
+                        <p class="automations-subtitle">
+                            Your workflow. Your projects. Your rules.<br>Without lifting a finger.
+                        </p>
+                        <p class="automations-body mb-3">
+                            With Automations, you stay firmly in control — just without the manual effort.
+                            You decide when things happen, how they happen, and what gets sent or done at each step.
+                        </p>
+                        <p class="automations-body mb-4">
+                            Whether it's assigning tasks, sending updates, or progressing checklists, everything
+                            runs exactly the way you've set it — consistently, reliably, hands-free.
+                        </p>
+                        <button onclick="alert('Explore automations')" class="btn-accent">
+                            Explore Automations →
+                        </button>
+                    </div>
+                    <div class="col-lg-6 reveal" style="transition-delay:.15s">
+                        <div class="gradient-card">
+                            <p class="gradient-card-text">Streamlined.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════ VALUE STATEMENT ═════════════════════════════════════════════════════ -->
+        <section class="section-py" style="background: linear-gradient(135deg, #06112a 0%, #0f2f5f 100%); position: relative; overflow: hidden;">
+            <div class="container">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-7">
+                        <h2 style="color: #fff; font-size: clamp(1.9rem, 5vw, 3.4rem); line-height: 1.15; font-weight: 800; margin-bottom: .8rem;">
+                            <span style="font-weight:900;">Automate</span> your portfolio.<br>
+                            <span style="font-weight:900;">Drive</span> your profit.<br>
+                            <span style="font-weight:900;">Elevate</span> your agency.
+                        </h2>
+                        <p class="value-tagline" style="font-size: clamp(1.2rem, 2.4vw, 1.75rem); font-weight: 800; margin-top: 0; margin-bottom: 0.8rem; background: linear-gradient(90deg, #2a65f4, #a63af8, #f56f49); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;">Without lifting a finger.</p>
+                    </div>
+                    <div class="col-lg-5 value-icon-rail-wrap">
+                        <div class="value-icon-rail">
+                            <div class="value-icon-item"><i class="fas fa-calendar-alt"></i></div>
+                            <div class="value-icon-item"><i class="fas fa-home"></i></div>
+                            <div class="value-icon-item"><i class="fas fa-file-invoice"></i></div>
+                            <div class="value-icon-item"><i class="fas fa-user"></i></div>
+                            <div class="value-icon-item"><i class="fas fa-cogs"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════ PARTNER CATEGORIES ═══════════════════════════════════════════════════ -->
+        <section class="section-py bg-surface section-ruled">
+            <div class="container">
+                <div class="text-center mb-5 reveal">
+                    <div class="section-label mx-auto mb-3">Trusted By</div>
+                    <h2 class="display-6 fw-bold">Join 30+ companies that are growing with iRuma</h2>
+                    <p class="text-muted mt-2">SCM / KJPM / JLFM / Wincanton</p>
+                </div>
+
+                <div class="d-flex justify-content-center flex-wrap gap-2 mb-4">
+                    <span class="partner-badge" style="background: var(--primary); color: #fff;">SCM</span>
+                    <span class="partner-badge" style="background: #14b8a6; color: #fff;">KJPM</span>
+                    <span class="partner-badge" style="background: #a855f7; color: #fff;">JLFM</span>
+                    <span class="partner-badge" style="background: #ef4444; color: #fff;">Wincanton</span>
+                </div>
+
+                <div class="marquee-wrapper mb-2">
+                    <div class="marquee-track marquee-left">
+                        <div class="marquee-inner d-flex align-items-center gap-3">
+                            <img class="partner-logo" src="partners/OPM.jpg" alt="OPM" title="OPM" />
+                            <img class="partner-logo" src="partners/DKSH.png" alt="DKSH" title="DKSH" />
+                            <img class="partner-logo" src="partners/Microsoft.png" alt="Microsoft" title="Microsoft" />
+                            <img class="partner-logo" src="partners/Fiuu.png" alt="Fiuu" title="Fiuu" />
+                            <img class="partner-logo" src="image/Partner.png" alt="PowerBee" title="PowerBee" />
+                            <img class="partner-logo" src="image/Partner.png" alt="Nuveq" title="Nuveq" />
+                            <img class="partner-logo" src="partners/Fujistu.png" alt="Fujitsu" title="Fujitsu" />
+                        </div>
+                        <div class="marquee-inner d-flex align-items-center gap-3" aria-hidden="true">
+                            <img class="partner-logo" src="partners/OPM.jpg" alt="OPM" title="OPM" />
+                            <img class="partner-logo" src="partners/DKSH.png" alt="DKSH" title="DKSH" />
+                            <img class="partner-logo" src="partners/Microsoft.png" alt="Microsoft" title="Microsoft" />
+                            <img class="partner-logo" src="partners/Fiuu.png" alt="Fiuu" title="Fiuu" />
+                            <img class="partner-logo" src="image/Partner.png" alt="PowerBee" title="PowerBee" />
+                            <img class="partner-logo" src="image/Partner.png" alt="Nuveq" title="Nuveq" />
+                            <img class="partner-logo" src="partners/Fujistu.png" alt="Fujitsu" title="Fujitsu" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="marquee-wrapper mb-2">
+                    <div class="marquee-track marquee-right">
+                        <div class="marquee-inner d-flex align-items-center gap-3">
+                            <img class="partner-logo" src="image/Partner.png" alt="Transpecc" title="Transpecc" />
+                            <img class="partner-logo" src="partners/Liberty_Insurans.jpg" alt="Liberty Insurance" title="Liberty Insurance" />
+                            <img class="partner-logo" src="partners/oracle.png" alt="Oracle" title="Oracle" />
+                            <img class="partner-logo" src="partners/ipay88.png" alt="iPay88" title="iPay88" />
+                            <img class="partner-logo" src="image/Partner.png" alt="EntryPass" title="EntryPass" />
+                            <img class="partner-logo" src="partners/Falco.png" alt="Falco" title="Falco" />
+                            <img class="partner-logo" src="partners/Soyal.png" alt="Soyal" title="Soyal" />
+                        </div>
+                        <div class="marquee-inner d-flex align-items-center gap-3" aria-hidden="true">
+                            <img class="partner-logo" src="image/Partner.png" alt="Transpecc" title="Transpecc" />
+                            <img class="partner-logo" src="partners/Liberty_Insurans.jpg" alt="Liberty Insurance" title="Liberty Insurance" />
+                            <img class="partner-logo" src="partners/oracle.png" alt="Oracle" title="Oracle" />
+                            <img class="partner-logo" src="partners/ipay88.png" alt="iPay88" title="iPay88" />
+                            <img class="partner-logo" src="image/Partner.png" alt="EntryPass" title="EntryPass" />
+                            <img class="partner-logo" src="partners/Falco.png" alt="Falco" title="Falco" />
+                            <img class="partner-logo" src="partners/Soyal.png" alt="Soyal" title="Soyal" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="marquee-wrapper mb-2">
+                    <div class="marquee-track marquee-left">
+                        <div class="marquee-inner d-flex align-items-center gap-3">
+                            <img class="partner-logo" src="partners/Rosewood.png" alt="Rosewood" title="Rosewood" />
+                            <img class="partner-logo" src="image/Partner.png" alt="Alpha" title="Alpha" />
+                            <img class="partner-logo" src="partners/Alicloud.png" alt="Alicloud" title="Alicloud" />
+                            <img class="partner-logo" src="partners/Gkash.png" alt="Gkash" title="Gkash" />
+                            <img class="partner-logo" src="partners/HIKVision.png" alt="HIKVision" title="HIKVision" />
+                            <img class="partner-logo" src="partners/Microengine.jpg" alt="Microengine" title="Microengine" />
+                            <img class="partner-logo" src="partners/Dahua.png" alt="Dahua" title="Dahua" />
+                        </div>
+                        <div class="marquee-inner d-flex align-items-center gap-3" aria-hidden="true">
+                            <img class="partner-logo" src="partners/Rosewood.png" alt="Rosewood" title="Rosewood" />
+                            <img class="partner-logo" src="image/Partner.png" alt="Alpha" title="Alpha" />
+                            <img class="partner-logo" src="partners/Alicloud.png" alt="Alicloud" title="Alicloud" />
+                            <img class="partner-logo" src="partners/Gkash.png" alt="Gkash" title="Gkash" />
+                            <img class="partner-logo" src="partners/HIKVision.png" alt="HIKVision" title="HIKVision" />
+                            <img class="partner-logo" src="partners/Microengine.jpg" alt="Microengine" title="Microengine" />
+                            <img class="partner-logo" src="partners/Dahua.png" alt="Dahua" title="Dahua" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="marquee-wrapper mb-3">
+                    <div class="marquee-track marquee-right">
+                        <div class="marquee-inner d-flex align-items-center gap-3">
+                            <img class="partner-logo" src="partners/Ambank.jpeg" alt="AmBank" title="AmBank" />
+                            <img class="partner-logo" src="partners/solarvest.webp" alt="Solarvest" title="Solarvest" />
+                            <img class="partner-logo" src="partners/expoas.png" alt="Expom Security Services" title="Expom Security Services" />
+                            <img class="partner-logo" src="partners/FreshTel.png" alt="FreshTel" title="FreshTel" />
+                            <img class="partner-logo" src="partners/ZKTeco.png" alt="ZKTeco" title="ZKTeco" />
+                            <img class="partner-logo" src="image/Partner.png" alt="MAG" title="MAG" />
+                            <img class="partner-logo" src="partners/Bosch.png" alt="Bosch" title="Bosch" />
+                        </div>
+                        <div class="marquee-inner d-flex align-items-center gap-3" aria-hidden="true">
+                            <img class="partner-logo" src="partners/Ambank.jpeg" alt="AmBank" title="AmBank" />
+                            <img class="partner-logo" src="partners/solarvest.webp" alt="Solarvest" title="Solarvest" />
+                            <img class="partner-logo" src="partners/expoas.png" alt="Expom Security Services" title="Expom Security Services" />
+                            <img class="partner-logo" src="partners/FreshTel.png" alt="FreshTel" title="FreshTel" />
+                            <img class="partner-logo" src="partners/ZKTeco.png" alt="ZKTeco" title="ZKTeco" />
+                            <img class="partner-logo" src="image/Partner.png" alt="MAG" title="MAG" />
+                            <img class="partner-logo" src="partners/Bosch.png" alt="Bosch" title="Bosch" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════ REAL-TIME DASHBOARD ═════════════════════════════════════════════════ -->
+        <section class="section-py bg-white section-ruled">
+            <div class="container">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-6 order-lg-2 reveal">
+                        <div class="section-label mb-4">Real-Time Dashboard</div>
+                        <h2 class="display-5 fw-bold mb-4">All the data you need,<br>in real-time</h2>
+                        <p class="text-muted fs-5 mb-3">
+                            Property management changes by the minute. Stay ahead with live insights.
+                        </p>
+                        <p class="text-muted mb-4">
+                            With <strong>20 dashboard widgets</strong> and <strong>56 live stats</strong>, you're perfectly
+                            positioned to keep oversight of your portfolio and pivot where needed.
+                        </p>
+                        <div class="d-flex flex-wrap gap-4">
+                            <div><div class="fw-bold fs-4 text-primary">20</div><div class="text-muted small">Widgets</div></div>
+                            <div style="width:1px;background:var(--border);"></div>
+                            <div><div class="fw-bold fs-4 text-primary">56</div><div class="text-muted small">Live stats</div></div>
+                            <div style="width:1px;background:var(--border);"></div>
+                            <div><div class="fw-bold fs-4 text-primary">24/7</div><div class="text-muted small">Uptime</div></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 order-lg-1 reveal" style="transition-delay:.1s">
+                        <div class="media-placeholder-light p-5">
+                            <i class="fas fa-film fa-3x mb-3 text-primary" style="opacity:.3;"></i>
+                            <p class="mb-0 fw-semibold">Dashboard preview GIF goes here</p>
+                            <p class="small text-muted mt-1 mb-0">Recommended: 800×500px, looping GIF</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════ SUPPORT ══════════════════════════════════════════════════════════════ -->
+        <section class="section-py bg-surface section-ruled">
+            <div class="container">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-6 reveal">
+                        <div class="section-label mb-4">Support</div>
+                        <h2 class="display-5 fw-bold mb-4">All the support<br>you need</h2>
+                        <p class="text-muted fs-5 mb-3">
+                            Behind every great property management team, there's a great support team.
+                            With iRuma, you can expect top-notch assistance whenever you need it.
+                        </p>
+                        <p class="text-muted mb-4">
+                            All our support options are included in your monthly subscription — no hidden fees.
+                        </p>
+                        <div class="d-flex flex-wrap gap-3">
+                            <a href="https://wa.me/60376101368" class="btn-primary-custom">
+                                <i class="fab fa-whatsapp"></i> WhatsApp Us
+                            </a>
+                            <a href="mailto:hello@i-ruma.com" class="btn btn-outline-secondary rounded-pill px-4 fw-semibold d-inline-flex align-items-center gap-2">
+                                <i class="fas fa-envelope"></i> Email Us
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 reveal" style="transition-delay:.1s">
+                        <div class="media-placeholder-light p-5">
+                            <i class="fas fa-headset fa-3x mb-3 text-primary" style="opacity:.3;"></i>
+                            <p class="mb-0 fw-semibold">Support team photo goes here</p>
+                            <p class="small text-muted mt-1 mb-0">Recommended: 800×500px JPG/WebP</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════ APP DOWNLOAD ═════════════════════════════════════════════════════════
+             Replaces the broken call-to-action-inner-style with a proper styled section
+        ══════════════════════════════════════════════════════════════════════════════ -->
+        <section class="app-download-section">
+            <div class="container position-relative" style="z-index:1;">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-7 reveal">
+                        <div class="section-label mb-3" style="background:rgba(255,255,255,.15);color:var(--white);">
+                            <i class="fas fa-mobile-alt me-1"></i> Mobile App
+                        </div>
+                        <h2 class="display-5 fw-bold text-white mb-3">
+                            App is available on<br>Google Play &amp; App Store
+                        </h2>
+                        <p class="mb-4" style="color:rgba(255,255,255,.75);font-size:1.05rem;line-height:1.7;">
+                            Manage your property from anywhere. The iRuma resident app is available on
+                            Google Play, the App Store, and as a direct APK download for Android.
+                        </p>
+                        <div class="d-flex align-items-center gap-3 mb-5 flex-wrap">
+                            <div class="app-rating-badge">
+                                <span class="stars">★★★★★</span>
+                                <span>4.8 / 5</span>
+                            </div>
+                            <div class="app-rating-badge">
+                                <i class="fas fa-download me-1"></i>
+                                10,000+ installs
+                            </div>
+                        </div>
+                        <div class="d-flex flex-wrap gap-3">
+                            <a href="https://play.google.com/store/apps/details?id=com.iruma_app_resident"
+                               target="_blank" rel="noopener" class="app-store-btn google">
+                                <img src="asset/googlePlay-button.png" alt="Google Play" />
+                            </a>
+                            <a href="https://apps.apple.com/app/id1625059081"
+                               target="_blank" rel="noopener" class="app-store-btn apple">
+                                <img src="asset/appStore-button.png" alt="App Store" />
+                            </a>
+                            <a href="https://www.i-ruma.com/apk/IRuma_Resident_V2.45.apk"
+                               target="_blank" rel="noopener" class="app-store-btn apk">
+                                <img src="asset/apk-button.png" alt="APK Download" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 text-center reveal" style="transition-delay:.15s">
+                        <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:var(--r-xl);padding:2.5rem;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                            <i class="fas fa-mobile-screen-button fa-5x mb-3" style="color:rgba(255,255,255,.3);"></i>
+                            <p class="mb-0 fw-semibold" style="color:rgba(255,255,255,.55);">App screenshot goes here</p>
+                            <p class="small mt-1 mb-0" style="color:rgba(255,255,255,.35);">Recommended: portrait mockup PNG</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════ FOOTER ═══════════════════════════════════════════════════════════════ -->
+        <footer class="py-5" id="contact">
+            <div class="container">
+                <div class="row g-4 pb-4">
+                    <div class="col-lg-2 col-md-4">
+                        <div style="max-width:240px;">
+                            <img src="image_icon/i-Ruma Logo_Vertical_2026.png" alt="i-Ruma" class="logo-img-footer mb-3"
+                                onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                            <span style="display:none;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem;color:var(--white);">i-Ruma</span>
+                            <p class="small mt-2 mb-3" style="line-height:1.7;">
+                                Leading fully automated property management solution in Malaysia.
+                            </p>
+                            <div class="d-flex gap-2">
+                                <a href="https://www.facebook.com/irumapms" class="footer-social-link facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="https://www.instagram.com/irumapms/" class="footer-social-link instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="https://www.linkedin.com/company/i-ruma" class="footer-social-link linkedin" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <h6 class="mb-3">Explore</h6>
+                        <ul class="list-unstyled small" style="line-height:2.3; margin-bottom:0;">
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#about">About Us</a></li>
+                            <li><a href="#services">Services</a></li>
+                            <li><a href="Contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <h6 class="mb-3">Support</h6>
+                        <ul class="list-unstyled small" style="line-height:2.3; margin-bottom:0;">
+                            <li>
+                                <a href="tel:+6019-399 3191" class="d-flex align-items-center gap-2">
+                                <i class="fab fa-whatsapp" style="width:16px;opacity:.5;"></i> +60 16-631 9373
+                            </a>
+                            </li>
+                            <li>
+                                <a href="mailto:hello@i-ruma.com" class="d-flex align-items-center gap-2">
+                                    <i class="fas fa-envelope" style="width:16px;opacity:.5;"></i> hello@i-ruma.com
+                                </a>
+                            </li>
+                        </ul>
+                        <h6 class="mt-3">Career</h6>
+                        <ul class="list-unstyled small" style="line-height:2.3; margin-bottom:0;">
+                            <li><a href="career.html">Join us</a></li>
+                        </ul>
+                        <h6 class="mt-3">IoT</h6>
+                        <ul class="list-unstyled small" style="line-height:2.3; margin-bottom:0;">
+                            <li><a href="iot.html">i-Ruma IoT</a></li>
+                        </ul>
+                        <h6 class="mt-3">FAQ</h6>
+                        <ul class="list-unstyled small" style="line-height:2.3; margin-bottom:0;">
+                            <li><a href="https://www.propertyme.com/faq" target="_blank">PropertyMe FAQ</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <h6 class="mb-3">Company</h6>
+                        <ul class="list-unstyled small" style="line-height:2.3; margin-bottom:0;">
+                            <li><a href="https://i-ruma.com/Refund.html">Refund Policy</a></li>
+                            <li><a href="https://i-ruma.com/privacy.html">Privacy Policy</a></li>
+                            <li><a href="https://i-ruma.com/policy.html">i-Ruma Policy</a></li>
+                            <li><a href="https://i-ruma.com/Terms.html">Terms of Service</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <h6 class="mb-3">Get in Touch</h6>
+                        <div class="d-flex flex-column gap-2 small mb-4">
+                            <a href="mailto:hello@i-ruma.com" class="d-flex align-items-center gap-2">
+                                <i class="fas fa-envelope" style="width:16px;opacity:.5;"></i> hello@i-ruma.com
+                            </a>
+                            <a href="tel:+6019-399 3191" class="d-flex align-items-center gap-2">
+                                <i class="fab fa-whatsapp" style="width:16px;opacity:.5;"></i> +60 19-399 3191
+                            </a>
+                            <a href="mailto:sales@iruma.my" class="d-flex align-items-center gap-2">
+                                <i class="fas fa-briefcase" style="width:16px;opacity:.5;"></i> sales@iruma.my
+                            </a>
+                        </div>
+                        <button onclick="alert('📅 Book a demo — our team will reach out!')" class="btn-primary-custom" style="padding:11px 24px;font-size:.85rem;">
+                            <i class="fas fa-calendar-check"></i> Book a demo
+                        </button>
+                    </div>
+                </div>
+
+                <hr class="footer-divider my-4">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2" style="background:rgba(105, 105, 105);padding:12px 16px;border-radius:12px;">
+                    <p class="small mb-0" style="color:rgba(255,255,255,.9);">
+                        © 2026 i-Ruma Solutions Sdn. Bhd. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+      /* ── Scroll reveal ─────────────────────────────── */
+      const revealObs = new IntersectionObserver(
+        (entries) => entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+        }),
+        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      );
+      document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+      /* ── Animated counter ──────────────────────────── */
+      function animateCount(el) {
+        const target = parseInt(el.dataset.target, 10);
+        const duration = 1400;
+        const start = performance.now();
+        (function step(now) {
+          const t = Math.min((now - start) / duration, 1);
+          const ease = 1 - Math.pow(1 - t, 3); // ease-out cubic
+          el.textContent = Math.round(ease * target);
+          if (t < 1) requestAnimationFrame(step);
+          else el.textContent = target;
+        })(start);
+      }
+
+      const countObs = new IntersectionObserver(
+        (entries) => entries.forEach(e => {
+          if (e.isIntersecting) { animateCount(e.target); countObs.unobserve(e.target); }
+        }),
+        { threshold: 0.5 }
+      );
+      document.querySelectorAll('.count-up').forEach(el => countObs.observe(el));
+
+      /* ── Navbar elevation on scroll ────────────────── */
+      const nav = document.querySelector('.navbar');
+      window.addEventListener('scroll', () => {
+        nav.style.boxShadow = window.scrollY > 20
+          ? '0 2px 20px rgba(0,55,140,.12)'
+          : '0 1px 0 var(--border)';
+      }, { passive: true });
+
+      document.addEventListener('DOMContentLoaded',() => {
+        const counters = document.querySelectorAll(".count-up");
+
+        counters.forEach(counter => {
+            const target = +counter.getAttribute("data-target");
+            let count = 0;
+
+            const update = () => {
+                const increment = target / 100;
+
+                if (count < target) {
+                    count += increment;
+                    counter.innerText = Math.ceil(count);
+                    requestAnimationFrame(update);
+                }else {
+                    counter.innerText = target;
+                }
+            };
+
+            update();
+        });
+      });
+
+      const reveals = document.querySelectorAll('.reveal');
+
+      function revealOnScroll() {
+        const triggerBottom = window.innerHeight * 0.85;
+
+        reveals.forEach(el => {
+            const top = el.getBoundingClientRect().top;
+
+            if (top < triggerBottom) {
+                el.classList.add("visible");
+            }
+        });
+      }
+
+      window.addEventListener("scroll", revealOnScroll);
+      revealOnScroll();
+
+      /* ── Value icon rail reveal ─────────────────────── */
+      const valueRail = document.querySelector('.value-icon-rail');
+      const valueRailWrap = document.querySelector('.value-icon-rail-wrap');
+      if (valueRail && valueRailWrap) {
+        valueRail.classList.add('with-motion');
+        const railObs = new IntersectionObserver(
+          (entries) => entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              valueRail.classList.add('is-active');
+              railObs.unobserve(entry.target);
+            }
+          }),
+          { threshold: 0.25 }
+        );
+        railObs.observe(valueRailWrap);
+      }
+
+      window.addEventListener("scroll", () => {
+        const nav = document.querySelector(".navbar");
+
+          if (window.scrollY > 50){
+              nav.style.boxShadow = "0 4px 20px rgba(0,0,0,0.08)";
+          } else {
+              nav.style.boxShadow = "0 1px 0 var(--border)";
+            }
+          });
+
+        </script>
+    </body>
+</html>

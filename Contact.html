@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <title>i-Ruma | Contact</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+        <!-- EmailJS SDK -->
+        <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+        <!-- Google reCAPTCHA v2 -->
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <style>
+            :root {
+                --primary: #0055bb;
+                --primary-dark: #003d8a;
+                --primary-light: #e8f1fd;
+                --accent: #f97316;
+                --surface: #f7f9fc;
+                --border: #e2e8f0;
+                --text: #111827;
+                --muted: #64748b;
+                --white: #fff;
+                --r-pill: 9999px;
+                --sh-md: 0 8px 24px rgba(0,55,140,.10);
+                --ease: all .28s cubic-bezier(.4,0,.2,1);
+            }
+
+            * { box-sizing: border-box; }
+
+            body {
+                margin: 0;
+                font-family: 'DM Sans', sans-serif;
+                color: var(--text);
+                background: #fff;
+            }
+
+            /* ── NAVBAR ── */
+            .navbar {
+                background: rgba(255,255,255,.97);
+                backdrop-filter: blur(12px);
+                box-shadow: 0 1px 0 var(--border);
+                padding: .85rem 0;
+            }
+            .logo-img { 
+                height: 36px; 
+                max-width: 180px; 
+            }
+            .nav-link {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-weight: 600;
+                font-size: .88rem;
+                color: var(--muted) !important;
+                padding: .4rem .65rem !important;
+                border-radius: 10px;
+                transition: var(--ease);
+            }
+            .nav-link:hover, .nav-link.active {
+                color: var(--primary) !important;
+                background: var(--primary-light);
+            }
+
+            /* ── HERO ── */
+            .hero {
+                background: linear-gradient(140deg,#04102b 0%,#071f4a 40%,#0a2d6a 70%,#0a3d8a 100%);
+                color: #fff;
+                padding: 90px 0 70px;
+                position: relative;
+                overflow: hidden;
+            }
+            .hero::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                opacity: .35;
+                background: url('https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+                filter: blur(2px);
+            }
+            .hero .container { 
+                position: relative; 
+                z-index: 1; 
+            }
+            .hero h1 {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-size: clamp(2.2rem,5vw,3.6rem);
+                font-weight: 800;
+            }
+            .hero p { font-size: 1.05rem; opacity: .9; max-width: 560px; }
+
+            /* ── CONTACT CARDS ── */
+            .contact-card {
+                background: #fff;
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                box-shadow: var(--sh-md);
+                transition: var(--ease);
+                padding: 2rem;
+                text-align: center;
+            }
+            .contact-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 14px 30px rgba(0,55,140,.15);
+            }
+            .contact-card i {
+                width: 72px; height: 72px;
+                border-radius: 22px;
+                display: flex; align-items: center; justify-content: center;
+                font-size: 1.6rem;
+                background: rgba(0,85,187,.1);
+                color: var(--primary);
+                margin: 0 auto 1rem;
+            }
+            .contact-card h4 {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-weight: 800;
+                margin-bottom: .65rem;
+            }
+            .contact-card p { margin-bottom: .3rem; color: var(--muted); }
+            .contact-card a { color: var(--primary); font-weight: 700; font-size: .95rem; }
+
+            /* ── SECTION LABEL ── */
+            .section-label {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                background: var(--primary-light);
+                color: var(--primary);
+                padding: 6px 14px;
+                border-radius: 999px;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-size: .74rem;
+                font-weight: 700;
+                letter-spacing: .8px;
+                text-transform: uppercase;
+            }
+
+            /* ── FORM ── */
+            .form-label {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-weight: 600;
+                font-size: .85rem;
+                margin-bottom: 6px;
+                display: block;
+            }
+            .form-control {
+                border-radius: 12px;
+                border: 1.5px solid var(--border);
+                padding: .92rem 1rem;
+                font-family: 'DM Sans', sans-serif;
+                font-size: .92rem;
+                color: var(--text);
+                width: 100%;
+                outline: none;
+                transition: border-color .2s, box-shadow .2s;
+                background: #fff;
+            }
+            .form-control:focus {
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(0,85,187,.1);
+            }
+            .form-control::placeholder { color: #b0bec8; }
+
+            .btn-primary-custom {
+                background: var(--primary);
+                color: var(--white);
+                border: none;
+                padding: 12px 28px;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-weight: 700;
+                font-size: .95rem;
+                border-radius: var(--r-pill);
+                transition: var(--ease);
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .btn-primary-custom:hover {
+                background: var(--primary-dark);
+                transform: translateY(-2px);
+                box-shadow: 0 10px 28px rgba(0,85,187,.3);
+            }
+            .btn-primary-custom:disabled {
+                opacity: .65;
+                cursor: not-allowed;
+                transform: none;
+            }
+
+            /* ── CAPTCHA BOX ── */
+            .captcha-box {
+                border: 1.5px solid var(--border);
+                border-radius: 12px;
+                padding: 12px 16px;
+                background: #fff;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 16px;
+                font-size: .88rem;
+                color: var(--muted);
+            }
+            .captcha-box input[type=checkbox] {
+                width: 18px; height: 18px;
+                accent-color: var(--primary);
+                cursor: pointer;
+                flex-shrink: 0;
+            }
+            .captcha-box label {
+                margin: 0;
+                font-weight: 400;
+                font-size: .88rem;
+                cursor: pointer;
+            }
+
+            /* ── TOAST NOTIFICATION ── */
+            .toast-custom {
+                position: fixed;
+                bottom: 32px; right: 32px;
+                z-index: 9999;
+                padding: 14px 22px;
+                border-radius: 14px;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-weight: 600;
+                font-size: .88rem;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                box-shadow: 0 12px 36px rgba(0,0,0,.2);
+                transform: translateY(80px);
+                opacity: 0;
+                transition: all .4s cubic-bezier(.4,0,.2,1);
+                pointer-events: none;
+                max-width: 340px;
+            }
+            .toast-custom.show { transform: translateY(0); opacity: 1; }
+            .toast-custom.success { background: #111827; color: #fff; }
+            .toast-custom.success i { color: #4ade80; }
+            .toast-custom.error { background: #fff1f2; color: #9f1239; border: 1px solid #fecdd3; }
+            .toast-custom.error i { color: #e11d48; }
+
+            /* ── SPINNER ── */
+            .spinner {
+                width: 16px; height: 16px;
+                border: 2px solid rgba(255,255,255,.4);
+                border-top-color: #fff;
+                border-radius: 50%;
+                animation: spin .7s linear infinite;
+                display: none;
+            }
+            @keyframes spin { to { transform: rotate(360deg); } }
+
+            /* ── MAP ── */
+            .map-wrapper {
+                height: 360px;
+                border-radius: 1rem;
+                overflow: hidden;
+                border: 1px solid var(--border);
+                box-shadow: var(--sh-md);
+            }
+
+                            /* ── Footer ──────────────────────────────────── */
+                footer {
+                    background: var(--white);
+                    color: #64748b;
+                    position: relative;
+                }
+
+                footer::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 1px;
+                    background: #e2e8f0;
+                }
+
+                footer h6 {
+                    color: #111827;
+                    font-weight: 700;
+                    letter-spacing: .05em;
+                    font-size: .8rem;
+                    text-transform: uppercase;
+                }
+
+                footer a {
+                    color: #64748b;
+                    text-decoration: none;
+                    transition: color .2s;
+                }
+
+                footer a:hover {
+                    color: #0055bb;
+                }
+
+                .footer-divider {
+                    border-color: #e2e8f0;
+                }
+
+                .footer-social-link {
+                    width: 34px;
+                    height: 34px;
+                    border-radius: 8px;
+                    background: transparent;
+                    border: 1px solid #e2e8f0;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #374151;
+                    font-size: .8rem;
+                    text-decoration: none;
+                    transition: all .2s ease;
+                }
+
+                .footer-social-link.facebook:hover {
+                    background: #1877f2;
+                    border-color: #1877f2;
+                    color: var(--white);
+                    transform: translateY(-2px);
+                }
+
+                .footer-social-link.instagram:hover {
+                    background: linear-gradient(
+                        45deg,
+                        #f09433,
+                        #e6683c,
+                        #dc2743,
+                        #cc2366,
+                        #bc1888
+                    );
+                    border-color: transparent;
+                    color: var(--white);
+                }
+
+                .footer-social-link.linkedin:hover {
+                    background: #0a66c2;
+                    border-color: #0a66c2;
+                    color: var(--white);
+                }
+
+                .logo-img-footer {
+                    height: 100px;
+                    width: auto;
+                    max-width: 160px;
+                }
+
+            @media (max-width: 991px) { .hero { padding: 70px 0 50px; } }
+
+            .api-info-box {
+                background: linear-gradient(135deg, #f0f6ff, #e8f1fd);
+                border: 1px solid #c7d8ef;
+                border-radius: 14px;
+                padding: 1.2rem 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            .api-info-box .api-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                background: var(--primary);
+                color: #fff;
+                padding: 3px 10px;
+                border-radius: 999px;
+                font-size: .72rem;
+                font-weight: 400;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                margin-bottom: .5rem;
+            }
+        </style>
+    </head>
+    <body>
+
+        <!-- ═══════ NAVBAR ═══════ -->
+        <nav class="navbar navbar-expand-lg sticky-top">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="image_icon/i-Ruma Logo_Hori_2026.png" class="logo-img" alt="i-Ruma"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block'">
+                    <span style="display:none;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.4rem;color:var(--primary);">i-Ruma</span>
+                </a>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-center gap-1">
+                        <li class="nav-item"><a class="nav-link" href="index.html#services">Services</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html#about">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="iot.html">IoT</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="contact.html">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="career.html">Career</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- ═══════ HERO ═══════ -->
+        <section class="hero">
+            <div class="container text-center">
+                <div class="section-label mb-2">Contact us</div>
+                <h1 class="mt-3 mb-3">We would love to hear from you</h1>
+                <p class="mx-auto">Questions about integration, tech support, partnership or career? Reach out and we'll respond within 24 hours.</p>
+            </div>
+        </section>
+
+        <!-- ═══════ MAIN CONTENT ═══════ -->
+        <section style="padding:60px 0; background:var(--surface);">
+            <div class="container">
+
+                <!-- Contact Cards -->
+                <div class="row g-4 mb-5">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="contact-card">
+                            <i class="fas fa-phone"></i>
+                            <h4>Sales</h4>
+                            <p>1300 776 763</p>
+                            <p><a href="mailto:start@i-ruma.com">start@i-ruma.com</a></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="contact-card">
+                            <i class="fas fa-briefcase"></i>
+                            <h4>Careers</h4>
+                            <p>For career enquiries</p>
+                            <p><a href="mailto:career@i-ruma.com">career@i-ruma.com</a></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="contact-card">
+                            <i class="fas fa-handshake"></i>
+                            <h4>Partners</h4>
+                            <p>For partnership enquiries</p>
+                            <p><a href="mailto:partnersupport@i-ruma.com">partnersupport@i-ruma.com</a></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="contact-card">
+                            <i class="fas fa-link"></i>
+                            <h4>Integrators</h4>
+                            <p>For integrator support</p>
+                            <p><a href="mailto:apisupport@i-ruma.com">apisupport@i-ruma.com</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form + Map -->
+                <div class="row g-5 align-items-start">
+
+                    <!-- ── CONTACT FORM ── -->
+                    <div class="col-lg-6">
+                        <div class="section-label mb-3">Leave us a message</div>
+                        <h2 class="fw-bold mb-3">Get in touch</h2>
+
+                        <!-- API info box -->
+                        <div class="api-info-box">
+                            <div class="api-badge"><i class="fas fa-server" style="font-size:.65rem;"></i> Node.js API</div>
+                            <p class="mb-0" style="font-size:.83rem;color:var(--muted);line-height:1.55;">
+                                This form sends via <strong>your own backend server</strong> (Express + Nodemailer).
+                                Make sure <code>server.js</code> is running and the <code>API_BASE</code> variable below points to your server URL.
+                            </p>
+                        </div>
+
+                        <form id="contactForm" novalidate class="needs-validation">
+                            <div class="mb-3">
+                                <label class="form-label" for="from_name">Name*</label>
+                                <input type="text" id="from_name" name="from_name" class="form-control" placeholder="Your full name" required mixlength="3" maxlength="50">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="phone">Phone Number*</label>
+                                <input type="tel" id="phone" name="phone" class="form-control" placeholder="+60 12-345 6789" required 
+                                    pattern="^\+60\s\d{2}-\d{3}\s\d{4}$" title="Format: +60 12-345 6789">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="reply_to">Business Email*</label>
+                                <input type="email" id="reply_to" name="reply_to" class="form-control" placeholder="you@company.com" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="message">Message*</label>
+                                <textarea id="message" name="message" class="form-control" rows="6" placeholder="Tell us how we can help..." required minlength="10"></textarea>
+                            </div>
+
+                            <!-- Google reCAPTCHA v2 -->
+                            <div class="mb-4" style="margin-bottom: 1.5rem;">
+                                <div class="g-recaptcha" 
+                                    data-sitekey="6Ldzt6IsAAAAAIZftr41ug9FqyfvNlcr6bCC-DPC"
+                                    data-theme="light"
+                                    data-size="normal">
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-primary-custom" id="submitBtn">
+                                <span class="spinner" id="spinner"></span>
+                                <i class="fas fa-paper-plane" id="btnIcon"></i>
+                                <span id="btnText">Send message</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- ── MAP ── -->
+                    <div class="col-lg-6">
+                        <div class="section-label mb-3">Find us</div>
+                        <h2 class="fw-bold mb-3">Head office</h2>
+                        <p style="color:var(--muted);margin-bottom:1rem;">
+                            No 809, Block A, Kelana Centre Point,<br>
+                            No 3, Jalan SS7/19, Kelana Jaya,<br>
+                            Petaling Jaya 47301, Selangor, Malaysia
+                        </p>
+                        <div class="map-wrapper mb-4">
+                            <iframe
+                                width="100%" height="100%"
+                                style="border:0;"
+                                loading="lazy"
+                                allowfullscreen
+                                referrerpolicy="no-referrer-when-downgrade"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.9837906142798!2d101.58939421470441!3d3.098966897743362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4c3ddd81b623%3A0x5b0aabd35a345e5e!2sNo%20809%2C%20Block%20A%2C%20Kelana%20Centre%20Point%2C%203%2C%20Jalan%20SS%207%2F19%2C%20Ss%207%2C%2047301%20Petaling%20Jaya%2C%20Selangor!5e0!3m2!1sen!2smy!4v1619513868965!5m2!1sen!2smy">
+                            </iframe>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════ FOOTER ═══════════════════════════════════════════════════════════════ -->
+        <footer class="py-5" id="contact">
+            <div class="container">
+                <div class="row g-4 pb-4">
+                    <div class="col-lg-2 col-md-4">
+                        <div style="max-width:240px;">
+                            <img src="image_icon/i-Ruma Logo_Vertical_2026.png" alt="i-Ruma" class="logo-img-footer mb-3"
+                                onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                            <span style="display:none;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem;color:var(--white);">i-Ruma</span>
+                            <p class="small mt-2 mb-3" style="line-height:1.7;">
+                                Leading fully automated property management solution in Malaysia.
+                            </p>
+                            <div class="d-flex gap-2">
+                                <a href="https://www.facebook.com/irumapms" class="footer-social-link facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="https://www.instagram.com/irumapms/" class="footer-social-link instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="https://www.linkedin.com/company/i-ruma" class="footer-social-link linkedin" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <h6 class="mb-3">Explore</h6>
+                        <ul class="list-unstyled small" style="line-height:2.3; margin-bottom:0;">
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#about">About Us</a></li>
+                            <li><a href="#services">Services</a></li>
+                            <li><a href="Contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <h6 class="mb-3">Support</h6>
+                        <ul class="list-unstyled small" style="line-height:2.3; margin-bottom:0;">
+                            <li>
+                                <a href="tel:+6019-399 3191" class="d-flex align-items-center gap-2">
+                                <i class="fab fa-whatsapp" style="width:16px;opacity:.5;"></i> +60 16-631 9373
+                            </a>
+                            </li>
+                            <li>
+                                <a href="mailto:hello@i-ruma.com" class="d-flex align-items-center gap-2">
+                                    <i class="fas fa-envelope" style="width:16px;opacity:.5;"></i> hello@i-ruma.com
+                                </a>
+                            </li>
+                        </ul>
+                        <h6 class="mt-3">Career</h6>
+                        <ul class="list-unstyled small" style="line-height:2.3; margin-bottom:0;">
+                            <li><a href="career.html">Join us</a></li>
+                        </ul>
+                        <h6 class="mt-3">IoT</h6>
+                        <ul class="list-unstyled small" style="line-height:2.3; margin-bottom:0;">
+                            <li><a href="iot.html">i-Ruma IoT</a></li>
+                        </ul>
+                        <h6 class="mt-3">FAQ</h6>
+                        <ul class="list-unstyled small" style="line-height:2.3; margin-bottom:0;">
+                            <li><a href="https://www.propertyme.com/faq" target="_blank">PropertyMe FAQ</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <h6 class="mb-3">Company</h6>
+                        <ul class="list-unstyled small" style="line-height:2.3; margin-bottom:0;">
+                            <li><a href="https://i-ruma.com/Refund.html">Refund Policy</a></li>
+                            <li><a href="https://i-ruma.com/privacy.html">Privacy Policy</a></li>
+                            <li><a href="https://i-ruma.com/policy.html">i-Ruma Policy</a></li>
+                            <li><a href="https://i-ruma.com/Terms.html">Terms of Service</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <h6 class="mb-3">Get in Touch</h6>
+                        <div class="d-flex flex-column gap-2 small mb-4">
+                            <a href="mailto:hello@i-ruma.com" class="d-flex align-items-center gap-2">
+                                <i class="fas fa-envelope" style="width:16px;opacity:.5;"></i> hello@i-ruma.com
+                            </a>
+                            <a href="tel:+6019-399 3191" class="d-flex align-items-center gap-2">
+                                <i class="fab fa-whatsapp" style="width:16px;opacity:.5;"></i> +60 19-399 3191
+                            </a>
+                            <a href="mailto:sales@iruma.my" class="d-flex align-items-center gap-2">
+                                <i class="fas fa-briefcase" style="width:16px;opacity:.5;"></i> sales@iruma.my
+                            </a>
+                        </div>
+                        <button onclick="alert('📅 Book a demo — our team will reach out!')" class="btn-primary-custom" style="padding:11px 24px;font-size:.85rem;">
+                            <i class="fas fa-calendar-check"></i> Book a demo
+                        </button>
+                    </div>
+                </div>
+
+                <hr class="footer-divider my-4">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2" style="background:rgba(105, 105, 105);padding:12px 16px;border-radius:12px;">
+                    <p class="small mb-0" style="color:rgba(255,255,255,.9);">
+                        © 2026 i-Ruma Solutions Sdn. Bhd. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- ═══════ TOAST ═══════ -->
+        <div class="toast-custom success" id="toastSuccess">
+            <i class="fas fa-check-circle"></i>
+            <span>Message sent! We'll get back to you within 24 hours.</span>
+        </div>
+        <div class="toast-custom error" id="toastError">
+            <i class="fas fa-circle-exclamation"></i>
+            <span id="toastErrorMsg">Oops! Something went wrong. Please try again.</span>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script>
+            // ══════════════════════════════════════════════════════════
+            //  EMAILJS SETUP — Replace these 3 values with your own
+            //  Get them free at: https://www.emailjs.com
+            // ══════════════════════════════════════════════════════════
+            // const EMAILJS_PUBLIC_KEY  = 'FtKScir2A-nqe9tSt';    // Account > API Keys
+            // const EMAILJS_SERVICE_ID  = 'service_b5bq7x7';    // Email Services tab
+            // const EMAILJS_TEMPLATE_ID = 'template_otpgxto';   // Email Templates tab
+            // ══════════════════════════════════════════════════════════
+
+            // Initialise EmailJS
+            // emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+            // // Helper: show / hide toast
+            // function showToast(id, duration = 4500) {
+            //     const el = document.getElementById(id);
+            //     el.classList.add('show');
+            //     setTimeout(() => el.classList.remove('show'), duration);
+            // }
+
+            // // Helper: toggle loading state on button
+            // function setLoading(isLoading) {
+            //     const btn     = document.getElementById('submitBtn');
+            //     const spinner = document.getElementById('spinner');
+            //     const icon    = document.getElementById('btnIcon');
+            //     const text    = document.getElementById('btnText');
+
+            //     btn.disabled        = isLoading;
+            //     spinner.style.display = isLoading ? 'block' : 'none';
+            //     icon.style.display    = isLoading ? 'none'  : 'inline';
+            //     text.textContent      = isLoading ? 'Sending…' : 'Send message';
+            // }
+
+            // // Form submit handler
+            // document.getElementById('contactForm').addEventListener('submit', function (e) {
+            //     e.preventDefault();
+
+            //     // Check "I'm not a robot" checkbox
+            //     if (!document.getElementById('notRobot').checked) {
+            //         alert('Please confirm you are not a robot.');
+            //         return;
+            //     }
+
+            //     setLoading(true);
+
+            //     // Collect form values into a template params object
+            //     const templateParams = {
+            //         from_name : document.getElementById('from_name').value.trim(),
+            //         phone     : document.getElementById('phone').value.trim(),
+            //         reply_to  : document.getElementById('reply_to').value.trim(),
+            //         message   : document.getElementById('message').value.trim(),
+            //     };
+
+            //     emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+            //         .then(() => {
+            //             setLoading(false);
+            //             this.reset();
+            //             document.getElementById('notRobot').checked = false;
+            //             showToast('toastSuccess');
+            //         })
+            //         .catch((err) => {
+            //             console.error('EmailJS error:', err);
+            //             setLoading(false);
+            //             showToast('toastError');
+            //         });
+            // });
+
+            /* ═══════════════════════════════════════════════════════════
+               ⚙️  CONFIG — change this to your server URL
+               - Local dev:    http://localhost:3000
+               - Production:   https://yourdomain.com
+            ═══════════════════════════════════════════════════════════ */
+            const API_BASE = 'http://localhost:3000';
+
+            /* ── Malaysia mobile: auto-format to match pattern +60 XX-XXX XXXX ── */
+            (function initPhoneAutoFormat() {
+                const phoneEl = document.getElementById('phone');
+                if (!phoneEl) return;
+                function formatFromDigits(allDigits) {
+                    if (!allDigits) return '';
+                    /* 本地习惯先打 0 → 立刻显示为 +60；单独 0 不可再被 strip 成空 */
+                    if (allDigits === '0') return '+60 ';
+                    let d = allDigits;
+                    if (d.startsWith('60')) d = d.slice(2);
+                    else if (d.startsWith('0')) d = d.slice(1);
+                    if (d.length > 9) d = d.slice(0, 9);
+                    /* 已格式化成 “+60 ” 时提取到的数字只有 60，不能再清空 */
+                    if (!d && allDigits === '60') return '+60 ';
+                    if (!d) return '';
+                    if (d.length <= 2) return '+60 ' + d;
+                    if (d.length <= 5) return '+60 ' + d.slice(0, 2) + '-' + d.slice(2);
+                    return '+60 ' + d.slice(0, 2) + '-' + d.slice(2, 5) + ' ' + d.slice(5);
+                }
+                phoneEl.addEventListener('input', function () {
+                    const all = phoneEl.value.replace(/\D/g, '');
+                    const next = formatFromDigits(all);
+                    if (phoneEl.value !== next) phoneEl.value = next;
+                });
+            })();
+ 
+            /* ── Toast helper ── */
+            function showToast(id, duration = 5000) {
+                const el = document.getElementById(id);
+                el.classList.add('show');
+                setTimeout(() => el.classList.remove('show'), duration);
+            }
+ 
+            /* ── Button loading state ── */
+            function setLoading(isLoading) {
+                const btn     = document.getElementById('submitBtn');
+                const spinner = document.getElementById('spinner');
+                const icon    = document.getElementById('btnIcon');
+                const text    = document.getElementById('btnText');
+                btn.disabled          = isLoading;
+                spinner.style.display = isLoading ? 'block' : 'none';
+                icon.style.display    = isLoading ? 'none' : 'inline';
+                text.textContent      = isLoading ? 'Sending…' : 'Send message';
+            }
+
+            function validateForm() {
+                const form = document.getElementById('contactForm')
+
+                if (!form.checkValidity()) {
+                    form.classList.add('was-validated');
+                    return false;
+                }
+
+                const phone = document.getElementById('phone').value.trim();
+                const phoneRegex = /^\+60\s\d{2}-\d{3}\s\d{4}$/
+
+                if(!phoneRegex.test(phone)) {
+                    alert('Phone must be in format: +60 12-345 6789');
+                    return false;
+                }
+
+                return true;
+            }
+ 
+            /* ── Form submit → POST /api/contact ── */
+            document.getElementById('contactForm').addEventListener('submit', async function (e) {
+                e.preventDefault();
+                
+                if (!validateForm()) return;
+
+                const recaptchaResponse = grecaptcha.getResponse();
+                if (!recaptchaResponse) {
+                    alert('Please complete the reCAPTCHA verification (click "I\'m not a robot").');
+                    return;
+                }
+ 
+                setLoading(true);
+ 
+                const payload = {
+                    from_name : document.getElementById('from_name').value.trim(),
+                    phone     : document.getElementById('phone').value.trim(),
+                    reply_to  : document.getElementById('reply_to').value.trim(),
+                    message   : document.getElementById('message').value.trim(),
+                    recaptcha : recaptchaResponse
+                };
+ 
+                try {
+                    const res  = await fetch(`${API_BASE}/api/contact`, {
+                        method : 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body   : JSON.stringify(payload),
+                    });
+                    const data = await res.json();
+ 
+                    if (data.ok) {
+                        this.reset();
+                        // reCAPTCHA v2 checkbox 没有对应 id="notRobot" 的元素的话会导致 JS 报错
+                        // 这里直接依赖 grecaptcha.reset() 即可，避免访问 null
+                        const notRobotEl = document.getElementById('notRobot');
+                        if (notRobotEl) notRobotEl.checked = false;
+                        grecaptcha.reset();
+                        showToast('toastSuccess');
+                    } else {
+                        document.getElementById('toastErrorMsg').textContent = data.error || 'Something went wrong.';
+                        showToast('toastError');
+                        grecaptcha.reset();
+                    }
+                } catch (err) {
+                    console.error('Network error:', err);
+                    document.getElementById('toastErrorMsg').textContent = 'Network error — is the server running?';
+                    showToast('toastError');
+                    grecaptcha.reset();
+                } finally {
+                    setLoading(false);
+                }
+            });
+        </script>
+    </body>
+</html>
