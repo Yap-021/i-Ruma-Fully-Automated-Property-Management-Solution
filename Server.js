@@ -152,7 +152,8 @@ app.post('/api/contact', async (req, res) => {
       const axios = require('axios');
 
       const verifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
-      const secretKey = '6Ldzt6IsAAAAACnf0KYwiWYNbFAyekQofJffNRwj';   // Your Secret Key
+      // 6Ldzt6IsAAAAACnf0KYwiWYNbFAyekQofJffNRwj
+      const secretKey = process.env.RECAPTCHA_SECRET_KEY;   // Your Secret Key
 
       // Google reCAPTCHA `siteverify` 需要用 x-www-form-urlencoded 形式提交到 POST body
       // 否则经常会拿到 `error-codes: ["bad-request"]`
