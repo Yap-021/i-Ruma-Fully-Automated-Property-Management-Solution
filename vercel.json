@@ -1,15 +1,43 @@
 {
-    "version": 2,
-    "rewrites": [
-        {
-            "source": "/api/:match*",
-            "destination": "/Server.js"
-        }
-    ],
-    "functions": {
-        "Server.js": {
-            "runtime": "nodejs@20.x"
-        }
+  "version": 2,
+  "builds": [
+    {
+      "src": "Server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "image/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "image_icon/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "asset/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "partners/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "IoT/**",
+      "use": "@vercel/static"
     }
-    
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "Server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ]
 }
