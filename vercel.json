@@ -8,7 +8,7 @@
     ],
     "functions": {
         "Server.js": {
-            "runtime": "@vercel/node"
+            "runtime": "nodejs@20.x"
         }
     }
     
