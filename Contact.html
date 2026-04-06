@@ -451,15 +451,6 @@
                         <div class="section-label mb-3">Leave us a message</div>
                         <h2 class="fw-bold mb-3">Get in touch</h2>
 
-                        <!-- API info box -->
-                        <div class="api-info-box">
-                            <div class="api-badge"><i class="fas fa-server" style="font-size:.65rem;"></i> Node.js API</div>
-                            <p class="mb-0" style="font-size:.83rem;color:var(--muted);line-height:1.55;">
-                                This form sends via <strong>your own backend server</strong> (Express + Nodemailer).
-                                Make sure <code>server.js</code> is running and the <code>API_BASE</code> variable below points to your server URL.
-                            </p>
-                        </div>
-
                         <form id="contactForm" novalidate class="needs-validation">
                             <div class="mb-3">
                                 <label class="form-label" for="from_name">Name*</label>
@@ -709,13 +700,13 @@
                 if (!phoneEl) return;
                 function formatFromDigits(allDigits) {
                     if (!allDigits) return '';
-                    /* 本地习惯先打 0 → 立刻显示为 +60；单独 0 不可再被 strip 成空 */
+
                     if (allDigits === '0') return '+60 ';
                     let d = allDigits;
                     if (d.startsWith('60')) d = d.slice(2);
                     else if (d.startsWith('0')) d = d.slice(1);
                     if (d.length > 9) d = d.slice(0, 9);
-                    /* 已格式化成 “+60 ” 时提取到的数字只有 60，不能再清空 */
+
                     if (!d && allDigits === '60') return '+60 ';
                     if (!d) return '';
                     if (d.length <= 2) return '+60 ' + d;
