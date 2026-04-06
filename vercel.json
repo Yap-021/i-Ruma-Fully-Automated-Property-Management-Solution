@@ -5,6 +5,11 @@
             "source": "/api/:match*",
             "destination": "/Server.js"
         }
-    ]
+    ],
+    "functions": {
+        "Server.js": {
+            "runtime": "@vercel/node"
+        }
+    }
     
 }
