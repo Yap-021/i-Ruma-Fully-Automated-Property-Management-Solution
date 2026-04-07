@@ -732,51 +732,76 @@
             /* ===== NEW ICON GRID ===== */
 
             .icon-grid-wrap {
-                position: relative;
-                height: 480px;
+                position: absolute;
+                top: 0;
+                right: -60px;
+                height: 100%;
+                width: 520px;
                 display: flex;
                 align-items: center;
-                justify-content: center;
+                justify-content: flex-end;
+                pointer-events: none;
+                overflow: visible;
             }
 
             .icon-grid {
                 display: grid;
                 grid-template-columns: repeat(3, 110px);
-                gap: 20px;
-
+                gap: 18px;
                 transform: rotate(-18deg) scale(1.05);
+                transform-origin: center center;
+                opacity: 0;
+                translate: 220px 0;
+                transition: 
+                    opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+                    translate 0.85s cubic-bezier(0.34, 1.2, 0.64, 1); 
+            }
+
+            .icon-grid.in-view {
+                opacity: 1;
+                translate: 0 0;
             }
 
             .icon-card {
                 width: 110px;
                 height: 110px;
                 border-radius: 22px;
-
-                background: rgba(255,255,255,0.06);
-                backdrop-filter: blur(12px);
-
+                background: rgba(255,255,255,0.07);
+                backdrop-filter: blur(10px);
                 display: flex;
                 align-items: center;
                 justify-content: center;
-
                 box-shadow:
                     0 12px 30px rgba(0,0,0,.45),
-                    inset 0 0 0 1px rgba(255,255,255,.08);
-
-                transition: all .3s ease;
+                    inset 0 0 0 1px rgba(255,255,255,.1);
+                opacity: 0;
+                transform: translateX(40px) scale(0.88);
+                transition:
+                    opacity 0.5s ease,
+                    transform 0.55s cubic-bezier(0.34, 1.4, 0.64, 1),
+                    box-shadow 0.3s ease;
             }
 
+            .icon-grid.in-view .icon-card:nth-child(1) { opacity:1; transform:none; transition-delay: 0.05s; }
+            .icon-grid.in-view .icon-card:nth-child(2) { opacity:1; transform:none; transition-delay: 0.12s; }
+            .icon-grid.in-view .icon-card:nth-child(3) { opacity:1; transform:none; transition-delay: 0.19s; }
+            .icon-grid.in-view .icon-card:nth-child(4) { opacity:1; transform:none; transition-delay: 0.26s; }
+            .icon-grid.in-view .icon-card:nth-child(5) { opacity:1; transform:none; transition-delay: 0.33s; }
+            .icon-grid.in-view .icon-card:nth-child(6) { opacity:1; transform:none; transition-delay: 0.40s; }
+            .icon-grid.in-view .icon-card:nth-child(7) { opacity:1; transform:none; transition-delay: 0.47s; }
+            .icon-grid.in-view .icon-card:nth-child(8) { opacity:1; transform:none; transition-delay: 0.54s; }
+            .icon-grid.in-view .icon-card:nth-child(9) { opacity:1; transform:none; transition-delay: 0.61s; }
+
             .icon-card i {
-                font-size: 30px;
-                color: #fff;
-                opacity: .9;
+                font-size: 28px;
+                color: rgba(255,255,255,0.85);
             }
 
             .icon-card:hover {
-                transform: translateY(-10px) scale(1.08);
                 box-shadow:
-                    0 20px 45px rgba(0,0,0,.7),
-                    inset 0 0 0 1px rgba(255,255,255,.15);
+                    0 20px 45px rgba(0,0,0,.6),
+                    inset 0 0 0 1px rgba(255,255,255,.18);
+                pointer-events: all;
             }
 
             .icon-grid-wrap::before {
@@ -784,10 +809,11 @@
                 position: absolute;
                 left: 0;
                 top: 0;
-                width: 40%;
+                width: 35%;
                 height: 100%;
-                background: linear-gradient(to right, #06112a, transparent);
+                background: linear-gradient(to right, #06112a, #06112a 30%, transparent 100%);
                 z-index: 2;
+                pointer-events: none;
             }
 
             @media (max-width: 992px) {
@@ -884,7 +910,7 @@
                       color: #fbbf24;
                   }
 
-                              /* ── Footer ──────────────────────────────────── */
+                /* ── Footer ──────────────────────────────────── */
                 footer {
                     background: var(--white);
                     color: #64748b;
@@ -1491,7 +1517,8 @@
         <!-- ═══════ VALUE STATEMENT ═════════════════════════════════════════════════════ -->
         <section class="section-py" style="background: linear-gradient(135deg, #06112a 0%, #0f2f5f 100%); position: relative; overflow: hidden;">
             <div class="container">
-                <div class="row align-items-center g-5">
+                <div class="row align-items-center" style="min-height: 360px; position: relative;">
+
                     <div class="col-lg-7">
                         <h2 style="color: #fff; font-size: clamp(1.9rem, 5vw, 3.4rem); line-height: 1.15; font-weight: 800; margin-bottom: .8rem;">
                             <span style="font-weight:900;">Automate</span> your portfolio.<br>
@@ -1500,23 +1527,20 @@
                         </h2>
                         <p class="value-tagline" style="font-size: clamp(1.2rem, 2.4vw, 1.75rem); font-weight: 800; margin-top: 0; margin-bottom: 0.8rem; background: linear-gradient(90deg, #2a65f4, #a63af8, #f56f49); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;">Without lifting a finger.</p>
                     </div>
-                    <div class="col-lg-5">
-                        <div class="icon-grid-wrap">
-                            <div class="icon-grid">
 
-                                <div class="icon-card"><i class="fas fa-home"></i></div>
-                                <div class="icon-card"><i class="fas fa-qrcode"></i></div>
-                                <div class="icon-card"><i class="fas fa-list"></i></div>
+                    <div class="icon-grid-wrap">
+                        <div class="icon-grid" id="valueIconGrid">
+                            <div class="icon-card"><i class="fas fa-home"></i></div>
+                            <div class="icon-card"><i class="fas fa-qrcode"></i></div>
+                            <div class="icon-card"><i class="fas fa-list"></i></div>
 
-                                <div class="icon-card"><i class="fas fa-tshirt"></i></div>
-                                <div class="icon-card"><i class="fas fa-heart"></i></div>
-                                <div class="icon-card"><i class="fas fa-briefcase"></i></div>
+                            <div class="icon-card"><i class="fas fa-tshirt"></i></div>
+                            <div class="icon-card"><i class="fas fa-heart"></i></div>
+                            <div class="icon-card"><i class="fas fa-briefcase"></i></div>
 
-                                <div class="icon-card"><i class="fas fa-cogs"></i></div>
-                                <div class="icon-card"><i class="fas fa-user"></i></div>
-                                <div class="icon-card"><i class="fas fa-calendar"></i></div>
-
-                            </div>
+                            <div class="icon-card"><i class="fas fa-cogs"></i></div>
+                            <div class="icon-card"><i class="fas fa-user"></i></div>
+                            <div class="icon-card"><i class="fas fa-calendar"></i></div>
                         </div>
                     </div>
                 </div>
@@ -2000,23 +2024,19 @@
       window.addEventListener("scroll", revealOnScroll);
       revealOnScroll();
       
-      const grid = document.querySelector('.icon-grid');
+      const valueGrid = document.getElementById('valueIconGrid');
+      if (valueGrid) {
+        const gridObs = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    valueGrid.classList.add('in-view');
+                    gridObs.unobserve(valueGrid);
+                }
+            });
+        }, { threshold: 0.25 });
 
-        if (grid) {
-            const obs = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        grid.style.transform = "rotate(-18deg) scale(1.05) translateY(0)";
-                        grid.style.opacity = "1";
-                    }
-                });
-            }, { threshold: 0.3 });
-
-            grid.style.transform = "rotate(-18deg) scale(0.9) translateY(40px)";
-            grid.style.opacity = "0";
-
-            obs.observe(grid);
-        }
+        gridObs.observe(valueGrid);
+      }
 
       window.addEventListener("scroll", () => {
         const nav = document.querySelector(".navbar");
