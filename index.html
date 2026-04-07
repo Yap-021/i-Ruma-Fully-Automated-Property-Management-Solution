@@ -729,113 +729,72 @@
                       transform: translateY(-2px);
                   }
 
-              .value-icon {
-                  width: 68px;
-                  height: 68px;
-                  border-radius: 16px;
-                  background: rgba(255,255,255,0.18);
-                  backdrop-filter: blur(10px);
-                  border: 1px solid rgba(255,255,255,0.22);
-                  box-shadow: 0 12px 28px rgba(0,0,0,0.18);
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  opacity: 0;
-                  transform: translateY(18px) scale(0.94);
-                  animation: fadeUp 0.9s ease forwards;
-              }
+            /* ===== NEW ICON GRID ===== */
 
-              .value-icon:nth-child(1) { animation-delay: 0.2s; }
-              .value-icon:nth-child(2) { animation-delay: 0.35s; }
-              .value-icon:nth-child(3) { animation-delay: 0.5s; }
-              .value-icon:nth-child(4) { animation-delay: 0.65s; }
-              .value-icon:nth-child(5) { animation-delay: 0.8s; }
+            .icon-grid-wrap {
+                position: relative;
+                height: 480px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
 
-              /* ── Value statement icon rail ───────────────── */
-              .value-icon-rail-wrap {
-                  min-height: 260px;
-                  position: relative;
-              }
+            .icon-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 110px);
+                gap: 20px;
 
-              .value-icon-rail {
-                  position: absolute;
-                  top: 26%;
-                  right: -8%;
-                  display: flex;
-                  flex-direction: column;
-                  gap: 16px;
-                  transform: rotate(18deg);
-              }
+                transform: rotate(-18deg) scale(1.05);
+            }
 
-              .value-icon-item {
-                  width: 68px;
-                  height: 68px;
-                  border-radius: 16px;
-                  background: rgba(255,255,255,0.18);
-                  backdrop-filter: blur(10px);
-                  border: 1px solid rgba(255,255,255,0.22);
-                  box-shadow: 0 12px 28px rgba(0,0,0,0.18);
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  opacity: 0;
-                  transform: translateX(58px) translateY(18px) scale(0.92);
-                  transition: transform .55s cubic-bezier(.2,.7,.1,1), opacity .5s ease;
-                  transition-delay: var(--icon-delay, 0ms);
-                  will-change: transform, opacity;
-              }
+            .icon-card {
+                width: 110px;
+                height: 110px;
+                border-radius: 22px;
 
-              /* 有动画能力时才先隐藏，避免触发失败导致整组看不见 */
-              .value-icon-rail.with-motion .value-icon-item {
-                  opacity: 0;
-                  transform: translateX(58px) translateY(18px) scale(0.92);
-              }
+                background: rgba(255,255,255,0.06);
+                backdrop-filter: blur(12px);
 
-              .value-icon-rail:not(.with-motion) .value-icon-item {
-                  opacity: 1;
-                  transform: translateX(0) translateY(0) scale(1);
-              }
+                display: flex;
+                align-items: center;
+                justify-content: center;
 
-              .value-icon-item i {
-                  color: #fff;
-                  font-size: 1.12rem;
-              }
+                box-shadow:
+                    0 12px 30px rgba(0,0,0,.45),
+                    inset 0 0 0 1px rgba(255,255,255,.08);
 
-              .value-icon-item:nth-child(1) { --icon-delay: 80ms; }
-              .value-icon-item:nth-child(2) { --icon-delay: 160ms; }
-              .value-icon-item:nth-child(3) { --icon-delay: 240ms; }
-              .value-icon-item:nth-child(4) { --icon-delay: 320ms; }
-              .value-icon-item:nth-child(5) { --icon-delay: 400ms; }
+                transition: all .3s ease;
+            }
 
-              .value-icon-rail.is-active .value-icon-item {
-                  opacity: 1;
-                  transform: translateX(0) translateY(0) scale(1);
-              }
+            .icon-card i {
+                font-size: 30px;
+                color: #fff;
+                opacity: .9;
+            }
 
-              .value-icon-rail:hover .value-icon-item,
-              .value-icon-rail:focus-within .value-icon-item {
-                  transform: translateX(-6px) scale(1.03);
-              }
+            .icon-card:hover {
+                transform: translateY(-10px) scale(1.08);
+                box-shadow:
+                    0 20px 45px rgba(0,0,0,.7),
+                    inset 0 0 0 1px rgba(255,255,255,.15);
+            }
 
-              .value-tagline {
-                  opacity: 0;
-                  transform: scale(0.94);
-                  animation: pulseText 0.8s ease forwards;
-                  animation-delay: 0.2s;
-              }
+            .icon-grid-wrap::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 40%;
+                height: 100%;
+                background: linear-gradient(to right, #06112a, transparent);
+                z-index: 2;
+            }
 
-              @keyframes fadeUp {
-                  to {
-                      opacity: 1;
-                      transform: translateY(0) scale(1);
-                  }
-              }
-
-              @keyframes pulseText {
-                  0% { opacity: 0; transform: translateY(8px) scale(0.9); }
-                  70% { opacity: 1; transform: translateY(0) scale(1.03); }
-                  100% { opacity: 1; transform: translateY(0) scale(1); }
-              }
+            @media (max-width: 992px) {
+                .icon-grid-wrap {
+                    display: none;
+                }
+            }
 
               /* ── App download ────────────────────────────── */
               .app-download-section {
@@ -1040,17 +999,6 @@
 
                   .app-store-btn {
                       min-width: 140px;
-                  }
-
-                  .value-icon-rail {
-                      right: 2%;
-                      top: 22%;
-                      transform: rotate(14deg) scale(.9);
-                  }
-
-                  .value-icon-item {
-                      width: 60px;
-                      height: 60px;
                   }
               }
 
@@ -1552,13 +1500,23 @@
                         </h2>
                         <p class="value-tagline" style="font-size: clamp(1.2rem, 2.4vw, 1.75rem); font-weight: 800; margin-top: 0; margin-bottom: 0.8rem; background: linear-gradient(90deg, #2a65f4, #a63af8, #f56f49); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;">Without lifting a finger.</p>
                     </div>
-                    <div class="col-lg-5 value-icon-rail-wrap">
-                        <div class="value-icon-rail">
-                            <div class="value-icon-item"><i class="fas fa-calendar-alt"></i></div>
-                            <div class="value-icon-item"><i class="fas fa-home"></i></div>
-                            <div class="value-icon-item"><i class="fas fa-file-invoice"></i></div>
-                            <div class="value-icon-item"><i class="fas fa-user"></i></div>
-                            <div class="value-icon-item"><i class="fas fa-cogs"></i></div>
+                    <div class="col-lg-5">
+                        <div class="icon-grid-wrap">
+                            <div class="icon-grid">
+
+                                <div class="icon-card"><i class="fas fa-home"></i></div>
+                                <div class="icon-card"><i class="fas fa-qrcode"></i></div>
+                                <div class="icon-card"><i class="fas fa-list"></i></div>
+
+                                <div class="icon-card"><i class="fas fa-tshirt"></i></div>
+                                <div class="icon-card"><i class="fas fa-heart"></i></div>
+                                <div class="icon-card"><i class="fas fa-briefcase"></i></div>
+
+                                <div class="icon-card"><i class="fas fa-cogs"></i></div>
+                                <div class="icon-card"><i class="fas fa-user"></i></div>
+                                <div class="icon-card"><i class="fas fa-calendar"></i></div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2041,23 +1999,24 @@
 
       window.addEventListener("scroll", revealOnScroll);
       revealOnScroll();
+      
+      const grid = document.querySelector('.icon-grid');
 
-      /* ── Value icon rail reveal ─────────────────────── */
-      const valueRail = document.querySelector('.value-icon-rail');
-      const valueRailWrap = document.querySelector('.value-icon-rail-wrap');
-      if (valueRail && valueRailWrap) {
-        valueRail.classList.add('with-motion');
-        const railObs = new IntersectionObserver(
-          (entries) => entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              valueRail.classList.add('is-active');
-              railObs.unobserve(entry.target);
-            }
-          }),
-          { threshold: 0.25 }
-        );
-        railObs.observe(valueRailWrap);
-      }
+        if (grid) {
+            const obs = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        grid.style.transform = "rotate(-18deg) scale(1.05) translateY(0)";
+                        grid.style.opacity = "1";
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            grid.style.transform = "rotate(-18deg) scale(0.9) translateY(40px)";
+            grid.style.opacity = "0";
+
+            obs.observe(grid);
+        }
 
       window.addEventListener("scroll", () => {
         const nav = document.querySelector(".navbar");
