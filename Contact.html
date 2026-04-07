@@ -450,6 +450,28 @@
                    border-color: var(--primary);
                    box-shadow: 0 0 0 4px var(--primary-light);
                }
+               .demo-form-group .field-error {
+                    display: none;
+                    font-size: .78rem;
+                    color: #dc2626;
+                    margin-top: 5px;
+                    font-family: 'Plus Jakarta Sans', sans-serif;
+                    font-weight: 600;
+                    align-items: center;
+                    gap: 4px; 
+               }
+               .demo-form-group .field-error.show {
+                    display: flex;
+               }
+               .demo-form-group input.is-invalid,
+               .demo-form-group textarea.is-invalid {
+                    border-color: #dc2626 !important;
+                    box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1) !important;
+               }
+               .demo-form-group input.is-valid {
+                    border-color: #16a34a !important;
+                    box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.08) !important;
+               }
                .btn-demo-submit {
                    width: 100%;
                    background: var(--primary);
@@ -759,23 +781,49 @@
                     <button class="demo-modal-close" onclick="closeDemoModal()">&times;</button>
                 </div>
                 <div class="demo-modal-body">
-                    <form id="demoForm">
+                    <form id="demoForm" novalidate>
+
                         <div class="demo-form-group">
-                            <label for="demo_name">Name</label>
-                            <input type="text" id="demo_name" name="name" placeholder="Your full name" required>
+                            <label for="demo_name">
+                                Name
+                                <span style="color:#dc2626;">*</span>
+                            </label>
+                            <input type="text" id="demo_name" name="name" placeholder="Your full name" autocomplete="name">
+                            <div class="field-error" id="err_name">
+                                <i class="fas fa-circle-exclamation" style="font-size:.72rem;"></i>
+                                <span>Please enter your full name.</span>
+                            </div>
                         </div>
+
                         <div class="demo-form-group">
-                            <label for="demo_phone">Mobile No</label>
-                            <input type="tel" id="demo_phone" name="phone" placeholder="+60 12-345 6789" required>
+                            <label for="demo_phone">Mobile No
+                                <span style="color:#dc2626;">*</span>
+                            </label>
+                            <input type="tel" id="demo_phone" name="phone" placeholder="+60 12-345 6789" autocomplete="tel">
+                            <div class="field-error" id="err_phone">
+                                <i class="fas fa-circle-exclamation" style="font-size:.72rem;"></i>
+                                <span>Please enter a valid mobile number.</span>
+                            </div>
                         </div>
+
                         <div class="demo-form-group">
-                            <label for="demo_email">Email</label>
-                            <input type="email" id="demo_email" name="email" placeholder="name@company.com" required>
+                            <label for="demo_email">Email
+                                <span style="color:#dc2626;">*</span>
+                            </label>
+                            <input type="email" id="demo_email" name="email" placeholder="name@company.com" autocomplete="email">
+                            <div class="field-error" id="err_email">
+                                <i class="fas fa-circle-exclamation" style="font-size:.72rem;"></i>
+                                <span>Please enter a valid email address.</span>
+                            </div>
                         </div>
+
                         <div class="demo-form-group">
-                            <label for="demo_message">Description</label>
-                            <textarea id="demo_message" name="message" rows="3" placeholder="Tell us about your property..."></textarea>
+                            <label for="demo_message">Description
+                                <span style="color:#94a3b8;font-weight:400;font-size:.75rem;">(Optional)</span>
+                            </label>
+                            <textarea id="demo_message" name="message" placeholder="Tell us about your property..."></textarea>
                         </div>
+
                         <button type="submit" class="btn-demo-submit" id="demoSubmitBtn">
                             <span id="demoBtnText">Book your demo now</span>
                             <div id="demoSpinner" class="spinner-border spinner-border-sm" style="display: none;" role="status"></div>
@@ -979,75 +1027,203 @@
             });
 
             /* ── Demo Modal Logic ──────────────────────────── */
-            const demoModal = document.getElementById('demoModalOverlay');
-            const demoForm = document.getElementById('demoForm');
-            const demoBtnText = document.getElementById('demoBtnText');
-            const demoSpinner = document.getElementById('demoSpinner');
+        const demoModal   = document.getElementById('demoModalOverlay');
+        const demoForm    = document.getElementById('demoForm');
+        const demoBtnText = document.getElementById('demoBtnText');
+        const demoSpinner = document.getElementById('demoSpinner');
 
-            function openDemoModal() {
-                demoModal.classList.add('active');
-                document.body.style.overflow = 'hidden';
+        function openDemoModal() {
+            demoModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            demoForm.reset();
+            clearAllDemoErrors();
+        }
+
+        function closeDemoModal() {
+            demoModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function showDemoToast(id) {
+            const toast = document.getElementById(id);
+            if (!toast) return;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 5000);
+        }
+
+        /* ── Phone auto-format  +60 12-345 6789 ── */
+        (function() {
+            const phoneEl = document.getElementById('demo_phone');
+            if (!phoneEl) return;
+
+            function formatFromDigits(allDigits) {
+                if (!allDigits) return '';
+                if (allDigits === '0') return '+60';
+                let d = allDigits;
+                if (d.startsWith('60'))     d = d.slice(2);
+                else if (d.startsWith('0')) d = d.slice(1);
+                if (d.length > 9) d = d.slice(0, 9);
+                if (!d && allDigits === '60') return '';
+                if (!d) return '';
+                if (d.length <= 2) return '+60 ' + d;
+                if (d.length <= 5) return '+60 ' + d.slice(0,2) + '-' + d.slice(2);
+                return '+60 ' + d.slice(0,2) + '-' + d.slice(2,5) + ' ' + d.slice(5);
             }
 
-            function closeDemoModal() {
-                demoModal.classList.remove('active');
-                document.body.style.overflow = '';
+            phoneEl.addEventListener('input', function() {
+                const all  = phoneEl.value.replace(/\D/g, '');
+                const next = formatFromDigits(all);
+                if (phoneEl.value !== next) phoneEl.value = next;
+                clearDemoError('demo_phone', 'err_phone');
+            });
+        })();
+
+        /* ── Validation helpers ── */
+        function showDemoError(inputId, errorId, msg) {
+            const input = document.getElementById(inputId);
+            const err   = document.getElementById(errorId);
+            if (!input || !err) return;
+            input.classList.add('is-invalid');
+            input.classList.remove('is-valid');
+            const span = err.querySelector('span');
+            if (msg && span) span.textContent = msg;
+            err.classList.add('show');
+        }
+
+        function clearDemoError(inputId, errorId) {
+            const input = document.getElementById(inputId);
+            const err   = document.getElementById(errorId);
+            if (input) { input.classList.remove('is-invalid'); }
+            if (err)   { err.classList.remove('show'); }
+        }
+
+        function markDemoValid(inputId) {
+            const input = document.getElementById(inputId);
+            if (input) {
+                input.classList.remove('is-invalid');
+                input.classList.add('is-valid');
+            }
+        }
+
+        function clearAllDemoErrors() {
+            ['demo_name','demo_phone','demo_email'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.remove('is-invalid','is-valid');
+            });
+            ['err_name','err_phone','err_email'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.remove('show');
+            });
+        }
+
+        function validateDemoForm() {
+            const name  = document.getElementById('demo_name').value.trim();
+            const phone = document.getElementById('demo_phone').value.trim();
+            const email = document.getElementById('demo_email').value.trim();
+            let valid   = true;
+
+            /* Name */
+            if (!name) {
+                showDemoError('demo_name', 'err_name', 'Please enter your full name.');
+                valid = false;
+            } else {
+                markDemoValid('demo_name');
             }
 
-            function showDemoToast(id) {
-                const toast = document.getElementById(id);
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 5000);
+            /* Phone */
+            const phoneRegex = /^\+60 \d{2}-\d{3} \d{4}$/;
+            if (!phone) {
+                showDemoError('demo_phone', 'err_phone', 'Please enter your phone number.');
+                valid = false;
+            } else if (!phoneRegex.test(phone)) {
+                showDemoError('demo_phone', 'err_phone', 'Format must be: +60 12-345 6789');
+                valid = false;
+            } else {
+                markDemoValid('demo_phone');
             }
 
-            demoForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                
-                const name = document.getElementById('demo_name').value.trim();
-                const phone = document.getElementById('demo_phone').value.trim();
-                const email = document.getElementById('demo_email').value.trim();
-                const message = document.getElementById('demo_message').value.trim();
+            /* Email */
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email) {
+                showDemoError('demo_email', 'err_email', 'Please enter your email address.');
+                valid = false;
+            } else if (!emailRegex.test(email)) {
+                showDemoError('demo_email', 'err_email', 'Please enter a valid email address.');
+                valid = false;
+            } else {
+                markDemoValid('demo_email');
+            }
 
-                demoBtnText.textContent = 'Sending...';
-                demoSpinner.style.display = 'block';
-                document.getElementById('demoSubmitBtn').disabled = true;
+            return valid;
+        }
 
-                try {
-                    const response = await fetch('/api/contact', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            from_name: name,
-                            phone: phone,
-                            reply_to: email,
-                            message: `[DEMO REQUEST]\n${message}`,
-                            recaptcha: 'bypass'
-                        })
-                    });
+        /* Clear errors while typing */
+        document.getElementById('demo_name').addEventListener('input',
+            () => clearDemoError('demo_name', 'err_name'));
+        document.getElementById('demo_email').addEventListener('input',
+            () => clearDemoError('demo_email', 'err_email'));
 
-                    const data = await response.json();
-                    if (data.ok) {
-                        showDemoToast('toastSuccess');
-                        demoForm.reset();
-                        setTimeout(closeDemoModal, 2000);
-                    } else {
-                        document.getElementById('toastErrorMsg').textContent = data.error || 'Failed to send request.';
-                        showDemoToast('toastError');
-                    }
-                } catch (error) {
-                    document.getElementById('toastErrorMsg').textContent = 'Network error. Please try again.';
+        /* ── Form submit ── */
+        demoForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            /* Validate first — stop if any error */
+            if (!validateDemoForm()) return;
+
+            const name    = document.getElementById('demo_name').value.trim();
+            const phone   = document.getElementById('demo_phone').value.trim();
+            const email   = document.getElementById('demo_email').value.trim();
+            const message = document.getElementById('demo_message').value.trim();
+
+            demoBtnText.textContent = 'Sending...';
+            demoSpinner.style.display = 'block';
+            document.getElementById('demoSubmitBtn').disabled = true;
+
+            try {
+                const response = await fetch('/api/contact', {
+                    method:  'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body:    JSON.stringify({
+                        from_name : name,
+                        phone     : phone,
+                        reply_to  : email,
+                        message   : `[DEMO REQUEST]\n${message}`,
+                        recaptcha : 'bypass'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.ok) {
+                    showDemoToast('toastSuccess');
+                    demoForm.reset();
+                    clearAllDemoErrors();
+                    setTimeout(closeDemoModal, 2000);
+                } else {
+                    const errEl = document.getElementById('toastErrorMsg');
+                    if (errEl) errEl.textContent = data.error || 'Failed to send request.';
                     showDemoToast('toastError');
-                } finally {
-                    demoBtnText.textContent = 'Book your demo now';
-                    demoSpinner.style.display = 'none';
-                    document.getElementById('demoSubmitBtn').disabled = false;
                 }
-            });
+            } catch (error) {
+                const errEl = document.getElementById('toastErrorMsg');
+                if (errEl) errEl.textContent = 'Network error. Please try again.';
+                showDemoToast('toastError');
+            } finally {
+                demoBtnText.textContent = 'Book your demo now';
+                demoSpinner.style.display = 'none';
+                document.getElementById('demoSubmitBtn').disabled = false;
+            }
+        });
 
-            // Close modal on click outside
-            demoModal.addEventListener('click', (e) => {
-                if (e.target === demoModal) closeDemoModal();
-            });
+        /* Close on click outside */
+        demoModal.addEventListener('click', (e) => {
+            if (e.target === demoModal) closeDemoModal();
+        });
+
+        /* Close on ESC */
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeDemoModal();
+        });
         </script>
     </body>
 </html>
