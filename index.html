@@ -1256,6 +1256,16 @@
                     grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
                     gap: 10px;
                }
+               .feat-icon {
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 8px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-bottom: 10px;
+                    font-size: 14px;
+                }
                .feat-item {
                     border: 1px solid var(--border);
                     border-radius: var(--r-md);
@@ -2033,7 +2043,9 @@
             <div class="demo-modal" style="max-width:720px">
                 <div class="demo-modal-header">
                     <h4>Platform features</h4>
-                    <button class="demo-model-close" onclick="closeFeaturesModal()">x</button>
+                    <button class="demo-model-close" onclick="closeFeaturesModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
                 <div style="border-bottom:1px solid var(--border);overflow-x:auto;">
                     <div style="display:flex;" id="featureTabs">
@@ -2052,26 +2064,32 @@
                         </p>
                         <div class="feat-grid">
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#e8f1fd;">🏠</div>
                                 <strong>Unit listings</strong>
                                 <p>Publish vacancies with photos, floor plans and pricing.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#e8f1fd;">📋</div>
                                 <strong>Digital tenancy agreements</strong>
                                 <p>Generate, send and e-sign contracts in minutes.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#e8f1fd;">🔑</div>
                                 <strong>Move-in / move-out</strong>
                                 <p>utomated checklists and key handover tracking.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#e8f1fd;">📅</div>
                                 <strong>Lease renewals</strong>
                                 <p>Auto-reminders 90, 60 and 30 days before expiry.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#e8f1fd;">🧾</div>
                                 <strong>Deposit management</strong>
                                 <p>Track security deposits with full audit trail.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#e8f1fd;">👤</div>
                                 <strong>Tenant screening</strong>
                                 <p>Collect documents and run background checks online.</p>
                             </div>
@@ -2091,26 +2109,32 @@
                         </p>
                         <div class="feat-grid">
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#e1f5ee;">📸</div>
                                 <strong>Photo reports</strong>
                                 <p>Attach photos and annotations to every inspection item.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#e1f5ee;">📆</div>
                                 <strong>Schedule inspections</strong>
                                 <p>Routine, entry, exit and mid-lease types all supported.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#e1f5ee;">📊</div>
                                 <strong>Condition reports</strong>
                                 <p>Instant PDF reports shared with owners and tenants.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#e1f5ee;">✅</div>
                                 <strong>Custom checklists</strong>
                                 <p>Room-by-room checklists tailored to each property type.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#e1f5ee;">📍</div>
                                 <strong>GPS verification</strong>
                                 <p>Confirm inspector location via mobile GPS stamp.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#e1f5ee;">🔔</div>
                                 <strong>Auto-reminders</strong>
                                 <p>Notify tenants and inspectors ahead of every visit.</p>
                             </div>
@@ -2130,26 +2154,32 @@
                         </p>
                         <div class="feat-grid">
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#faeeda;">🔧</div>
                                 <strong>Work order management</strong>
                                 <p>Create and assign jobs to contractors with one tap.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#faeeda;">📲</div>
                                 <strong>Resident request portal</strong>
                                 <p>Tenants submit issues via app — no phone calls needed.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#faeeda;">🏗️</div>
                                 <strong>Contractor directory</strong>
                                 <p>Maintain a vetted panel of approved service providers.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#faeeda;">📈</div>
                                 <strong>Status tracking</strong>
                                 <p>Real-time progress: open → in-progress → resolved.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#faeeda;">💬</div>
                                 <strong>In-app messaging</strong>
                                 <p>Chat directly with contractors inside each job.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#faeeda;">📂</div>
                                 <strong>Maintenance history</strong>
                                 <p>Full log of past work per unit — great for handovers.</p>
                             </div>
@@ -2169,26 +2199,32 @@
                         </p>
                         <div class="feat-grid">
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#eaf3de;">💳</div>
                                 <strong>Online payments</strong>
                                 <p>Collect rent via FPX, credit card and e-wallet (Ambank, Fiuu, iPay88).</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#eaf3de;">🧮</div>
                                 <strong>Auto invoicing</strong>
                                 <p>Generate and send rental invoices automatically each month.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#eaf3de;">📑</div>
                                 <strong>Trust accounting</strong>
                                 <p>Compliant owner disbursements with full audit trail.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#eaf3de;">📉</div>
                                 <strong>Arrears management</strong>
                                 <p>Automatic overdue reminders and penalty fee calculation.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#eaf3de;">📊</div>
                                 <strong>Financial reports</strong>
                                 <p>P&amp;L, income statements and owner statements at a click.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#eaf3de;">🔗</div>
                                 <strong>Bank reconciliation</strong>
                                 <p>Match receipts to bank transactions automatically.</p>
                             </div>
@@ -2208,26 +2244,32 @@
                         </p>
                         <div class="feat-grid">
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#e6f1fb;">📊</div>
                                 <strong>Portfolio overview</strong>
                                 <p>Occupancy, arrears and revenue across all properties.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#e6f1fb;">🗺️</div>
                                 <strong>Property map view</strong>
                                 <p>All properties plotted on an interactive live map.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#e6f1fb;">📅</div>
                                 <strong>Activity feed</strong>
                                 <p>A live stream of all actions across your portfolio.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#e6f1fb;">🔔</div>
                                 <strong>Smart alerts</strong>
                                 <p>Instant notifications for late rent, lease expiry and new requests.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#e6f1fb;">📈</div>
                                 <strong>Revenue analytics</strong>
                                 <p>Monthly trends, collection rates and income forecasting.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#e6f1fb;">⚙️</div>
                                 <strong>Custom widgets</strong>
                                 <p>Drag, resize and configure your dashboard layout.</p>
                             </div>
@@ -2247,26 +2289,32 @@
                         </p>
                         <div class="feat-grid">
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#fbeaf0;">📣</div>
                                 <strong>Broadcast notices</strong>
                                 <p>Send announcements to all residents or selected units.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#fbeaf0;">💬</div>
                                 <strong>In-app messaging</strong>
                                 <p>Direct chat between managers, residents and owners.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#fbeaf0;">📧</div>
                                 <strong>Email &amp; WhatsApp</strong>
                                 <p>Automated triggers send comms via your preferred channel.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#fbeaf0;">📝</div>
                                 <strong>Notice board</strong>
                                 <p>Digital notice board accessible via the resident app.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#fbeaf0;">🗳️</div>
                                 <strong>Polls &amp; surveys</strong>
                                 <p>Gather resident feedback with built-in voting tools.</p>
                             </div>
                             <div class="feat-item">
+                                <div class="feat-icon" style="background:#fbeaf0;">📖</div>
                                 <strong>Document library</strong>
                                 <p>Share by-laws, manuals and forms with residents securely.</p>
                             </div>
