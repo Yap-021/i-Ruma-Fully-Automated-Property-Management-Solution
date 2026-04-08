@@ -170,6 +170,30 @@
                       box-shadow: 0 10px 28px rgba(249,115,22,.35);
                   }
 
+                .btn-accent2 {
+                  background: var(--accent);
+                  color: var(--white);
+                  border: none;
+                  padding: 12px 28px;
+                  font-family: 'Plus Jakarta Sans', sans-serif;
+                  font-weight: 700;
+                  font-size: .88rem;
+                  border-radius: var(--r-pill);
+                  transition: var(--ease);
+                  cursor: pointer;
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  text-decoration: none;
+              }
+
+                  .btn-accent2:hover {
+                      background: var(--accent-dark);
+                      color: var(--white);
+                      transform: translateY(-2px);
+                      box-shadow: 0 10px 28px rgba(249, 22, 22, 0.35);
+                  }
+
               /* ── Section label ───────────────────────────── */
               .section-label {
                   display: inline-flex;
@@ -1218,7 +1242,7 @@
                         <li class="nav-item"><a class="nav-link" href="career.html">Career</a></li>
                         <li class="nav-item"><a class="nav-link" href="Contact.html">Contact</a></li>
                         <li class="ms-3">
-                            <button onclick="openDemoModal()" class="btn-accent" style="padding:11px 24px;font-size:.85rem;">
+                            <button onclick="openDemoModal()" class="btn-accent2" style="padding:11px 24px;font-size:.85rem;">
                                 <i class="fas fa-calendar-check" style="font-size:.8rem;"></i> Book a demo
                             </button>
                         </li>
@@ -1243,7 +1267,7 @@
                             <strong>3,500+ property managers</strong> across Malaysia.
                         </p>
                         <div class="mt-5 d-flex flex-wrap gap-3">
-                            <button onclick="openDemoModal()" class="btn-accent" style="padding:11px 24px;font-size:.85rem;">
+                            <button onclick="openDemoModal()" class="btn-accent2" style="padding:11px 24px;font-size:.85rem;">
                                 <i class="fas fa-calendar-check" style="font-size:.8rem;"></i> Book a demo — it's free
                             </button>
                             <a href="#services" class="btn-outline-white btn-lg">
@@ -1454,7 +1478,7 @@
                 </div>
 
                 <div class="mt-5 text-center reveal">
-                    <button onclick="openDemoModal()" class="btn-accent" style="padding:11px 24px;font-size:.85rem;">
+                    <button onclick="openDemoModal()" class="btn-accent2" style="padding:11px 24px;font-size:.85rem;">
                         <i class="fas fa-calendar-check"></i> Book a demo
                     </button>
                 </div>
@@ -1502,7 +1526,7 @@
                             runs exactly the way you've set it — consistently, reliably, hands-free.
                         </p>
                         <button onclick="alert('Explore automations')" class="btn-accent">
-                            Explore Automations →
+                            Explore More →
                         </button>
                     </div>
                     <div class="col-lg-6 reveal" style="transition-delay:.15s">
@@ -1553,7 +1577,6 @@
                 <div class="text-center mb-5 reveal">
                     <div class="section-label mx-auto mb-3">Trusted By</div>
                     <h2 class="display-6 fw-bold">Join 30+ companies that are growing with iRuma</h2>
-                    <p class="text-muted mt-2">SCM / KJPM / JLFM / Wincanton</p>
                 </div>
 
                 <div class="d-flex justify-content-center flex-wrap gap-2 mb-4">
@@ -1566,6 +1589,7 @@
                 <div class="marquee-wrapper mb-2">
                     <div class="marquee-track marquee-left">
                         <div class="marquee-inner d-flex align-items-center gap-3">
+                            <img class="partner-logo" src="image/Partner.png" alt="SCM" title="SCM" />
                             <img class="partner-logo" src="partners/OPM.jpg" alt="OPM" title="OPM" />
                             <img class="partner-logo" src="partners/DKSH.png" alt="DKSH" title="DKSH" />
                             <img class="partner-logo" src="partners/Microsoft.png" alt="Microsoft" title="Microsoft" />
@@ -1575,6 +1599,7 @@
                             <img class="partner-logo" src="partners/Fujistu.png" alt="Fujitsu" title="Fujitsu" />
                         </div>
                         <div class="marquee-inner d-flex align-items-center gap-3" aria-hidden="true">
+                            <img class="partner-logo" src="image/Partner.png" alt="SCM" title="SCM" />
                             <img class="partner-logo" src="partners/OPM.jpg" alt="OPM" title="OPM" />
                             <img class="partner-logo" src="partners/DKSH.png" alt="DKSH" title="DKSH" />
                             <img class="partner-logo" src="partners/Microsoft.png" alt="Microsoft" title="Microsoft" />
@@ -1589,6 +1614,7 @@
                 <div class="marquee-wrapper mb-2">
                     <div class="marquee-track marquee-right">
                         <div class="marquee-inner d-flex align-items-center gap-3">
+                            <img class="partner-logo" src="image/Partner.png" alt="KJPM" title="KJPM" />
                             <img class="partner-logo" src="image/Partner.png" alt="Transpecc" title="Transpecc" />
                             <img class="partner-logo" src="partners/Liberty_Insurans.jpg" alt="Liberty Insurance" title="Liberty Insurance" />
                             <img class="partner-logo" src="partners/oracle.png" alt="Oracle" title="Oracle" />
@@ -1598,6 +1624,7 @@
                             <img class="partner-logo" src="partners/Soyal.png" alt="Soyal" title="Soyal" />
                         </div>
                         <div class="marquee-inner d-flex align-items-center gap-3" aria-hidden="true">
+                            <img class="partner-logo" src="image/Partner.png" alt="KJPM" title="KJPM" />
                             <img class="partner-logo" src="image/Partner.png" alt="Transpecc" title="Transpecc" />
                             <img class="partner-logo" src="partners/Liberty_Insurans.jpg" alt="Liberty Insurance" title="Liberty Insurance" />
                             <img class="partner-logo" src="partners/oracle.png" alt="Oracle" title="Oracle" />
@@ -1612,6 +1639,7 @@
                 <div class="marquee-wrapper mb-2">
                     <div class="marquee-track marquee-left">
                         <div class="marquee-inner d-flex align-items-center gap-3">
+                            <img class="partner-logo" src="image/Partner.png" alt="JLFM" title="JLFM" />
                             <img class="partner-logo" src="partners/Rosewood.png" alt="Rosewood" title="Rosewood" />
                             <img class="partner-logo" src="image/Partner.png" alt="Alpha" title="Alpha" />
                             <img class="partner-logo" src="partners/Alicloud.png" alt="Alicloud" title="Alicloud" />
@@ -1621,6 +1649,7 @@
                             <img class="partner-logo" src="partners/Dahua.png" alt="Dahua" title="Dahua" />
                         </div>
                         <div class="marquee-inner d-flex align-items-center gap-3" aria-hidden="true">
+                            <img class="partner-logo" src="image/Partner.png" alt="JLFM" title="JLFM" />
                             <img class="partner-logo" src="partners/Rosewood.png" alt="Rosewood" title="Rosewood" />
                             <img class="partner-logo" src="image/Partner.png" alt="Alpha" title="Alpha" />
                             <img class="partner-logo" src="partners/Alicloud.png" alt="Alicloud" title="Alicloud" />
@@ -1635,6 +1664,7 @@
                 <div class="marquee-wrapper mb-3">
                     <div class="marquee-track marquee-right">
                         <div class="marquee-inner d-flex align-items-center gap-3">
+                            <img class="partner-logo" src="image/Partner.png" alt="Wincanton" title="Wincanton" />
                             <img class="partner-logo" src="partners/Ambank.jpeg" alt="AmBank" title="AmBank" />
                             <img class="partner-logo" src="partners/solarvest.webp" alt="Solarvest" title="Solarvest" />
                             <img class="partner-logo" src="partners/expoas.png" alt="Expom Security Services" title="Expom Security Services" />
@@ -1644,6 +1674,7 @@
                             <img class="partner-logo" src="partners/Bosch.png" alt="Bosch" title="Bosch" />
                         </div>
                         <div class="marquee-inner d-flex align-items-center gap-3" aria-hidden="true">
+                            <img class="partner-logo" src="image/Partner.png" alt="Wincanton" title="Wincanton" />
                             <img class="partner-logo" src="partners/Ambank.jpeg" alt="AmBank" title="AmBank" />
                             <img class="partner-logo" src="partners/solarvest.webp" alt="Solarvest" title="Solarvest" />
                             <img class="partner-logo" src="partners/expoas.png" alt="Expom Security Services" title="Expom Security Services" />
@@ -1858,7 +1889,7 @@
                                 <i class="fas fa-briefcase" style="width:16px;opacity:.5;"></i> sales@iruma.my
                             </a>
                         </div>
-                        <button onclick="openDemoModal()" class="btn-accent" style="padding:11px 24px;font-size:.85rem;">
+                        <button onclick="openDemoModal()" class="btn-accent2" style="padding:11px 24px;font-size:.85rem;">
                             <i class="fas fa-calendar-check"></i> Book a demo
                         </button>
                     </div>
