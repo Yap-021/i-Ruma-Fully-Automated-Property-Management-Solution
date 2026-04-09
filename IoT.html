@@ -153,9 +153,14 @@
                         color: var(--white);
                         transform: translateY(-2px);
                     }
-
-                .btn-accent {
-                    background: var(--red);
+                
+                .btn-book {
+                    background: linear-gradient(
+                        135deg,
+                        #2563eb,
+                        #3b82f6,
+                        #60a5fa
+                    );
                     color: var(--white);
                     border: none;
                     padding: 12px 28px;
@@ -163,20 +168,26 @@
                     font-weight: 700;
                     font-size: .88rem;
                     border-radius: var(--r-pill);
-                    transition: var(--ease);
+                    transition: all 0.25s ease;
                     cursor: pointer;
                     display: inline-flex;
                     align-items: center;
                     gap: 8px;
                     text-decoration: none;
+                    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
                 }
 
-                    .btn-accent:hover {
-                        background: var(--red-dark);
-                        color: var(--white);
-                        transform: translateY(-2px);
-                        box-shadow: 0 10px 28px rgba(239, 68, 68, 0.35);
-                    }
+                .btn-book:hover {
+                    background: linear-gradient(
+                        135deg,
+                        #2563eb,
+                        #3b82f6,
+                        #60a5fa
+                    );
+                    color: var(--white);
+                    transform: translateY(-3px);
+                    box-shadow: 0 12px 30px rgba(59, 130, 246, 0.45);
+                }
 
                 /* ══════════════════════════════════════════════
                     SECTION LABEL
@@ -1082,7 +1093,7 @@
                         <li class="nav-item"><a class="nav-link" href="career.html">Career</a></li>
                         <li class="nav-item"><a class="nav-link" href="Contact.html">Contact</a></li>
                         <li class="ms-3">
-                            <button onclick="openDemoModal()" class="btn-accent" style="padding:11px 24px;font-size:.85rem;">
+                            <button onclick="openDemoModal()" class="btn-book" style="padding:11px 24px;font-size:.85rem;">
                                 <i class="fas fa-calendar-check" style="font-size:.8rem;"></i> Book a demo
                             </button>
                         </li>
@@ -1751,7 +1762,7 @@
                                 <i class="fas fa-briefcase" style="width:16px;opacity:.5;"></i> sales@iruma.my
                             </a>
                         </div>
-                        <button onclick="openDemoModal()" class="btn-accent" style="padding:11px 24px;font-size:.85rem;">
+                        <button onclick="openDemoModal()" class="btn-book" style="padding:11px 24px;font-size:.85rem;">
                             <i class="fas fa-calendar-check"></i> Book a demo
                         </button>
                     </div>
