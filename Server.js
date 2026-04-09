@@ -135,6 +135,70 @@ function emailShell(innerHtml) {
 </body>
 </html>`;
 }
+/* ══════════════════════════════════════════════════════════════
+   ROUTE 3 — Booking Demo Form
+   POST /api/booking-demo
+   Body: { from_name, phone, reply_to, message, recaptcha }
+══════════════════════════════════════════════════════════════ */
+app.post('/api/booking-demo', async (req, res) =>{
+    const { from_name, phone, reply_to, message, recaptcha } = req.body;
+
+    if (!from_name || !reply_to || !message) {
+      return res.status(400).json({ ok: false, error: 'Missing required fields.' });
+    }
+
+    const inner = `
+      <p style="font-size:16px;font-weight:700;margin:0 0 4px;color:#202124;">New Demo Booking Request</p>
+      <p style="font-size:13pxcolor:#5f6368;margin:0 0 24px;">Someone has requested a demo via the i-Ruma website.</p>
+      
+      <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;">
+        <tr>
+          <td style="padding:10px 0;color:#5f6368;width:110px;border-bottom:1px solid #f1f3f4;">Name</td>
+          <td style="padding:10px 0;font-weight:700;border-bottom:1px solid #f1f3f4;">${from_name}</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 0;color:#5f6368;width:110px;border-bottom:1px solid #f1f3f4;">Phone</td>
+          <td style="padding:10px 0;border-bottom:1px solid #f1f3f4;">${phone || '—'}</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 0;color:#5f6368;width:110px;border-bottom:1px solid #f1f3f4;">Email</td>
+          <td style="padding:10px 0;border-bottom:1px solid #f1f3f4;">
+            <a href="mailto:${reply_to}" style="color#1a73e8;">${reply_to}</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:10px 0;color:#5f6368;width:110px;border-bottom:1px solid #f1f3f4;">Description</td>
+          <td style="padding:10px 0;line-height:1.7;">
+          ${message ? message.replace(/\n/g, '<br>') : '<span style="color:#9aa0a6;">No description provided.</span>'}
+          </td>
+        </tr>
+      </table>
+      
+      <div style="margin-top:28px;">
+        <a href="mailto:${reply_to}?subject=Re: Your demo request for i-Ruma"
+           style="display:inline-block;background:#0055bb;color:#ffffff;text-decoration:none;
+           padding:10px 24px;border-radius:4px;font-size:14px;font-weight:600;">
+           
+           &#8617;&nbsp; Reply to ${from_name}
+        </a>
+      </div>`;
+      
+      const mailOptions = {
+        from: `"i-Ruma Demo Booking" <${process.env.SMTP_USER}>`,
+        to: process.env.MAIL_TO || 'hello@i-ruma.com',
+        replyTo: reply_to,
+        subject: `[Demo Booking] New request from ${from_name}`,
+        html: emailShell(inner),
+      };
+
+      try {
+        await transporter.sendMail(emailOptions);
+        return res.json({ ok: true, message: 'Demo booking request sent successfully.' });
+      } catch (err) {
+        console.error('Demo booking mail error:', err);
+        return res.status(500).json({ ok: false, error: 'Failed to send. Please try again.' });
+      }
+});
 
 /* ══════════════════════════════════════════════════════════════
    ROUTE 1 — Contact Form
