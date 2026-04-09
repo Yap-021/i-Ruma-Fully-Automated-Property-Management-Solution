@@ -596,6 +596,21 @@
             color: var(--text); 
             white-space: nowrap; 
         }
+
+        .reports-to {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(90deg, #1e3a8a, #2563eb);
+            color: #1e3a8a;
+            border: 1px solid #93c5fd;
+            padding: 6px 16px;
+            border-radius: var(--r-pill);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: .82rem;
+            font-weight: 700;
+        }
+
         /* Salary pill */
         .salary-pill {
             display: inline-flex; 
@@ -2001,6 +2016,7 @@
                     exp: 'Mid-Senior · 2+ years',
                     loc: 'Kuala Lumpur',
                     dept: 'Engineering',
+                    report: 'IT Manager / CTO',
                     email: 'yongqi060121@gmail.com',
                     overview: 'We are seeking a talented <strong>Full Stack Developer</strong> to design, build, and maintain ' +
                     'scalable web and mobile applications using the Microsoft technology stack. You will work ' +
@@ -2111,7 +2127,7 @@
                         ],
                         '2. B2B Sales & Business Development': [
                             'Sell our technology solutions to property management companies (B2B)',
-                            'Conduct product demonstrations tailored to operational pain points (tenant communication, ' +
+                            'Conduct product demonstrations tailored to operational pain points (e.g., tenant communication, ' +
                             'maintenance tracking, financial reporting)',
                             'Manage the full sales cycle from lead generation to contract negotiation and closure',
                         ],
@@ -2307,6 +2323,10 @@
                                 <p style="opacity:.75;font-size:.88rem;margin-top:.4rem;">
                                     ${j.sub}
                                 </p>
+                                <span class="reports-to mt-2 d-inline-flex align-items-center gap-2">
+                                    <i class="fas fa-user me-1"></i>
+                                    ${j.report}
+                                </span>
                             </div>
                             <button class="drawer-close" onclick="closeDrawer()" aria-label="Close">
                                 <i class="fas fa-times"></i>
