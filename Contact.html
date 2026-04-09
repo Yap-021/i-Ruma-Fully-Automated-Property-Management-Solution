@@ -163,6 +163,28 @@
             }
             .form-control::placeholder { color: #b0bec8; }
 
+            .field-error {
+                display: none;
+                font-size: .78rem;
+                color: #dc2626;
+                margin-top: 6px;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-weight: 600;
+                align-items: center;
+                gap: 6px;
+            }
+            .field-error.show {
+                display: flex;
+            }
+            .field-error i {
+                font-size: .75rem;
+            }
+
+            .form-control.is-invalid {
+                border-color: #dc2626 !important;
+                box-shadow: 0 0 0 3px rgba(220,38,38,0.1) !important;
+            }
+
             .btn-primary-custom {
                 background: var(--primary);
                 color: var(--white);
@@ -632,23 +654,40 @@
                         <div class="section-label mb-3">Leave us a message</div>
                         <h2 class="fw-bold mb-3">Get in touch</h2>
 
-                        <form id="contactForm" novalidate class="needs-validation">
+                        <form id="contactForm" novalidate>
                             <div class="mb-3">
                                 <label class="form-label" for="from_name">Name*</label>
-                                <input type="text" id="from_name" name="from_name" class="form-control" placeholder="Your full name" required mixlength="3" maxlength="50">
+                                <input type="text" id="from_name" name="from_name" class="form-control" placeholder="Your full name" required>
+                                <div class="field-error" id="err_name">
+                                    <i class="fas fa-circle-exclamation"></i>
+                                    <span>Please enter your full name.</span>
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="phone">Phone Number*</label>
                                 <input type="tel" id="phone" name="phone" class="form-control" placeholder="+60 12-345 6789" required 
                                     pattern="^\+60\s\d{2}-\d{3}\s\d{4}$" title="Format: +60 12-345 6789">
+                                
+                                    <div class="field-error" id="err_phone">
+                                        <i class="fas fa-circle-exclamation"></i>
+                                        <span>Please enter a valid phone number.</span>
+                                    </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="reply_to">Business Email*</label>
                                 <input type="email" id="reply_to" name="reply_to" class="form-control" placeholder="you@company.com" required>
+                                <div class="field-error" id="err_email">
+                                    <i class="fas fa-circle-exclamation"></i>
+                                    <span>Please enter a valid email address.</span>
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="message">Message*</label>
-                                <textarea id="message" name="message" class="form-control" rows="6" placeholder="Tell us how we can help..." required minlength="10"></textarea>
+                                <textarea id="message" name="message" class="form-control" rows="6" placeholder="Tell us how we can help..." required></textarea>
+                                <div class="field-error" id="err_message">
+                                    <i class="fas fa-circle-exclamation"></i>
+                                    <span>Please enter your message.</span>
+                                </div>
                             </div>
 
                             <!-- Google reCAPTCHA v2 -->
@@ -657,6 +696,10 @@
                                     data-sitekey="6Ldzt6IsAAAAAIZftr41ug9FqyfvNlcr6bCC-DPC"
                                     data-theme="light"
                                     data-size="normal">
+                                </div>
+                                <div class="field-error" id="err_recaptcha">
+                                    <i class="fas fa-circle-exclamation"></i>
+                                    <span>Please complete the reCAPTCHA.</span>
                                 </div>
                             </div>
 
@@ -928,20 +971,15 @@
             const API_BASE = '';
 
             /* ── Malaysia mobile: auto-format to match pattern +60 XX-XXX XXXX ── */
-            (function initPhoneAutoFormat() {
+            function initPhoneAutoFormat() {
                 const phoneEl = document.getElementById('phone');
                 if (!phoneEl) return;
+
                 function formatFromDigits(allDigits) {
                     if (!allDigits) return '';
-
-                    if (allDigits === '0') return '+60 ';
-                    let d = allDigits;
-                    if (d.startsWith('60')) d = d.slice(2);
-                    else if (d.startsWith('0')) d = d.slice(1);
+                    let d = allDigits.replace(/^60|^0/, '');
                     if (d.length > 9) d = d.slice(0, 9);
 
-                    if (!d && allDigits === '60') return '+60 ';
-                    if (!d) return '';
                     if (d.length <= 2) return '+60 ' + d;
                     if (d.length <= 5) return '+60 ' + d.slice(0, 2) + '-' + d.slice(2);
                     return '+60 ' + d.slice(0, 2) + '-' + d.slice(2, 5) + ' ' + d.slice(5);
@@ -951,13 +989,15 @@
                     const next = formatFromDigits(all);
                     if (phoneEl.value !== next) phoneEl.value = next;
                 });
-            })();
+            }
  
             /* ── Toast helper ── */
             function showToast(id, duration = 5000) {
                 const el = document.getElementById(id);
-                el.classList.add('show');
-                setTimeout(() => el.classList.remove('show'), duration);
+                if (el){
+                    el.classList.add('show');
+                    setTimeout(() => el.classList.remove('show'), duration);
+                }
             }
  
             /* ── Button loading state ── */
@@ -967,41 +1007,77 @@
                 const icon    = document.getElementById('btnIcon');
                 const text    = document.getElementById('btnText');
                 btn.disabled          = isLoading;
-                spinner.style.display = isLoading ? 'block' : 'none';
+                spinner.style.display = isLoading ? 'inline-block' : 'none';
                 icon.style.display    = isLoading ? 'none' : 'inline';
                 text.textContent      = isLoading ? 'Sending…' : 'Send message';
             }
 
-            function validateForm() {
-                const form = document.getElementById('contactForm')
-
-                if (!form.checkValidity()) {
-                    form.classList.add('was-validated');
-                    return false;
+            function showError(fieldId, errorId, message){
+                const input = document.getElementById(fieldId);
+                const err = document.getElementById(errorId);
+                if (input) input.classList.add('is-invalid');
+                if (err) {
+                    err.querySelector('span').textContent = message;
+                    err.classList.add('show');
                 }
+            }
+
+            function clearError(fieldId, errorId){
+                const input = document.getElementById(fieldId);
+                const err = document.getElementById(errorId);
+                if (input) input.classList.remove('is-invalid');
+                if (err) err.classList.remove('show');
+            }
+
+            function validateContactForm() {
+                let valid = true;
+
+                // Name
+                const name = document.getElementById('from_name').value.trim();
+                if (!name || name.length < 2) {
+                    showError('from_name', 'err_name', 'Please enter your full name (min 2 characters).');
+                    valid = false;
+                } else clearError('from_name', 'err_name');
 
                 const phone = document.getElementById('phone').value.trim();
-                const phoneRegex = /^\+60\s\d{2}-\d{3}\s\d{4}$/
+                const phoneRegex = /^\+60\s\d{2}-\d{3}\s\d{4}$/;
+                if (!phone) {
+                    showError('phone', 'err_phone', 'Phone number is required.');
+                    valid = false;
+                } else if (!phoneRegex.test(phone)) {
+                    showError('phone', 'err_phone', 'Format: +60 12-345 6789');
+                    valid = false;
+                } else clearError('phone', 'err_phone');
 
-                if(!phoneRegex.test(phone)) {
-                    alert('Phone must be in format: +60 12-345 6789');
-                    return false;
+                const email = document.getElementById('reply_to').value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email) {
+                    showError('reply_to', 'err_email', 'Email is required.');
+                    valid = false;
+                } else if (!emailRegex.test(email)){
+                    showError('reply_to', 'err_email', 'Please enter a valid email address.');
+                    valid = false;
+                } else clearError('message', 'err_email');
+
+                const recaptchaResponse = grecaptcha.getResponse();
+                const errRecap = document.getElementById('err_recaptcha');
+                if (!recaptchaResponse) {
+                    if (errRecap) errRecap.classList.add('show');
+                    valid = false;
+                } else {
+                    if (errRecap) errRecap.classList.remove('show');
                 }
 
-                return true;
+                return valid;
             }
  
             /* ── Form submit → POST /api/contact ── */
             document.getElementById('contactForm').addEventListener('submit', async function (e) {
                 e.preventDefault();
-                
-                if (!validateForm()) return;
+                if (!validateContactForm()) return;
 
                 const recaptchaResponse = grecaptcha.getResponse();
-                if (!recaptchaResponse) {
-                    alert('Please complete the reCAPTCHA verification (click "I\'m not a robot").');
-                    return;
-                }
+                if (!recaptchaResponse) return;
  
                 setLoading(true);
  
@@ -1023,10 +1099,6 @@
  
                     if (data.ok) {
                         this.reset();
-                        // reCAPTCHA v2 checkbox 没有对应 id="notRobot" 的元素的话会导致 JS 报错
-                        // 这里直接依赖 grecaptcha.reset() 即可，避免访问 null
-                        const notRobotEl = document.getElementById('notRobot');
-                        if (notRobotEl) notRobotEl.checked = false;
                         grecaptcha.reset();
                         showToast('toastSuccess');
                     } else {
@@ -1035,8 +1107,8 @@
                         grecaptcha.reset();
                     }
                 } catch (err) {
-                    console.error('Network error:', err);
-                    document.getElementById('toastErrorMsg').textContent = 'Network error — is the server running?';
+                    console.error(err);
+                    document.getElementById('toastErrorMsg').textContent = 'Network error. Please try again.';
                     showToast('toastError');
                     grecaptcha.reset();
                 } finally {
@@ -1044,108 +1116,83 @@
                 }
             });
 
+            const fields = [
+                { input: 'from_name', err: 'err_name' },
+                { input: 'phone', err: 'err_phone' },
+                { input: 'reply_to', err: 'err_email' },
+                { input: 'message', err: 'err_message' }
+            ];
+
+            fields.forEach(f => {
+                const el = document.getElementById(f.input);
+                if (el) el.addEventListener('input', () => clearError(f.input, f.err));
+            });
+
             /* ── Demo Modal Logic ──────────────────────────── */
-        const demoModal   = document.getElementById('demoModalOverlay');
-        const demoForm    = document.getElementById('demoForm');
-        const demoBtnText = document.getElementById('demoBtnText');
-        const demoSpinner = document.getElementById('demoSpinner');
+            const demoModal   = document.getElementById('demoModalOverlay');
+            const demoForm    = document.getElementById('demoForm');
+            const demoBtnText = document.getElementById('demoBtnText');
+            const demoSpinner = document.getElementById('demoSpinner');
 
-        function openDemoModal() {
-            demoModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            demoForm.reset();
-            clearAllDemoErrors();
-        }
-
-        function closeDemoModal() {
-            demoModal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function showDemoToast(id) {
-            const toast = document.getElementById(id);
-            if (!toast) return;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 5000);
-        }
-
-        /* ── Phone auto-format  +60 12-345 6789 ── */
-        (function() {
-            const phoneEl = document.getElementById('demo_phone');
-            if (!phoneEl) return;
-
-            function formatFromDigits(allDigits) {
-                if (!allDigits) return '';
-                if (allDigits === '0') return '+60';
-                let d = allDigits;
-                if (d.startsWith('60'))     d = d.slice(2);
-                else if (d.startsWith('0')) d = d.slice(1);
-                if (d.length > 9) d = d.slice(0, 9);
-                if (!d && allDigits === '60') return '';
-                if (!d) return '';
-                if (d.length <= 2) return '+60 ' + d;
-                if (d.length <= 5) return '+60 ' + d.slice(0,2) + '-' + d.slice(2);
-                return '+60 ' + d.slice(0,2) + '-' + d.slice(2,5) + ' ' + d.slice(5);
+            function openDemoModal() {
+                demoModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                demoForm.reset();
+                clearAllDemoErrors();
             }
 
-            phoneEl.addEventListener('input', function() {
-                const all  = phoneEl.value.replace(/\D/g, '');
-                const next = formatFromDigits(all);
-                if (phoneEl.value !== next) phoneEl.value = next;
-                clearDemoError('demo_phone', 'err_phone');
-            });
-        })();
-
-        /* ── Validation helpers ── */
-        function showDemoError(inputId, errorId, msg) {
-            const input = document.getElementById(inputId);
-            const err   = document.getElementById(errorId);
-            if (!input || !err) return;
-            input.classList.add('is-invalid');
-            input.classList.remove('is-valid');
-            const span = err.querySelector('span');
-            if (msg && span) span.textContent = msg;
-            err.classList.add('show');
-        }
-
-        function clearDemoError(inputId, errorId) {
-            const input = document.getElementById(inputId);
-            const err   = document.getElementById(errorId);
-            if (input) { input.classList.remove('is-invalid'); }
-            if (err)   { err.classList.remove('show'); }
-        }
-
-        function markDemoValid(inputId) {
-            const input = document.getElementById(inputId);
-            if (input) {
-                input.classList.remove('is-invalid');
-                input.classList.add('is-valid');
+            function closeDemoModal() {
+                demoModal.classList.remove('active');
+                document.body.style.overflow = '';
             }
-        }
 
-        function clearAllDemoErrors() {
-            ['demo_name','demo_phone','demo_email'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.classList.remove('is-invalid','is-valid');
-            });
-            ['err_name','err_phone','err_email'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.classList.remove('show');
-            });
-        }
+            function showDemoToast(id) {
+                showToast(id);
+            }
 
-        function validateDemoForm() {
-            const name  = document.getElementById('demo_name').value.trim();
-            const phone = document.getElementById('demo_phone').value.trim();
-            const email = document.getElementById('demo_email').value.trim();
-            let valid   = true;
+            initPhoneAutoFormat('demo_phone');
+
+            /* ── Validation helpers ── */
+            function showDemoError(inputId, errorId, msg) {
+                const input = document.getElementById(inputId);
+                const err   = document.getElementById(errorId);
+                if (!input) input.classList.add('is-invalid');
+                if (err) {
+                    err.querySelector('span').textContent = msg;
+                    err.classList.add('show');
+                }
+            }
+
+            function clearDemoError(inputId, errorId) {
+                const input = document.getElementById(inputId);
+                const err   = document.getElementById(errorId);
+                if (input) input.classList.remove('is-invalid');
+                if (err) err.classList.remove('show');
+            }
+
+            function clearAllDemoErrors() {
+                ['demo_name','demo_phone','demo_email'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.classList.remove('is-invalid','is-valid');
+                });
+                ['err_name','err_phone','err_email'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.classList.remove('show');
+                });
+            }
+
+            function validateDemoForm() {
+                let valid   = true;
+                const name  = document.getElementById('demo_name').value.trim();
+                const phone = document.getElementById('demo_phone').value.trim();
+                const email = document.getElementById('demo_email').value.trim();
 
             /* Name */
             if (!name) {
                 showDemoError('demo_name', 'err_name', 'Please enter your full name.');
                 valid = false;
             } else {
-                markDemoValid('demo_name');
+                clearDemoError('demo_name', 'err_name');
             }
 
             /* Phone */
@@ -1157,7 +1204,7 @@
                 showDemoError('demo_phone', 'err_phone', 'Format must be: +60 12-345 6789');
                 valid = false;
             } else {
-                markDemoValid('demo_phone');
+                clearDemoError('demo_phone', 'err_phone');
             }
 
             /* Email */
@@ -1169,29 +1216,16 @@
                 showDemoError('demo_email', 'err_email', 'Please enter a valid email address.');
                 valid = false;
             } else {
-                markDemoValid('demo_email');
+                clearDemoError('demo_email', 'err_email');
             }
 
             return valid;
         }
 
-        /* Clear errors while typing */
-        document.getElementById('demo_name').addEventListener('input',
-            () => clearDemoError('demo_name', 'err_name'));
-        document.getElementById('demo_email').addEventListener('input',
-            () => clearDemoError('demo_email', 'err_email'));
-
         /* ── Form submit ── */
         demoForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-
-            /* Validate first — stop if any error */
             if (!validateDemoForm()) return;
-
-            const name    = document.getElementById('demo_name').value.trim();
-            const phone   = document.getElementById('demo_phone').value.trim();
-            const email   = document.getElementById('demo_email').value.trim();
-            const message = document.getElementById('demo_message').value.trim();
 
             demoBtnText.textContent = 'Sending...';
             demoSpinner.style.display = 'block';
@@ -1202,10 +1236,10 @@
                     method:  'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body:    JSON.stringify({
-                        from_name : name,
-                        phone     : phone,
-                        reply_to  : email,
-                        message   : `[DEMO REQUEST]\n${message}`,
+                        from_name : document.getElementById('demo_name').value.trim(),
+                        phone     : document.getElementById('demo_phone').value.trim(),
+                        reply_to  : document.getElementById('demo_email').value.trim(),
+                        message   : `[DEMO REQUEST]\n${document.getElementById('demo_message').value.trim()}`,
                         recaptcha : 'bypass'
                     })
                 });
@@ -1218,13 +1252,11 @@
                     clearAllDemoErrors();
                     setTimeout(closeDemoModal, 2000);
                 } else {
-                    const errEl = document.getElementById('toastErrorMsg');
-                    if (errEl) errEl.textContent = data.error || 'Failed to send request.';
+                    document.getElementById('toastErrorMsg').textContent = data.error || 'Failed to send request.';
                     showDemoToast('toastError');
                 }
             } catch (error) {
-                const errEl = document.getElementById('toastErrorMsg');
-                if (errEl) errEl.textContent = 'Network error. Please try again.';
+                document.getElementById('toastErrorMsg').textContent = 'Network error. Please try again.';
                 showDemoToast('toastError');
             } finally {
                 demoBtnText.textContent = 'Book your demo now';
@@ -1242,6 +1274,8 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeDemoModal();
         });
+
+        initPhoneFormatter('phone');
 
         function initMap() {
                 const officeLocation = {
@@ -1263,8 +1297,6 @@
                             "featureType": "poi",
                             "elementType": "labels",
                             "stylers": [{ "visibility": "off" }]
-                        },
-                        {
                         }
                     ]
                 });
