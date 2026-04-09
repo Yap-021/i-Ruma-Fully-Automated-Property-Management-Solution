@@ -8,6 +8,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
         <style>
             /* ══════════════════════════════════════════════
@@ -1221,75 +1222,6 @@
                .toast-custom i { font-size: 1.2rem; }
                .toast-custom.success i { color: #10b981; }
                .toast-custom.error i { color: #ef4444; }
-
-               /* ── Features Modal tabs ── */
-               .feat-tab {
-                    padding: 12px 18px;
-                    font-family: 'Plus Jakarta Sans', sans-serif;
-                    font-size: .82rem;
-                    font-weight: 700;
-                    border: none;
-                    background: transparent;
-                    color: var(--muted);
-                    cursor: pointer;
-                    white-space: nowrap;
-                    border-bottom: 2px solid transparent;
-                    transition: var(--ease);
-               }
-               .feat-tab.active {
-                    color: var(--primary);
-                    border-bottom: 2px solid var(--primary);
-                    background: var(--primary-xlight);
-               }
-               .feat-tab:hover:not(.active) {
-                    color: var(--text);
-                    background: var(--surface);
-               }
-               .feat-panel {
-                    display: none;
-               }
-               .feat-panel.active {
-                    display: block;
-               }
-               .feat-grid {
-                    display: grid;
-                    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-                    gap: 10px;
-               }
-               .feat-icon {
-                    width: 32px;
-                    height: 32px;
-                    border-radius: 8px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin-bottom: 10px;
-                    font-size: 14px;
-                }
-               .feat-item {
-                    border: 1px solid var(--border);
-                    border-radius: var(--r-md);
-                    padding: 14px 16px;
-                    background: var(--white);
-                    transition: var(--ease);
-               }
-               .feat-item:hover {
-                    border-color: var(--primary);
-                    box-shadow: var(--sh-sm);
-               }
-               .feat-item strong {
-                    font-family: 'Plus Jakarta Sans', sans-serif;
-                    font-size: .85rem;
-                    display: block;
-                    margin-bottom: 5px;
-                    color: var(--text);
-               }
-               .feat-item p {
-                    font-size: .8rem;
-                    color: var(--muted);
-                    margin: 0;
-                    line-height: 1.55;
-               }
         </style>
     </head>
     <body>
@@ -1570,7 +1502,7 @@
                     <p class="fw-bold fs-5 mb-1" style="color:var(--text-2);">Watch the platform overview</p>
                     <p class="text-muted small mb-0">3 min · No signup required</p>
                 </div>
-                <button onclick="openFeaturesModal()"
+                <button onclick="alert('Interactive features: inspections, maintenance, leasing')"
                         class="btn btn-link text-primary fw-bold mt-4 fs-6 text-decoration-none">
                     Explore all features →
                 </button>
@@ -1596,8 +1528,8 @@
                             Whether it's assigning tasks, sending updates, or progressing checklists, everything
                             runs exactly the way you've set it — consistently, reliably, hands-free.
                         </p>
-                        <button onclick="openFeaturesModal()" class="btn-accent">
-                            Explore More →
+                        <button onclick="alert('Explore automations')" class="btn-accent">
+                            Explore Automations →
                         </button>
                     </div>
                     <div class="col-lg-6 reveal" style="transition-delay:.15s">
@@ -2038,301 +1970,6 @@
             </div>
         </div>
 
-        <!-- Features Modal -->
-        <div class="demo-modal-overlay" id="featuresModalOverlay">
-            <div class="demo-modal" style="max-width:720px">
-                <div class="demo-modal-header">
-                    <h4>Platform features</h4>
-                    <button class="demo-model-close" onclick="closeFeaturesModal()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div style="border-bottom:1px solid var(--border);overflow-x:auto;">
-                    <div style="display:flex;" id="featureTabs">
-                        <button class="feat-tab active" data-tab="leasing">Leasing</button>
-                        <button class="feat-tab" data-tab="inspections">Inspections</button>
-                        <button class="feat-tab" data-tab="maintenance">Maintenance</button>
-                        <button class="feat-tab" data-tab="accounting">Accounting</button>
-                        <button class="feat-tab" data-tab="dashboard">Dashboard</button>
-                        <button class="feat-tab" data-tab="comms">Communications</button>
-                    </div>
-                </div>
-                <div class="demo-modal-body" style="padding:24px;">
-                    <div class="feat-panel active" id="fpanel-leasing">
-                        <p style="font-size:.9rem;color:var(--muted);margin-bottom:16px;">
-                            End-to-end leasing — from listing to signed agreement, fully automated.
-                        </p>
-                        <div class="feat-grid">
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#e8f1fd;">🏠</div>
-                                <strong>Unit listings</strong>
-                                <p>Publish vacancies with photos, floor plans and pricing.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#e8f1fd;">📋</div>
-                                <strong>Digital tenancy agreements</strong>
-                                <p>Generate, send and e-sign contracts in minutes.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#e8f1fd;">🔑</div>
-                                <strong>Move-in / move-out</strong>
-                                <p>utomated checklists and key handover tracking.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#e8f1fd;">📅</div>
-                                <strong>Lease renewals</strong>
-                                <p>Auto-reminders 90, 60 and 30 days before expiry.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#e8f1fd;">🧾</div>
-                                <strong>Deposit management</strong>
-                                <p>Track security deposits with full audit trail.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#e8f1fd;">👤</div>
-                                <strong>Tenant screening</strong>
-                                <p>Collect documents and run background checks online.</p>
-                            </div>
-                        </div>
-                        <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
-                            <button onclick="closeFeaturesModal();openDemoModal();" class="btn-accent2" 
-                                style="padding:10px 22px;font-size:.85rem;">
-                                
-                                <i class="fas fa-calendar-check"></i>
-                                Book a demo
-                            </button>
-                        </div>
-                    </div>
-                    <div class="feat-panel" id="fpanel-inspections">
-                        <p style="font-size:.9rem;color:var(--muted);margin-bottom:16px;">
-                            Schedule, conduct and report inspections — paperlessly, from any device.
-                        </p>
-                        <div class="feat-grid">
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#f3e8ff;">📸</div>
-                                <strong>Photo reports</strong>
-                                <p>Attach photos and annotations to every inspection item.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#f3e8ff;">📆</div>
-                                <strong>Schedule inspections</strong>
-                                <p>Routine, entry, exit and mid-lease types all supported.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#f3e8ff;">📊</div>
-                                <strong>Condition reports</strong>
-                                <p>Instant PDF reports shared with owners and tenants.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#f3e8ff;">✅</div>
-                                <strong>Custom checklists</strong>
-                                <p>Room-by-room checklists tailored to each property type.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#f3e8ff;">📍</div>
-                                <strong>GPS verification</strong>
-                                <p>Confirm inspector location via mobile GPS stamp.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#f3e8ff;">🔔</div>
-                                <strong>Auto-reminders</strong>
-                                <p>Notify tenants and inspectors ahead of every visit.</p>
-                            </div>
-                        </div>  
-                        <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
-                            <button onclick="closeFeaturesModal();openDemoModal();" class="btn-accent2" 
-                                style="padding:10px 22px;font-size:.85rem;">
-                                
-                                <i class="fas fa-calendar-check"></i>
-                                    Book a demo
-                            </button>
-                        </div>
-                    </div>
-                    <div class="feat-panel" id="fpanel-maintenance">
-                        <p style="font-size:.9rem;color:var(--muted);margin-bottom:16px;">
-                            Log, assign and track every maintenance request — from submission to completion.
-                        </p>
-                        <div class="feat-grid">
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#faeeda;">🔧</div>
-                                <strong>Work order management</strong>
-                                <p>Create and assign jobs to contractors with one tap.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#faeeda;">📲</div>
-                                <strong>Resident request portal</strong>
-                                <p>Tenants submit issues via app — no phone calls needed.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#faeeda;">🏗️</div>
-                                <strong>Contractor directory</strong>
-                                <p>Maintain a vetted panel of approved service providers.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#faeeda;">📈</div>
-                                <strong>Status tracking</strong>
-                                <p>Real-time progress: open → in-progress → resolved.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#faeeda;">💬</div>
-                                <strong>In-app messaging</strong>
-                                <p>Chat directly with contractors inside each job.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#faeeda;">📂</div>
-                                <strong>Maintenance history</strong>
-                                <p>Full log of past work per unit — great for handovers.</p>
-                            </div>
-                        </div>
-                        <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
-                            <button onclick="closeFeaturesModal();openDemoModal();" class="btn-accent2" 
-                                style="padding:10px 22px;font-size:.85rem;">
-                                
-                                <i class="fas fa-calendar-check"></i>
-                                Book a demo
-                            </button>
-                        </div>
-                    </div>
-                    <div class="feat-panel" id="fpanel-accounting">
-                        <p style="font-size:.9rem;color:var(--muted);margin-bottom:16px;">
-                            Trust accounting, invoicing and financial reporting built for Malaysian property managers.
-                        </p>
-                        <div class="feat-grid">
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#eaf3de;">💳</div>
-                                <strong>Online payments</strong>
-                                <p>Collect rent via FPX, credit card and e-wallet (Ambank, Fiuu, iPay88).</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#eaf3de;">🧮</div>
-                                <strong>Auto invoicing</strong>
-                                <p>Generate and send rental invoices automatically each month.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#eaf3de;">📑</div>
-                                <strong>Trust accounting</strong>
-                                <p>Compliant owner disbursements with full audit trail.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#eaf3de;">📉</div>
-                                <strong>Arrears management</strong>
-                                <p>Automatic overdue reminders and penalty fee calculation.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#eaf3de;">📊</div>
-                                <strong>Financial reports</strong>
-                                <p>P&amp;L, income statements and owner statements at a click.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#eaf3de;">🔗</div>
-                                <strong>Bank reconciliation</strong>
-                                <p>Match receipts to bank transactions automatically.</p>
-                            </div>
-                        </div>
-                        <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
-                            <button onclick="closeFeaturesModal();openDemoModal();" class="btn-accent2" 
-                                style="padding:10px 22px;font-size:.85rem;">
-                                
-                                <i class="fas fa-calendar-check"></i>
-                                Book a demo
-                            </button>
-                        </div>
-                    </div>
-                    <div class="feat-panel" id="fpanel-dashboard">
-                        <p style="font-size:.9rem;color:var(--muted);margin-bottom:16px;">
-                            20 widgets, 56 live stats — oversee your entire portfolio at a glance.
-                        </p>
-                        <div class="feat-grid">
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#fecdd3;">📊</div>
-                                <strong>Portfolio overview</strong>
-                                <p>Occupancy, arrears and revenue across all properties.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#fecdd3;">🗺️</div>
-                                <strong>Property map view</strong>
-                                <p>All properties plotted on an interactive live map.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#fecdd3;">📅</div>
-                                <strong>Activity feed</strong>
-                                <p>A live stream of all actions across your portfolio.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#fecdd3;">🔔</div>
-                                <strong>Smart alerts</strong>
-                                <p>Instant notifications for late rent, lease expiry and new requests.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#fecdd3;">📈</div>
-                                <strong>Revenue analytics</strong>
-                                <p>Monthly trends, collection rates and income forecasting.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#fecdd3;">⚙️</div>
-                                <strong>Custom widgets</strong>
-                                <p>Drag, resize and configure your dashboard layout.</p>
-                            </div>
-                        </div>
-                        <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
-                            <button onclick="closeFeaturesModal();openDemoModal();" class="btn-accent2" 
-                                style="padding:10px 22px;font-size:.85rem;">
-                                
-                                <i class="fas fa-calendar-check"></i>
-                                Book a demo
-                            </button>
-                        </div>
-                    </div>
-                    <div class="feat-panel" id="fpanel-comms">
-                        <p style="font-size:.9rem;color:var(--muted);margin-bottom:16px;">
-                            Keep residents, owners and your team in the loop — automatically, at every step.
-                        </p>
-                        <div class="feat-grid">
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#fbeaf0;">📣</div>
-                                <strong>Broadcast notices</strong>
-                                <p>Send announcements to all residents or selected units.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#fbeaf0;">💬</div>
-                                <strong>In-app messaging</strong>
-                                <p>Direct chat between managers, residents and owners.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#fbeaf0;">📧</div>
-                                <strong>Email &amp; WhatsApp</strong>
-                                <p>Automated triggers send comms via your preferred channel.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#fbeaf0;">📝</div>
-                                <strong>Notice board</strong>
-                                <p>Digital notice board accessible via the resident app.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#fbeaf0;">🗳️</div>
-                                <strong>Polls &amp; surveys</strong>
-                                <p>Gather resident feedback with built-in voting tools.</p>
-                            </div>
-                            <div class="feat-item">
-                                <div class="feat-icon" style="background:#fbeaf0;">📖</div>
-                                <strong>Document library</strong>
-                                <p>Share by-laws, manuals and forms with residents securely.</p>
-                            </div>
-                        </div>
-                        <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
-                            <button onclick="closeFeaturesModal();openDemoModal();" class="btn-accent2" 
-                                style="padding:10px 22px;font-size:.85rem;">
-                                
-                                <i class="fas fa-calendar-check"></i>
-                                Book a demo
-                            </button>
-                        </div>
-                    </div> 
-                </div>
-            </div>
-        </div>
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         <script>
       /* ── Scroll reveal ─────────────────────────────── */
       const revealObs = new IntersectionObserver(
@@ -2635,28 +2272,6 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeDemoModal();
         });
-
-            // Features modal
-            const featuresModal = document.getElementById('featuresModalOverlay');
-            function openFeaturesModal() {
-                featuresModal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-
-            function closeFeaturesModal() {
-                featuresModal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-
-            document.getElementById('featureTabs').addEventListener('click', function(e) {
-                const btn = e.target.closest('.feat-tab');
-                if (!btn) return;
-                document.querySelectorAll('.feat-tab').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.feat-panel').forEach(p => p.classList.remove('active'));
-                btn.classList.add('active');
-                document.getElementById('fpanel-' + btn.dataset.tab).classList.add('active');
-            });
-            featuresModal.addEventListener('click', e => { if (e.target === featuresModal) closeFeaturesModal(); });
         </script>
     </body>
 </html>
