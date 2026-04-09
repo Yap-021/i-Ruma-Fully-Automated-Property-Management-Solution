@@ -1988,9 +1988,9 @@
                         'Retrospective report on challenges and solutions',
                     ],
                     checkpoints: [
-                        'End of Month 1: Functional prototype (To-Do List App)',
-                        'End of Month 2: Core App features integrated with backend',
-                        'End of Month 3: App ready for deployment with test cases',
+                        '<b>End of Month 1: </b>Functional prototype (To-Do List App)',
+                        '<b>End of Month 2: </b>Core App features integrated with backend',
+                        '<b>End of Month 3: </b>App ready for deployment with test cases',
                     ],
                 },
 
@@ -2250,7 +2250,11 @@
                                     <div class="timeline-item-title">${t.label}</div>
                                     ${t.objective ? `
                                         <div class="timeline-item-objective">
+                                            <p style="font-weight:600;color:var(--text);margin-bottom:.3rem;">
+                                                <b>Objective: </b>
+                                            </p>
                                             ${t.objective}
+                                            <br>
                                         </div>
                                     ` : ''}
                                     <div class="timeline-item-body">
@@ -2276,7 +2280,7 @@
                             ${renderList(j.checkpoints)}
                             <p style="font-size:.85rem;color:var(--muted);margin-top:.8rem;">
                                 <i class="fas fa-user-tie me-1 text-primary"></i>
-                                <strong>Mentorship:</strong> Regular 1:1 sessions for feedback, troubleshooting, and career guidance.
+                                <strong><b>Mentorship: </b></strong>Regular 1:1 sessions for feedback, troubleshooting, and career guidance.
                             </p>
                         </div>`;
                 }
