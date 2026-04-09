@@ -543,18 +543,62 @@
                     background: var(--surface);
                     border: 1px solid var(--border);
                     border-radius: 10px;
-                    padding: 6px 14px;
+                    padding: 8px 16px;
                     font-family: 'Plus Jakarta Sans', sans-serif;
-                    font-size: .78rem;
+                    font-size: 0.8rem;
                     font-weight: 700;
                     color: var(--text-2);
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    cursor: pointer;
                 }
 
-                    .spec-chip i {
-                        color: var(--primary);
-                        font-size: .7rem;
-                    }
+                .spec-chip i {
+                    font-size: 0.85rem;
+                    transition: all 0.3s ease;
+                }
 
+                .spec-chip:hover {
+                    transform: translateY(-3px);
+                    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+                }
+
+                /* Custom hover colors for each tab */
+                #panel-barrier .spec-chip:hover {
+                    background: #fee2e2;
+                    border-color: #dc2626;
+                    color: #dc2626;
+                }
+                #panel-barrier .spec-chip:hover i {
+                    color: #dc2626;
+                }
+
+                #panel-life .spec-chip:hover {
+                    background: #f3e8ff;
+                    border-color: #a855f7;
+                    color: #a855f7;
+                }
+                #panel-life .spec-chip:hover i {
+                    color: #a855f7;
+                }
+
+                #panel-attendance .spec-chip:hover {
+                    background: #fefce8;
+                    border-color: #ca8a04;
+                    color: #ca8a04;
+                }
+                #panel-attendance .spec-chip:hover i {
+                    color: #ca8a04;
+                }
+
+                #panel-facilities .spec-chip:hover {
+                    background: #ccfbf1;
+                    border-color: #0f766e;
+                    color: #0f766e;
+                }
+                #panel-facilities .spec-chip:hover i {
+                    color: #0f766e;
+                }
+                
                 /* Media placeholder */
                 .media-box {
                     background: var(--surface);
@@ -629,8 +673,8 @@
                 }
 
                 /* ══════════════════════════════════════════════
-               INTEGRATION GRID
-            ══════════════════════════════════════════════ */
+                INTEGRATION GRID
+                ══════════════════════════════════════════════ */
                 .integration-cat-title {
                     font-family: 'Plus Jakarta Sans', sans-serif;
                     font-weight: 800;
