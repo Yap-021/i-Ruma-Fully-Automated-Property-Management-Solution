@@ -149,7 +149,7 @@ app.post('/api/booking-demo', async (req, res) =>{
 
     const inner = `
       <p style="font-size:16px;font-weight:700;margin:0 0 4px;color:#202124;">New Demo Booking Request</p>
-      <p style="font-size:13pxcolor:#5f6368;margin:0 0 24px;">Someone has requested a demo via the i-Ruma website.</p>
+      <p style="font-size:13px;color:#5f6368;margin:0 0 24px;">Someone has requested a demo via the i-Ruma website.</p>
       
       <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;">
         <tr>
@@ -163,7 +163,7 @@ app.post('/api/booking-demo', async (req, res) =>{
         <tr>
           <td style="padding:10px 0;color:#5f6368;width:110px;border-bottom:1px solid #f1f3f4;">Email</td>
           <td style="padding:10px 0;border-bottom:1px solid #f1f3f4;">
-            <a href="mailto:${reply_to}" style="color#1a73e8;">${reply_to}</a>
+            <a href="mailto:${reply_to}" style="color:#1a73e8;">${reply_to}</a>
           </td>
         </tr>
         <tr>
@@ -192,7 +192,7 @@ app.post('/api/booking-demo', async (req, res) =>{
       };
 
       try {
-        await transporter.sendMail(emailOptions);
+        await transporter.sendMail(mailOptions);
         return res.json({ ok: true, message: 'Demo booking request sent successfully.' });
       } catch (err) {
         console.error('Demo booking mail error:', err);
