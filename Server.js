@@ -379,13 +379,13 @@ app.post('/api/apply', upload.single('resume'), async (req, res) => {
       </table>
 
       <!-- Action buttons -->
-      <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;">
+      <div style="margin-top:28px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;">
         <a href="mailto:${applicant_email}?subject=Re: Your application for ${encodeURIComponent(job_title)} at i-Ruma"
-           style="display:inline-block;background:#0055bb;color:#ffffff;text-decoration:none;padding:10px 24px;border-radius:4px;font-size:14px;font-weight:600;">
+           style="display:inline-block;flex:1;text-align:center;background:#0055bb;color:#ffffff;text-decoration:none;padding:10px 24px;border-radius:4px;font-size:14px;font-weight:600;">
           &#8617;&nbsp; Reply to Applicant
         </a>
         <a href="mailto:${applicant_email}?subject=Interview Invitation — ${encodeURIComponent(job_title)} at i-Ruma&body=Dear ${encodeURIComponent(applicant_name)},%0D%0A%0D%0AThank you for your application..."
-           style="display:inline-block;background:#ffffff;color:#0055bb;text-decoration:none;padding:10px 24px;border-radius:4px;font-size:14px;font-weight:600;border:1px solid #0055bb;">
+           style="display:inline-block;flex:1;text-align:center;background:#ffffff;color:#0055bb;text-decoration:none;padding:10px 24px;border-radius:4px;font-size:14px;font-weight:600;border:1px solid #0055bb;">
           &#128197;&nbsp; Invite for Interview
         </a>
       </div>`;
