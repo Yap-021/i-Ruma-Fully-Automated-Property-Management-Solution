@@ -135,147 +135,73 @@ function emailShell(innerHtml) {
 </body>
 </html>`;
 }
-/* ══════════════════════════════════════════════════════════════
-   ROUTE 3 — Booking Demo Form
-   POST /api/booking-demo
-   Body: { from_name, phone, reply_to, message, recaptcha }
-══════════════════════════════════════════════════════════════ */
-app.post('/api/booking-demo', async (req, res) =>{
+
+app.post('/api/contact', async (req, res) => {
     const { from_name, phone, reply_to, message, recaptcha } = req.body;
 
+    // ── Basic validation ──
     if (!from_name || !reply_to || !message) {
-      return res.status(400).json({ ok: false, error: 'Missing required fields.' });
+        return res.status(400).json({ ok: false, error: 'Missing required fields.' });
+    }
+    if (!reply_to.includes('@')) {
+        return res.status(400).json({ ok: false, error: 'Invalid email format.' });
     }
 
-    const inner = `
-      <p style="font-size:16px;font-weight:700;margin:0 0 4px;color:#202124;">New Demo Booking Request</p>
-      <p style="font-size:13px;color:#5f6368;margin:0 0 24px;">Someone has requested a demo via the i-Ruma website.</p>
-      
+    // ── reCAPTCHA 驗證 ──
+    if (!recaptcha) {
+        return res.status(400).json({ ok: false, error: 'reCAPTCHA verification is required.' });
+    }
+
+    if (recaptcha !== 'bypass') {
+        try {
+            const axios = require('axios');
+            const verifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
+            const secretKey = process.env.RECAPTCHA_SECRET_KEY || '6Ldzt6IsAAAAACnf0KYwiWYNbFAyekQofJffNRwj';
+
+            const form = new URLSearchParams();
+            form.append('secret', secretKey);
+            form.append('response', recaptcha);
+            form.append('remoteip', req.ip || req.socket.remoteAddress || '');
+
+            const verification = await axios.post(verifyUrl, form.toString(), {
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            });
+
+            if (!verification.data.success) {
+                console.warn('reCAPTCHA verify failed:', verification.data);
+                return res.status(400).json({ ok: false, error: 'reCAPTCHA verification failed.' });
+            }
+        } catch (err) {
+            console.error('reCAPTCHA verify error:', err);
+            return res.status(500).json({ ok: false, error: 'reCAPTCHA service error.' });
+        }
+    }
+
+    const companyInner = `
+      <p style="font-size:16px;font-weight:700;margin:0 0 4px;color:#202124;">New Contact Form Enquiry</p>
+      <p style="font-size:13px;color:#5f6368;margin:0 0 24px;">Someone has sent a message via the i-Ruma website contact form.</p>
+
       <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;">
         <tr>
-          <td style="padding:10px 0;color:#5f6368;width:110px;border-bottom:1px solid #f1f3f4;">Name</td>
-          <td style="padding:10px 0;font-weight:700;border-bottom:1px solid #f1f3f4;">${from_name}</td>
+          <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;border-bottom:1px solid #f1f3f4;">Name</td>
+          <td style="padding:10px 0;color:#202124;font-weight:700;border-bottom:1px solid #f1f3f4;">${from_name}</td>
         </tr>
         <tr>
-          <td style="padding:10px 0;color:#5f6368;width:110px;border-bottom:1px solid #f1f3f4;">Phone</td>
-          <td style="padding:10px 0;border-bottom:1px solid #f1f3f4;">${phone || '—'}</td>
+          <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;border-bottom:1px solid #f1f3f4;">Phone</td>
+          <td style="padding:10px 0;color:#202124;border-bottom:1px solid #f1f3f4;">${phone || '—'}</td>
         </tr>
         <tr>
-          <td style="padding:10px 0;color:#5f6368;width:110px;border-bottom:1px solid #f1f3f4;">Email</td>
+          <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;border-bottom:1px solid #f1f3f4;">Email</td>
           <td style="padding:10px 0;border-bottom:1px solid #f1f3f4;">
             <a href="mailto:${reply_to}" style="color:#1a73e8;">${reply_to}</a>
           </td>
         </tr>
         <tr>
-          <td style="padding:10px 0;color:#5f6368;width:110px;border-bottom:1px solid #f1f3f4;">Description</td>
-          <td style="padding:10px 0;line-height:1.7;">
-          ${message ? message.replace(/\n/g, '<br>') : '<span style="color:#9aa0a6;">No description provided.</span>'}
-          </td>
-        </tr>
-      </table>
-      
-      <div style="margin-top:28px;">
-        <a href="mailto:${reply_to}?subject=Re: Your demo request for i-Ruma"
-           style="display:inline-block;background:#0055bb;color:#ffffff;text-decoration:none;
-           padding:10px 24px;border-radius:4px;font-size:14px;font-weight:600;">
-           
-           &#8617;&nbsp; Reply to ${from_name}
-        </a>
-      </div>`;
-      
-      const mailOptions = {
-        from: `"i-Ruma Demo Booking" <${process.env.SMTP_USER}>`,
-        to: process.env.MAIL_TO || 'hello@i-ruma.com',
-        replyTo: reply_to,
-        subject: `[Demo Booking] New request from ${from_name}`,
-        html: emailShell(inner),
-      };
-
-      try {
-        await transporter.sendMail(mailOptions);
-        return res.json({ ok: true, message: 'Demo booking request sent successfully.' });
-      } catch (err) {
-        console.error('Demo booking mail error:', err);
-        return res.status(500).json({ ok: false, error: 'Failed to send. Please try again.' });
-      }
-});
-
-/* ══════════════════════════════════════════════════════════════
-   ROUTE 1 — Contact Form
-   POST /api/contact
-   Body: { from_name, phone, reply_to, message }
-══════════════════════════════════════════════════════════════ */
-app.post('/api/contact', async (req, res) => {
-    const { from_name, phone, reply_to, message, recaptcha } = req.body;
-
-    if (!recaptcha) {
-      return res.status(400).json({ ok: false, error: 'reCAPTCHA verification is required.' });
-    }
-
-    if (recaptcha !== 'bypass') {
-        try {
-          const axios = require('axios');
-    
-          const verifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
-          const secretKey = process.env.RECAPTCHA_SECRET_KEY || '6Ldzt6IsAAAAACnf0KYwiWYNbFAyekQofJffNRwj'; // 优先从环境变量读取
-    
-          const form = new URLSearchParams();
-          form.append('secret', secretKey);
-          form.append('response', recaptcha);
-          form.append('remoteip', req.ip || req.socket.remoteAddress || '');
-    
-          const verification = await axios.post(verifyUrl, form.toString(), {
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          });
-          
-          if (!verification.data.success) {
-            console.warn('reCAPTCHA verify failed:', verification.data);
-            return res.status(400).json({ ok: false, error: 'reCAPTCHA verification failed. Please try again.' });
-          }
-        } catch (err) {
-          console.error('reCAPTCHA verify error:', err);
-          return res.status(500).json({ ok:false, error: 'reCAPTCHA service error. Please try again later.' });
-        }
-    }
-
-    if (!from_name || !reply_to || !message) {
-        return res.status(400).json({ ok: false, error: 'Missing required fields.' });
-    }
-
-    /* ── Inner content ── */
-    const inner = `
-      <!-- Greeting -->
-      <p style="font-size:16px;font-weight:700;margin:0 0 4px;color:#202124;">New Contact Form Enquiry</p>
-      <p style="font-size:13px;color:#5f6368;margin:0 0 24px;">Someone has sent a message via the i-Ruma website contact form.</p>
-
-      <!-- Detail rows -->
-      <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;">
-
-        <tr>
-          <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;border-bottom:1px solid #f1f3f4;">Name</td>
-          <td style="padding:10px 0;color:#202124;font-weight:700;border-bottom:1px solid #f1f3f4;">${from_name}</td>
-        </tr>
-
-        <tr>
-          <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;border-bottom:1px solid #f1f3f4;">Phone</td>
-          <td style="padding:10px 0;color:#202124;border-bottom:1px solid #f1f3f4;">${phone || '—'}</td>
-        </tr>
-
-        <tr>
-          <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;border-bottom:1px solid #f1f3f4;">Email</td>
-          <td style="padding:10px 0;border-bottom:1px solid #f1f3f4;">
-            <a href="mailto:${reply_to}" style="color:#1a73e8;text-decoration:none;">${reply_to}</a>
-          </td>
-        </tr>
-
-        <tr>
           <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;">Message</td>
           <td style="padding:10px 0;color:#202124;line-height:1.7;">${message.replace(/\n/g, '<br>')}</td>
         </tr>
-
       </table>
 
-      <!-- Reply CTA -->
       <div style="margin-top:28px;">
         <a href="mailto:${reply_to}?subject=Re: Your enquiry to i-Ruma"
            style="display:inline-block;background:#0055bb;color:#ffffff;text-decoration:none;padding:10px 24px;border-radius:4px;font-size:14px;font-weight:600;">
@@ -283,17 +209,41 @@ app.post('/api/contact', async (req, res) => {
         </a>
       </div>`;
 
-    const mailOptions = {
-        from:    `"i-Ruma Contact Form" <${process.env.SMTP_USER}>`,
-        to:      process.env.MAIL_TO || 'hello@i-ruma.com',
+    const companyMailOptions = {
+        from: `"i-Ruma Contact Form" <${process.env.SMTP_USER}>`,
+        to: process.env.MAIL_TO || 'hello@i-ruma.com',
         replyTo: reply_to,
         subject: `[Contact] New enquiry from ${from_name}`,
-        html:    emailShell(inner),
+        html: emailShell(companyInner),
+    };
+
+    const userInner = `
+      <p style="font-size:16px;font-weight:700;margin:0 0 8px;color:#202124;">Hi ${from_name}, 👋</p>
+      <p style="font-size:15px;color:#202124;">Thank you for contacting <strong>i-Ruma Property Management</strong>.</p>
+      <p style="color:#5f6368;line-height:1.6;">We have successfully received your message. Our team will get back to you as soon as possible.</p>
+      
+      <div style="margin:24px 0;padding:16px;background:#f8f9fa;border-radius:8px;border-left:4px solid #0055bb;">
+        <p style="margin:0 0 8px;color:#5f6368;font-weight:600;">Your message:</p>
+        <p style="margin:0;color:#202124;line-height:1.6;">${message.replace(/\n/g, '<br>')}</p>
+      </div>
+
+      <p style="color:#5f6368;">Best regards,<br><strong>i-Ruma Team</strong></p>`;
+
+    const userMailOptions = {
+        from: `"i-Ruma" <${process.env.SMTP_USER}>`,
+        to: reply_to,
+        subject: "✅ We received your message - i-Ruma",
+        html: emailShell(userInner),
     };
 
     try {
-        await transporter.sendMail(mailOptions);
-        return res.json({ ok: true, message: 'Message sent successfully.' });
+        await transporter.sendMail(companyMailOptions);
+        await transporter.sendMail(userMailOptions);
+
+        return res.json({ 
+            ok: true, 
+            message: 'Message sent successfully. Auto-reply has been sent.' 
+        });
     } catch (err) {
         console.error('Contact mail error:', err);
         return res.status(500).json({ ok: false, error: 'Failed to send email. Please try again.' });
@@ -312,99 +262,100 @@ app.post('/api/apply', upload.single('resume'), async (req, res) => {
         return res.status(400).json({ ok: false, error: 'Missing required fields.' });
     }
 
+    if (!applicant_email.includes("@")) {
+        return res.status(400).json({ ok: false, error: 'Invalid email format.' });
+    }
+
+    /* ─────────────────────────────────────────────
+       📎 Attachment (resume)
+    ───────────────────────────────────────────── */
     const attachments = [];
     if (req.file) {
         attachments.push({
-            filename:    req.file.originalname,
-            content:     req.file.buffer,
+            filename: req.file.originalname,
+            content: req.file.buffer,
             contentType: req.file.mimetype,
         });
     }
 
-    /* ── Inner content ── */
-    const inner = `
-      <!-- Greeting -->
-      <p style="font-size:16px;font-weight:700;margin:0 0 4px;color:#202124;">New Job Application</p>
-      <p style="font-size:13px;color:#5f6368;margin:0 0 4px;">
-        A candidate has applied for a position via the i-Ruma Careers page.
-      </p>
-      <!-- Position badge -->
-      <p style="margin:0 0 24px;">
-        <span style="display:inline-block;background:#e8f0fe;color:#1a73e8;font-size:12px;font-weight:700;padding:4px 12px;border-radius:12px;letter-spacing:0.3px;">
-          ${job_title}
-        </span>
-      </p>
+    /* ─────────────────────────────────────────────
+       📩 1️⃣ EMAIL TO COMPANY
+    ───────────────────────────────────────────── */
+    const companyInner = `
+        <p style="font-size:16px;font-weight:700;">New Job Application</p>
+        <p>A candidate has applied via your website.</p>
 
-      <!-- Detail rows -->
-      <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;">
+        <table width="100%" style="font-size:14px;">
+            <tr>
+                <td><strong>Name:</strong></td>
+                <td>${applicant_name}</td>
+            </tr>
+            <tr>
+                <td><strong>Email:</strong></td>
+                <td>${applicant_email}</td>
+            </tr>
+            <tr>
+                <td><strong>Position:</strong></td>
+                <td>${job_title}</td>
+            </tr>
+            <tr>
+                <td><strong>Message:</strong></td>
+                <td>${message ? message.replace(/\n/g, '<br>') : '—'}</td>
+            </tr>
+        </table>
+    `;
 
-        <tr>
-          <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;border-bottom:1px solid #f1f3f4;">Applicant</td>
-          <td style="padding:10px 0;color:#202124;font-weight:700;border-bottom:1px solid #f1f3f4;">${applicant_name}</td>
-        </tr>
-
-        <tr>
-          <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;border-bottom:1px solid #f1f3f4;">Email</td>
-          <td style="padding:10px 0;border-bottom:1px solid #f1f3f4;">
-            <a href="mailto:${applicant_email}" style="color:#1a73e8;text-decoration:none;">${applicant_email}</a>
-          </td>
-        </tr>
-
-        <tr>
-          <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;border-bottom:1px solid #f1f3f4;">Position</td>
-          <td style="padding:10px 0;color:#202124;border-bottom:1px solid #f1f3f4;">${job_title}</td>
-        </tr>
-
-        <tr>
-          <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;border-bottom:1px solid #f1f3f4;">Message</td>
-          <td style="padding:10px 0;color:#202124;line-height:1.7;border-bottom:1px solid #f1f3f4;">
-            ${message ? message.replace(/\n/g, '<br>') : '<span style="color:#9aa0a6;">No message provided.</span>'}
-          </td>
-        </tr>
-
-        <tr>
-          <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;">Resume</td>
-          <td style="padding:10px 0;color:#202124;">
-            ${req.file
-                ? `<span style="display:inline-flex;align-items:center;gap:6px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:6px 12px;font-size:13px;">
-                     &#128206; <strong>${req.file.originalname}</strong>
-                     <span style="color:#80868b;">(${(req.file.size / 1024).toFixed(1)} KB)</span>
-                   </span>
-                   <p style="margin:6px 0 0;font-size:12px;color:#80868b;">See attached file above.</p>`
-                : '<span style="color:#9aa0a6;">No resume attached.</span>'
-            }
-          </td>
-        </tr>
-
-      </table>
-
-      <!-- Action buttons -->
-      <div style="margin-top:28px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;">
-        <a href="mailto:${applicant_email}?subject=Re: Your application for ${encodeURIComponent(job_title)} at i-Ruma"
-           style="display:inline-block;flex:1;text-align:center;background:#0055bb;color:#ffffff;text-decoration:none;padding:10px 24px;border-radius:4px;font-size:14px;font-weight:600;">
-          &#8617;&nbsp; Reply to Applicant
-        </a>
-        <a href="mailto:${applicant_email}?subject=Interview Invitation — ${encodeURIComponent(job_title)} at i-Ruma&body=Dear ${encodeURIComponent(applicant_name)},%0D%0A%0D%0AThank you for your application..."
-           style="display:inline-block;flex:1;text-align:center;background:#ffffff;color:#0055bb;text-decoration:none;padding:10px 24px;border-radius:4px;font-size:14px;font-weight:600;border:1px solid #0055bb;">
-          &#128197;&nbsp; Invite for Interview
-        </a>
-      </div>`;
-
-    const mailOptions = {
-        from:        `"i-Ruma Careers" <${process.env.SMTP_USER}>`,
-        to:          process.env.MAIL_TO || 'hello@i-ruma.com',
-        replyTo:     applicant_email,
-        subject:     `[Application] ${job_title} — ${applicant_name}`,
-        html:        emailShell(inner),
-        attachments,
+    const companyMailOptions = {
+        from: `"i-Ruma Careers" <${process.env.SMTP_USER}>`,
+        to: process.env.MAIL_TO || 'hello@i-ruma.com',
+        replyTo: applicant_email,
+        subject: `[Application] ${job_title} — ${applicant_name}`,
+        html: emailShell(companyInner),
+        attachments, 
     };
 
+    /* ─────────────────────────────────────────────
+       📩 2️⃣ AUTO REPLY TO APPLICANT
+    ───────────────────────────────────────────── */
+    const userInner = `
+        <p style="font-size:16px;font-weight:700;">Hi ${applicant_name},</p>
+
+        <p>Thank you for applying for the position of <strong>${job_title}</strong> at <strong>i-Ruma</strong> 🙌</p>
+
+        <p>We have successfully received your application. Our team will review it and contact you if you are shortlisted.</p>
+
+        <div style="margin-top:20px;padding:12px;background:#f1f3f4;border-radius:6px;">
+            <p style="margin:0 0 6px;"><strong>Your submission:</strong></p>
+            <p style="margin:0;">${message ? message.replace(/\n/g, '<br>') : 'No message provided.'}</p>
+        </div>
+
+        <br>
+        <p style="color:#5f6368;">
+            Best regards,<br>
+            i-Ruma Careers Team
+        </p>
+    `;
+
+    const userMailOptions = {
+        from: `"i-Ruma Careers" <${process.env.SMTP_USER}>`,
+        to: applicant_email, // 👈 发给 applicant
+        subject: `Application Received — ${job_title}`,
+        html: emailShell(userInner),
+    };
+
+    /* ─────────────────────────────────────────────
+       🚀 SEND BOTH EMAILS
+    ───────────────────────────────────────────── */
     try {
-        await transporter.sendMail(mailOptions);
+        await transporter.sendMail(companyMailOptions);
+
+        await transporter.sendMail(userMailOptions);
+
         return res.json({ ok: true, message: 'Application sent successfully.' });
+
     } catch (err) {
         console.error('Apply mail error:', err);
-        return res.status(500).json({ ok: false, error: 'Failed to send application. Please try again.' });
+        return res.status(500).json({ ok: false, error: 'Failed to send application.' });
     }
 });
 
