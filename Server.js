@@ -416,14 +416,3 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = app;
-
-/*
- * .env file should contain:
- * ─────────────────────────────
- * PORT=3000
- * SMTP_HOST=smtp.gmail.com
- * SMTP_PORT=587
- * SMTP_USER=yongqi060121@gmail.com
- * SMTP_PASS=kenxhjpuledqsqzd
- * MAIL_TO=yongqi060121@gmail.com
- */
