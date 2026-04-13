@@ -256,7 +256,16 @@
 
               /* ── Hero ────────────────────────────────────── */
               .hero {
-                  background: radial-gradient(ellipse 80% 60% at 70% 120%, rgba(249,115,22,.14) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at -10% 20%, rgba(255,255,255,.06) 0%, transparent 55%), linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 45%, #1e7fcb 100%);
+                  background: 
+                    radial-gradient(ellipse 80% 60% at 70% 120%, rgba(249,115,22,.14) 0%, transparent 60%), 
+                    radial-gradient(ellipse 60% 80% at -10% 20%, rgba(255,255,255,.06) 0%, transparent 55%), 
+                    linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 45%, #1e7fcb 100%);
+                    
+                  background-image: url('./image/Banner.png');
+                  background-position: center, center, center, center;
+                  background-size: cover, cover, cover, cover;
+                  background-repeat: no-repeat;
+
                   padding: 110px 0 100px;
                   color: var(--white);
                   position: relative;
@@ -523,13 +532,7 @@
 
               /* ── Trust banner ────────────────────────────── */
               .trust-banner {
-                  background: 
-                    linear-gradient(135deg, var(--primary-xlight) 0%, #dbeafe 100%),
-                    url('image/1.\ Banner.png');
-                  background-size: cover;
-                  background-position: center;
-                  background-repeat: no-repeat;
-                
+                  background: linear-gradient(135deg, var(--primary-xlight) 0%, #dbeafe 100%);
                   border: 1px solid var(--border-strong);
                   border-radius: var(--r-xl);
                   position: relative;
