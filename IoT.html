@@ -1306,7 +1306,7 @@
                 </div>
 
                 <!-- ── TAB: LIFT ACCESS SYSTEM ── -->
-                <div class="tab-panel" id="panel-lift">
+                <div class="tab-panel active" id="panel-lift">
                     <div class="row align-items-center g-5">
                         <div class="col-lg-6 reveal">
                             <div class="section-label mb-3" style="background:#f3e8ff;color:#a855f7;">
@@ -1352,9 +1352,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6 reveal" style="transition-delay:.12s">
-                            <div class="media-box" style="min-height:420px;padding:0;">
-                                <img src="IoT/Lift_Access.png" alt="Lift Access" style="width:100%;height:100%;object-fit:cover;border-radius:var(--r-lg);border:0;" />
-                            </div>
+                            <img src="IoT/Lift_Access.png" alt="Lift Access" style="width:100%;height:auto;object-fit:contain;border-radius:var(--r-md);border:0;display:block;" />
                         </div>
                     </div>
                 </div>
@@ -1406,9 +1404,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6 order-lg-1 reveal" style="transition-delay:.12s">
-                            <div class="media-box" style="min-height:420px;padding:0;">
-                                <img src="IoT/Barrier_Gate_&_RFID.png" alt="Barrier Gate &amp; RFID" style="width:100%;height:100%;object-fit:cover;border-radius:var(--r-lg);border:0;" />
-                            </div>
+                            <img src="IoT/Barrier_Gate_&_RFID.png" alt="Barrier Gate &amp; RFID" style="width:100%;height:auto;object-fit:contain;border-radius:var(--r-md);border:0;display:block;" />
                         </div>
                     </div>
                 </div>
@@ -1458,9 +1454,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6 reveal" style="transition-delay:.12s">
-                            <div class="media-box" style="min-height:420px;padding:0;">
-                                <img src="IoT/Face_Time_Attendance.png" alt="Face Time Attendance" style="width:100%;height:100%;object-fit:cover;border-radius:var(--r-lg);border:0;" />
-                            </div>
+                            <img src="IoT/Face_Time_Attendance.png" alt="Face Time Attendance" style="width:100%;height:auto;object-fit:contain;border-radius:var(--r-md);border:0;display:block;" />
                         </div>
                     </div>
                 </div>
@@ -1512,9 +1506,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6 reveal" style="transition-delay:.12s">
-                            <div class="media-box" style="min-height:420px;padding:0;">
-                                <img src="IoT/M&E_Facilities.png" alt="M&E Facilities" style="width:100%;height:100%;object-fit:cover;border-radius:var(--r-lg);border:0;" />
-                            </div>
+                            <img src="IoT/M&E_Facilities.png" alt="M&E Facilities" style="width:100%;height:auto;object-fit:contain;border-radius:var(--r-md);border:0;display:block;" />
                         </div>
                     </div>
                 </div>
@@ -1837,6 +1829,46 @@
                         </div>
 
                         <div class="demo-form-group">
+                            <label>Entity Type
+                                <span style="color:#dc2626;">*</span>
+                            </label>
+                            <div class="custom-select" id="propSelect">
+                                <div class="select-trigger" id="propTrigger" tabindex="0" role="combobox"
+                                    aria-haspopup="listbox" aria-expanded="false">
+                                    <span id="propLabel">Select entity type...</span>
+                                    <i class="fas fa-chevron-down cs-chevron"></i>
+                                </div>
+                                <div class="select-options" role="listbox">
+                                    <div class="option" data-value="JMB" role="option">
+                                        Joint Management Body(JMB)
+                                        <i class="fas fa-check opt-check"></i>
+                                    </div>
+                                    <div class="option" data-value="MC" role="option">
+                                        Management Corporation(MC) 
+                                        <i class="fas fa-check opt-check"></i>
+                                    </div>
+                                    <div class="option" data-value="RA" role="option">
+                                        Residents Association(RA) 
+                                        <i class="fas fa-check opt-check"></i>
+                                    </div>
+                                    <div class="option" data-value="PMC" role="option">
+                                        Property Management Company
+                                        <i class="fas fa-check opt-check"></i>
+                                    </div>
+                                    <div class="option" data-value="Developer" role="option">
+                                        Property Developer 
+                                        <i class="fas fa-check opt-check"></i>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="prop_type_hidden" name="property_type">
+                            </div>
+                            <div class="field-error" id="err_prop_type">
+                                <i class="fas fa-circle-exclamation" style="font-size:.72rem;"></i>
+                                <span>Please select an entity type.</span>
+                            </div>
+                        </div>
+
+                        <div class="demo-form-group">
                             <label for="demo_message">Description
                                 <span style="color:var(--white);font-weight:400;font-size:.75rem;">(Optional)</span>
                             </label>
@@ -1908,11 +1940,15 @@
                 });
             }
 
+            document.addEventListener("DOMContentLoaded", () => {
+                switchTab('lift');
+            });
+
             /* ── Demo Modal Logic ──────────────────────────── */
-        const demoModal   = document.getElementById('demoModalOverlay');
-        const demoForm    = document.getElementById('demoForm');
-        const demoBtnText = document.getElementById('demoBtnText');
-        const demoSpinner = document.getElementById('demoSpinner');
+            const demoModal   = document.getElementById('demoModalOverlay');
+            const demoForm    = document.getElementById('demoForm');
+            const demoBtnText = document.getElementById('demoBtnText');
+            const demoSpinner = document.getElementById('demoSpinner');
 
         function openDemoModal() {
             demoModal.classList.add('active');

@@ -1617,7 +1617,8 @@
                 <div class="section-label mx-auto mb-3">See it in action</div>
                 <h2 class="display-5 fw-bold mb-2">Malaysia's best fully automated</h2>
                 <h2 class="display-5 fw-bold mb-5">property management solution</h2>
-                <div class="yt-wrap mx-auto reveal" style="max-width:740px;position:relative;
+
+                <div class="yt-wrap mx-auto reveal" style="max-width:1100px;position:relative;
                     border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--sh-xl);
                     cursor:pointer;background:#000;aspect-ratio:16/9;" id="ytWrap" onclick="loadYT()">
 
@@ -1638,7 +1639,8 @@
                             <p class="text-muted small mb-0">3 min · No signup required</p>
                         </div>
                     </div>
-                <div id="ytIframe" style="display:none;position:absolute;inset:0;z-index:3;"></div>
+                    <div id="ytIframe" style="display:none;position:absolute;inset:0;z-index:3;"></div>
+                </div>
             </div>
         </section>
 
@@ -2098,15 +2100,15 @@
                                 </div>
                                 <div class="select-options" role="listbox">
                                     <div class="option" data-value="JMB" role="option">
-                                        Joint Management Body
+                                        Joint Management Body(JMB)
                                         <i class="fas fa-check opt-check"></i>
                                     </div>
                                     <div class="option" data-value="MC" role="option">
-                                        Management Corporation 
+                                        Management Corporation(MC) 
                                         <i class="fas fa-check opt-check"></i>
                                     </div>
                                     <div class="option" data-value="RA" role="option">
-                                        Residents Association 
+                                        Residents Association(RA) 
                                         <i class="fas fa-check opt-check"></i>
                                     </div>
                                     <div class="option" data-value="PMC" role="option">
@@ -2246,18 +2248,27 @@
             }
           });
 
-          /* ── Demo Modal Logic ──────────────────────────── */
+         /* ── Demo Modal Logic ──────────────────────────── */
         const demoModal   = document.getElementById('demoModalOverlay');
         const demoForm    = document.getElementById('demoForm');
         const demoBtnText = document.getElementById('demoBtnText');
         const demoSpinner = document.getElementById('demoSpinner');
 
         function openDemoModal() {
-
+            const modal = document.getElementById('demoModal');
             demoModal.classList.add('active');
             document.body.style.overflow = 'hidden';
             demoForm.reset();
             clearAllDemoErrors();
+
+            const hidden = document.getElementById('property_type');
+            const label = document.getElementById('propLabel');
+            const trigger = document.getElementById('propTrigger');
+
+            if (hidden) hidden.value = "";
+            if (label) label.textContent = "Select entity type...";
+            if (trigger) trigger.classList.remove('has-value');
+
             clearDemoErrorForSelect();
         }
 
@@ -2344,7 +2355,7 @@
             const name  = document.getElementById('demo_name').value.trim();
             const phone = document.getElementById('demo_phone').value.trim();
             const email = document.getElementById('demo_email').value.trim();
-            const propType = document.getElementById('prop_type_hidden').value.trim();
+            const propType = document.getElementById('prop_type_hidden') ? document.getElementById('prop_type_hidden').value.trim() : '';
             let valid   = true;
 
             /* Name */
@@ -2427,6 +2438,12 @@
             const phone   = document.getElementById('demo_phone').value.trim();
             const email   = document.getElementById('demo_email').value.trim();
             const message = document.getElementById('demo_message').value.trim();
+            const propType = document.getElementById('prop_type_hidden') ? document.getElementById('prop_type_hidden').value.trim() : '';
+
+            const entityLabels = { JMB: 'Joint Management Body (JMB)', MC: 'Management Corporation (MC)', RA: 'Residents Association (RA)', PMC: 'Property Management Company (PMC)', Developer: 'Property Developer' };
+            const entityLine = propType ? `Entity Type: ${entityLabels[propType] || propType}` : '';
+ 
+            const fullMessage = ['[DEMO REQUEST]', entityLine, message].filter(Boolean).join('\n');
 
             demoBtnText.textContent = 'Sending...';
             demoSpinner.style.display = 'block';
@@ -2434,14 +2451,14 @@
 
             try {
                 const response = await fetch('/api/contact', {
-                    method:  'POST',
+                    method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body:    JSON.stringify({
-                        from_name : name,
-                        phone     : phone,
-                        reply_to  : email,
-                        message   : `[DEMO REQUEST]\n${message}`,
-                        recaptcha : 'bypass'
+                    body: JSON.stringify({ 
+                        from_name: name, 
+                        phone, 
+                        reply_to: email, 
+                        message: fullMessage, 
+                        recaptcha: 'bypass' 
                     })
                 });
 
@@ -2451,6 +2468,11 @@
                     showDemoToast('toastSuccess');
                     demoForm.reset();
                     clearAllDemoErrors();
+                    const propLabel = document.getElementById('propLabel');
+                    const propHidden = document.getElementById('prop_type_hidden');
+                    if (propLabel) propLabel.textContent = 'Select entity type...';
+                    if (propHidden) propHidden.value = '';
+                    document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
                     setTimeout(closeDemoModal, 2000);
                 } else {
                     const errEl = document.getElementById('toastErrorMsg');
@@ -2505,8 +2527,11 @@
                     options.forEach(o => o.classList.remove('selected'));
                     opt.classList.add('selected');
 
-                    label.textContent = opt.dataset.value;
+                    label.textContent = opt.textContent;
                     hidden.value = opt.dataset.value;
+
+                    trigger.classlist.add('has-value');
+
                     closeSelect();
                     trigger.focus();
 
