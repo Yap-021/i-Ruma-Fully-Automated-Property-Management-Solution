@@ -2809,13 +2809,12 @@
         const demoSpinner = document.getElementById('demoSpinner');
 
         function openDemoModal() {
-            const modal = document.getElementById('demoModal');
             demoModal.classList.add('active');
             document.body.style.overflow = 'hidden';
             demoForm.reset();
             clearAllDemoErrors();
 
-            const hidden = document.getElementById('property_type');
+            const hidden = document.getElementById('prop_type_hidden');
             const label = document.getElementById('propLabel');
             const trigger = document.getElementById('propTrigger');
 
@@ -3053,7 +3052,7 @@
             const trigger = document.getElementById('propTrigger');
             const label = document.getElementById('propLabel');
             const hidden = document.getElementById('prop_type_hidden');
-            const demoModal = document.getElementById('demoModal');
+            const modalOverlay = document.getElementById('demoModalOverlay');
 
             const options = cs.querySelectorAll('.option');
 
@@ -3103,9 +3102,11 @@
             });
 
             /* modal close */
-            demoModal.addEventListener('click', (e) => {
-                if (e.target === demoModal) closeDemoModal();
-            });
+            if (modalOverlay) {
+                modalOverlay.addEventListener('click', (e) => {
+                    if (e.target === modalOverlay) closeDemoModal();
+                });
+            }
 
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') closeDemoModal();
