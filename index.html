@@ -1272,6 +1272,102 @@
                .toast-custom i { font-size: 1.2rem; }
                .toast-custom.success i { color: #10b981; }
                .toast-custom.error i { color: #ef4444; }
+
+               .custom-select {
+                    position: relative;
+                    width: 100%;
+                    font-family: 'Plus Jakarta Sans', sans-serif;
+               }
+
+               .select-trigger {
+                    padding: 12px 16px;
+                    border-radius: 12px;
+                    border: 1.5px solid var(--border);
+                    background: var(--white);
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: .9rem;
+                    color: var(--muted);
+                    transition: var(--ease);
+                    user-select: none;
+               }
+               .select-trigger:hover {
+                    border-color: var(--border-strong);
+               }
+               .custom-select.active .select-trigger {
+                    border-color: var(--primary);
+                    box-shadow: 0 0 0 4px var(--primary-light);
+                    color: var(--text);
+               }
+               .cs-chevron {
+                    transition: transform .25s ease;
+                    opacity: 0.5;
+                    font-size: .8rem;
+               }
+               .custom-select.active .cs-chevron {
+                    transform: rotate(180deg);
+                    opacity: 1;
+               }
+               .select-trigger.has-value {
+                    color: var(--text);
+               }
+
+               .select-options {
+                    position: absolute;
+                    top: calc(100% + 6px);
+                    left: 0;
+                    width: 100%;
+                    background: var(--white);
+                    border-radius: 12px;
+                    border: 1px solid var(--border);
+                    box-shadow: var(--sh-md);
+                    opacity: 0;
+                    transform: translateY(-6px);
+                    pointer-events: none;
+                    transition: all .18s ease;
+                    z-index: 200;
+                    overflow: hidden;
+               }
+               .custom-select.active .select-options {
+                    opacity: 1;
+                    transform: translateY(0);
+                    pointer-events: all;
+               }
+
+               .option {
+                    padding: 11px 16px;
+                    cursor: pointer;
+                    font-size: .9rem;
+                    color: var(--text);
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 8px;
+                    transition: background .15s;
+                    border-bottom: 1px solid var(--border);
+               }
+               .option:last-child {
+                    border-bottom: none;
+               }
+               .option:hover {
+                    background: var(--primary-light);
+                    color: var(--primary);
+               }
+               .option.selected {
+                    background: var(--primary-xlight);
+                    color: var(--primary);
+                    font-weight: 600;
+               }
+               .option .opt-check {
+                    font-size: .8rem;
+                    opacity: 0;
+                    color: var(--primary)
+               }
+               .option.selected .opt-check {
+                    opacity: 1;
+               }
         </style>
     </head>
     <body>
@@ -1445,7 +1541,7 @@
                         <div class="card card-hover h-100">
                             <div class="card-body p-5 d-flex flex-column">
                                 <div class="icon-box mb-4">
-                                    <i class="fas fa-cloud-upload-alt fa-lg text-primary"></i>
+                                    <i class="fas fa-dollar-sign fa-lg text-primary"></i>
                                 </div>
                                 <h5 class="fw-bold mb-2">Reduced Costs</h5>
                                 <p class="text-muted mb-0 flex-grow-1">
@@ -1957,6 +2053,41 @@
                         </div>
 
                         <div class="demo-form-group">
+                            <label>Entity Type
+                                <span style="color:#dc2626;">*</span>
+                            </label>
+                            <div class="custom-select" id="propSelect">
+                                <div class="select-trigger" id="propTrigger" tabindex="0" role="combobox"
+                                    aria-haspopup="listbox" aria-expanded="false">
+                                    <span id="propLabel">Select entity type...</span>
+                                    <i class="fas fa-chevron-down cs-chevron"></i>
+                                </div>
+                                <div class="select-options" role="listbox">
+                                    <div class="option" data-value="JMB" role="option">
+                                        Joint Management Body
+                                        <i class="fas fa-check opt-check"></i>
+                                    </div>
+                                    <div class="option" data-value="MC" role="option">
+                                        Management Corporation 
+                                        <i class="fas fa-check opt-check"></i>
+                                    </div>
+                                    <div class="option" data-value="RA" role="option">
+                                        Residents Association 
+                                        <i class="fas fa-check opt-check"></i>
+                                    </div>
+                                    <div class="option" data-value="PMC" role="option">
+                                        Property Management Company
+                                        <i class="fas fa-check opt-check"></i>
+                                    </div>
+                                    <div class="option" data-value="Developer" role="option">
+                                        Property Developer 
+                                        <i class="fas fa-check opt-check"></i>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="prop_type_hidden" name="property_type">
+                            </div>
+
+                        <div class="demo-form-group">
                             <label for="demo_message">Description
                                 <span style="color:var(--white);font-weight:400;font-size:.75rem;">(Optional)</span>
                             </label>
@@ -2265,15 +2396,57 @@
             }
         });
 
-        /* Close on click outside */
-        demoModal.addEventListener('click', (e) => {
-            if (e.target === demoModal) closeDemoModal();
-        });
+        (function () {
+            const cs = document.getElementById('propSelect');
+            const trigger = document.getElementById('propTrigger');
+            const label = document.getElementById('propLabel');
+            const hidden = document.getElementById('prop_type_hidden')
+            const options = cs.querySelectorAll('.option');
 
-        /* Close on ESC */
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeDemoModal();
-        });
+            function closeSelect() {
+                cs.classList.remove('active');
+                trigger.setAttribute('aria-expanded', 'false');
+            }   
+
+            function openSelect() {
+                cs.classList.add('active');
+                trigger.setAttribute('aria-expanded', 'true');
+            }
+
+            trigger.addEventListener("click", (e) => {
+                e.stopPropagation();
+                cs.classList.contains('active') ? closeSelect() : openSelect();
+            });
+
+            trigger.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === '') {
+                    e.preventDefault();
+                    cs.classList.contains('active') ? closeSelect() : openSelect();
+                }
+                if (e.key === 'Escape') closeSelect();
+            })
+
+            options.forEach(opt => {
+                opt.addEventListener("click", () => {
+                    options.forEach(o => o.classList.remove('selected'));
+                    opt.classList.add('selected');
+                    label.textContent = opt.dataset.value;
+                    hidden.value = opt.dataset.value;
+                    closeSelect();
+                    trigger.focus();
+                });
+            });
+
+            /* Close on click outside */
+            demoModal.addEventListener('click', (e) => {
+                if (e.target === demoModal) closeDemoModal();
+            });
+
+            /* Close on ESC */
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeDemoModal();
+            });
+        })();
         </script>
     </body>
 </html>
