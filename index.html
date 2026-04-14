@@ -1634,10 +1634,6 @@
                         <div class="play-btn-ring">
                             <i class="fas fa-play text-white" style="font-size:1.3rem;margin-left:3px;"></i>
                         </div>
-                        <div>
-                            <p class="fw-bold fs-5 mb-1" style="color:var(--text-2);">Watch the platform overview</p>
-                            <p class="text-muted small mb-0">3 min · No signup required</p>
-                        </div>
                     </div>
                     <div id="ytIframe" style="display:none;position:absolute;inset:0;z-index:3;"></div>
                 </div>
@@ -2101,15 +2097,15 @@
                                 </div>
                                 <div class="select-options" role="listbox">
                                     <div class="option" data-value="JMB" role="option">
-                                        Joint Management Body(JMB)
+                                        Joint Management Body (JMB)
                                         <i class="fas fa-check opt-check"></i>
                                     </div>
                                     <div class="option" data-value="MC" role="option">
-                                        Management Corporation(MC) 
+                                        Management Corporation (MC) 
                                         <i class="fas fa-check opt-check"></i>
                                     </div>
                                     <div class="option" data-value="RA" role="option">
-                                        Residents Association(RA) 
+                                        Residents Association (RA) 
                                         <i class="fas fa-check opt-check"></i>
                                     </div>
                                     <div class="option" data-value="PMC" role="option">
@@ -2456,7 +2452,7 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
                         from_name: name, 
-                        phone, 
+                        phone: phone,
                         reply_to: email, 
                         message: fullMessage, 
                         recaptcha: 'bypass' 
@@ -2469,10 +2465,13 @@
                     showDemoToast('toastSuccess');
                     demoForm.reset();
                     clearAllDemoErrors();
+
                     const propLabel = document.getElementById('propLabel');
                     const propHidden = document.getElementById('prop_type_hidden');
+
                     if (propLabel) propLabel.textContent = 'Select entity type...';
                     if (propHidden) propHidden.value = '';
+
                     document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
                     setTimeout(closeDemoModal, 2000);
                 } else {

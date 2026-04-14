@@ -137,7 +137,7 @@ function emailShell(innerHtml) {
 }
 
 app.post('/api/contact', async (req, res) => {
-    const { from_name, phone, reply_to, message, recaptcha } = req.body;
+    const { from_name, phone, reply_to, entity_type, message, recaptcha } = req.body;
 
     // ── Basic validation ──
     if (!from_name || !reply_to || !message) {
@@ -197,6 +197,10 @@ app.post('/api/contact', async (req, res) => {
           </td>
         </tr>
         <tr>
+          <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;border-bottom:1px solid #f1f3f4;">Entity Type</td>
+          <td style="padding:10px 0;border-bottom:1px solid #f1f3f4;">${entity_type || '—'}</td>
+        </tr>
+        <tr>
           <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;">Message</td>
           <td style="padding:10px 0;color:#202124;line-height:1.7;">${message.replace(/\n/g, '<br>')}</td>
         </tr>
@@ -213,6 +217,7 @@ app.post('/api/contact', async (req, res) => {
         from: `"i-Ruma Contact Form" <${process.env.SMTP_USER}>`,
         to: process.env.MAIL_TO || 'hello@i-ruma.com',
         replyTo: reply_to,
+        entityType: entity_type,
         subject: `[Contact] New enquiry from ${from_name}`,
         html: emailShell(companyInner),
     };
