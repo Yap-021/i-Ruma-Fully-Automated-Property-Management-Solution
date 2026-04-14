@@ -2233,7 +2233,7 @@
             const propType = document.getElementById('prop_type_hidden') ? document.getElementById('prop_type_hidden').value.trim() : '';
 
             const entityLabels = { JMB: 'Joint Management Body (JMB)', MC: 'Management Corporation (MC)', RA: 'Residents Association (RA)', PMC: 'Property Management Company (PMC)', Developer: 'Property Developer' };
-            const entityLine = entity_type ? (entityLabels[entity_type] || entity_type) : '—';
+            const entityLine = propType ? (entityLabels[propType] || propType) : '—';
  
             const fullMessage = ['[DEMO REQUEST]', entityLine, message].filter(Boolean).join('\n');
 
@@ -2326,7 +2326,7 @@
                     label.textContent = opt.textContent;
                     hidden.value = opt.dataset.value;
 
-                    trigger.classlist.add('has-value');
+                    trigger.classList.add('has-value');
 
                     closeSelect();
                     trigger.focus();

@@ -2419,13 +2419,21 @@
         }
 
         /* Clear errors while typing */
-        document.getElementById('demo_name').addEventListener('input',
-            () => clearDemoError('demo_name', 'err_name'));
-        document.getElementById('demo_email').addEventListener('input',
-            () => clearDemoError('demo_email', 'err_email'));
+        const demoNameInput = document.getElementById('demo_name');
+        if (demoNameInput) {
+            demoNameInput.addEventListener('input',
+                () => clearDemoError('demo_name', 'err_name'));
+        }
+
+        const demoEmailInput = document.getElementById('demo_email');
+        if (demoEmailInput) {
+            demoEmailInput.addEventListener('input',
+                () => clearDemoError('demo_email', 'err_email'));
+        }
 
         /* ── Form submit ── */
-        demoForm.addEventListener('submit', async (e) => {
+        if (demoForm) {
+            demoForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             /* Validate first — stop if any error */
@@ -2438,7 +2446,7 @@
             const propType = document.getElementById('prop_type_hidden') ? document.getElementById('prop_type_hidden').value.trim() : '';
 
             const entityLabels = { JMB: 'Joint Management Body (JMB)', MC: 'Management Corporation (MC)', RA: 'Residents Association (RA)', PMC: 'Property Management Company (PMC)', Developer: 'Property Developer' };
-            const entityLine = entity_type ? (entityLabels[entity_type] || entity_type) : '—';
+            const entityLine = propType ? (entityLabels[propType] || propType) : '—';
  
             const fullMessage = ['[DEMO REQUEST]', entityLine, message].filter(Boolean).join('\n');
 
@@ -2490,6 +2498,7 @@
                 document.getElementById('demoSubmitBtn').disabled = false;
             }
         });
+        }
 
         (function () {
             const cs = document.getElementById('propSelect');
@@ -2498,6 +2507,7 @@
             const hidden = document.getElementById('prop_type_hidden');
             const demoModal = document.getElementById('demoModal');
 
+            if (!cs || !trigger) return;
             const options = cs.querySelectorAll('.option');
 
             function closeSelect() {
@@ -2531,7 +2541,7 @@
                     label.textContent = opt.textContent;
                     hidden.value = opt.dataset.value;
 
-                    trigger.classlist.add('has-value');
+                    trigger.classList.add('has-value');
 
                     closeSelect();
                     trigger.focus();
