@@ -198,7 +198,7 @@ app.post('/api/contact', async (req, res) => {
         </tr>
         <tr>
           <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;border-bottom:1px solid #f1f3f4;">Entity Type</td>
-          <td style="padding:10px 0;border-bottom:1px solid #f1f3f4;">${entity_type || '—'}</td>
+          <td style="padding:10px 0;border-bottom:1px solid #f1f3f4;">${entity_type}</td>
         </tr>
         <tr>
           <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;">Message</td>

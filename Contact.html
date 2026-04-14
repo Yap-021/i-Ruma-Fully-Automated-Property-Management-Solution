@@ -1444,7 +1444,7 @@
             const propType = document.getElementById('prop_type_hidden') ? document.getElementById('prop_type_hidden').value.trim() : '';
 
             const entityLabels = { JMB: 'Joint Management Body (JMB)', MC: 'Management Corporation (MC)', RA: 'Residents Association (RA)', PMC: 'Property Management Company (PMC)', Developer: 'Property Developer' };
-            const entityLine = propType ? `Entity Type: ${entityLabels[propType] || propType}` : '';
+            const entityLine = entity_type ? (entityLabels[entity_type] || entity_type) : '—';
  
             const fullMessage = ['[DEMO REQUEST]', entityLine, message].filter(Boolean).join('\n');
 
@@ -1460,6 +1460,7 @@
                         from_name: name, 
                         phone: phone,
                         reply_to: email, 
+                        entity_type: entityLine,
                         message: fullMessage, 
                         recaptcha: 'bypass' 
                     })
