@@ -302,27 +302,72 @@ app.post('/api/apply', upload.single('resume'), async (req, res) => {
        📩 1️⃣ EMAIL TO COMPANY
     ───────────────────────────────────────────── */
     const companyInner = `
-        <p style="font-size:16px;font-weight:700;">New Job Application</p>
-        <p>A candidate has applied via your website.</p>
+        <!-- Greeting -->
+      <p style="font-size:16px;font-weight:700;margin:0 0 4px;color:#202124;">New Job Application</p>
+      <p style="font-size:13px;color:#5f6368;margin:0 0 4px;">
+        A candidate has applied for a position via the i-Ruma Careers page.
+      </p>
+      <!-- Position badge -->
+      <p style="margin:0 0 24px;">
+        <span style="display:inline-block;background:#e8f0fe;color:#1a73e8;font-size:12px;font-weight:700;padding:4px 12px;border-radius:12px;letter-spacing:0.3px;">
+          ${job_title}
+        </span>
+      </p>
 
-        <table width="100%" style="font-size:14px;">
-            <tr>
-                <td><strong>Name:</strong></td>
-                <td>${applicant_name}</td>
-            </tr>
-            <tr>
-                <td><strong>Email:</strong></td>
-                <td>${applicant_email}</td>
-            </tr>
-            <tr>
-                <td><strong>Position:</strong></td>
-                <td>${job_title}</td>
-            </tr>
-            <tr>
-                <td><strong>Message:</strong></td>
-                <td>${message ? message.replace(/\n/g, '<br>') : '—'}</td>
-            </tr>
-        </table>`;
+      <!-- Detail rows -->
+      <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;">
+
+        <tr>
+          <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;border-bottom:1px solid #f1f3f4;">Applicant</td>
+          <td style="padding:10px 0;color:#202124;font-weight:700;border-bottom:1px solid #f1f3f4;">${applicant_name}</td>
+        </tr>
+
+        <tr>
+          <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;border-bottom:1px solid #f1f3f4;">Email</td>
+          <td style="padding:10px 0;border-bottom:1px solid #f1f3f4;">
+            <a href="mailto:${applicant_email}" style="color:#1a73e8;text-decoration:none;">${applicant_email}</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;border-bottom:1px solid #f1f3f4;">Position</td>
+          <td style="padding:10px 0;color:#202124;border-bottom:1px solid #f1f3f4;">${job_title}</td>
+        </tr>
+
+        <tr>
+          <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;border-bottom:1px solid #f1f3f4;">Message</td>
+          <td style="padding:10px 0;color:#202124;line-height:1.7;border-bottom:1px solid #f1f3f4;">
+            ${message ? message.replace(/\n/g, '<br>') : '<span style="color:#9aa0a6;">No message provided.</span>'}
+          </td>
+        </tr>
+
+        <tr>
+          <td style="padding:10px 0;color:#5f6368;width:110px;vertical-align:top;">Resume</td>
+          <td style="padding:10px 0;color:#202124;">
+            ${req.file
+                ? `<span style="display:inline-flex;align-items:center;gap:6px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:6px 12px;font-size:13px;">
+                     &#128206; <strong>${req.file.originalname}</strong>
+                     <span style="color:#80868b;">(${(req.file.size / 1024).toFixed(1)} KB)</span>
+                   </span>
+                   <p style="margin:6px 0 0;font-size:12px;color:#80868b;">See attached file above.</p>`
+                : '<span style="color:#9aa0a6;">No resume attached.</span>'
+            }
+          </td>
+        </tr>
+
+      </table>
+
+      <!-- Action buttons -->
+      <div style="margin-top:28px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <a href="mailto:${applicant_email}?subject=Re: Your application for ${encodeURIComponent(job_title)} at i-Ruma"
+           style="display:inline-block;flex:1;text-align:center;background:#0055bb;color:#ffffff;text-decoration:none;padding:10px 24px;border-radius:4px;font-size:14px;font-weight:600;">
+          &#8617;&nbsp; Reply to Applicant
+        </a>
+        <a href="mailto:${applicant_email}?subject=Interview Invitation — ${encodeURIComponent(job_title)} at i-Ruma&body=Dear ${encodeURIComponent(applicant_name)},%0D%0A%0D%0AThank you for your application..."
+           style="display:inline-block;flex:1;text-align:center;background:#ffffff;color:#0055bb;text-decoration:none;padding:10px 24px;border-radius:4px;font-size:14px;font-weight:600;border:1px solid #0055bb;">
+          &#128197;&nbsp; Invite for Interview
+        </a>
+      </div>`;
 
     const companyMailOptions = {
         from: `"i-Ruma Careers" <${process.env.SMTP_USER}>`,
