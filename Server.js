@@ -233,8 +233,18 @@ app.post('/api/contact', async (req, res) => {
       <p style="color:#5f6368;line-height:1.6;">We have successfully received your message. Our team will get back to you as soon as possible.</p>
       
       <div style="margin:24px 0;padding:16px;background:#f8f9fa;border-radius:8px;border-left:4px solid #0055bb;">
-        <p style="margin:0 0 8px;color:#5f6368;font-weight:600;">Your message:</p>
-        <p style="margin:0;color:#202124;line-height:1.6;">${message.replace(/\n/g, '<br>')}</p>
+        <p style="margin:0 0 8px;color:#5f6368;font-weight:600;">Your name:
+          <p style="margin:0;color:#202124;line-height:1.6;">${from_name.replace(/\n/g, '<br>')}</p>
+        </p> 
+        <p style="margin:0 0 8px;color:#5f6368;font-weight:600;">Your phone number:
+          <p style="margin:0;color:#202124;line-height:1.6;">${phone.replace(/\n/g, '<br>')}</p>
+        </p>
+        <p style="margin:0 0 8px;color:#5f6368;font-weight:600;">Your entity type:
+          <p style="margin:0;color:#202124;line-height:1.6;">${entity_type.replace(/\n/g, '<br>')}</p>
+        </p>
+        <p style="margin:0 0 8px;color:#5f6368;font-weight:600;">Your message:
+          <p style="margin:0;color:#202124;line-height:1.6;">${message.replace(/\n/g, '<br>')}</p>
+        </p>
       </div>
 
       <p style="color:#5f6368;">Best regards,<br><strong>i-Ruma Team</strong></p>`;
@@ -328,22 +338,25 @@ app.post('/api/apply', upload.single('resume'), async (req, res) => {
        📩 2️⃣ AUTO REPLY TO APPLICANT
     ───────────────────────────────────────────── */
     const userInner = `
-        <p style="font-size:16px;font-weight:700;">Hi ${applicant_name},</p>
+        <p style="font-size:16px;font-weight:700;margin:0 0 8px;color:#202124;">Hi ${applicant_name}, 🙌</p>
 
-        <p>Thank you for applying for the position of <strong>${job_title}</strong> at <strong>i-Ruma</strong> 🙌</p>
+        <p style="font-size:15px;color:#202124;">Thank you for applying for the position of <strong>${job_title}</strong> at <strong>i-Ruma</strong>.</p>
 
-        <p>We have successfully received your application. Our team will review it and contact you if you are shortlisted.</p>
+        <p style="color:#5f6368;line-height:1.6;">We have successfully received your application. Our team will review it and contact you if you are shortlisted.</p>
 
-        <div style="margin-top:20px;padding:12px;background:#f1f3f4;border-radius:6px;">
-            <p style="margin:0 0 6px;"><strong>Your submission:</strong></p>
-            <p style="margin:0;">${message ? message.replace(/\n/g, '<br>') : 'No message provided.'}</p>
+        <div style="margin:24px 0;padding:16px;background:#f8f9fa;border-radius:8px;border-left:4px solid #0055bb;">
+            <p style="margin:0 0 8px;color:#5f6368;font-weight:600;">Your submission:</p>
+            <strong>Name:</strong> 
+            <p style="margin:0;color:#202124;line-height:1.6;">${applicant_name ? applicant_name.replace(/n/g, '<br>') : 'No appliciant name.'}</p>
+            <strong>Email:</strong>
+            <p style="margin:0;color:#202124;line-height:1.6;">${applicant_email ? applicant_email.replace(/n/g, '<br>') : 'No appliciant email.'}</p>
+            <strong>Job Title:</strong>
+            <p style="margin:0;color:#202124;line-height:1.6;">${job_title ? job_title.replace(/n/g, '<br>') : 'No job title.'}</p>
+            <strong>Message:</strong>
+            <p style="margin:0;color:#202124;line-height:1.6;">${message ? message.replace(/\n/g, '<br>') : 'No message provided.'}</p>
         </div>
 
-        <br>
-        <p style="color:#5f6368;">
-            Best regards,<br>
-            i-Ruma Careers Team
-        </p>
+        <p style="color:#5f6368;">Best regards,<br><strong>i-Ruma Careers Team</strong></p>
     `;
 
     const userMailOptions = {
