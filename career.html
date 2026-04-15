@@ -893,7 +893,7 @@
             font-weight: 600;
             flex-shrink: 0; width: 52px;
         }
-        .compose-field input, .compose-field .field-input {
+        .compose-field input, .compose-field select, .compose-field .field-input {
             flex: 1; 
             border: none; 
             outline: none;
@@ -1445,9 +1445,9 @@
                             <a href="#open-roles" class="btn btn-light btn-lg px-5 rounded-pill fw-bold">
                                 <i class="fas fa-arrow-down me-2 text-primary"></i> See open roles
                             </a>
-                            <a href="mailto:hello@i-ruma.com" class="btn-outline-white btn-lg">
+                            <button type="button" onclick="openApply('general')" class="btn-outline-white btn-lg">
                                 Send your CV →
-                            </a>                        
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1524,9 +1524,9 @@
                     <h2 class="display-5 fw-bold">We're hiring across teams</h2>
                     <p class="text-muted mt-2">
                         Can't find the right role?
-                        <a href="mailto:hello@i-ruma.com" class="text-primary fw-semibold">
+                        <button type="button" onclick="openApply('general')" class="text-primary fw-semibold" style="background:none;border:none;padding:0;font:inherit;cursor:pointer;">
                             Send us your CV anyway.
-                        </a>
+                        </button>
                     </p>
                 </div>
                 <div class="d-flex flex-wrap gap-2 justify-content-center mb-5 reveal">
@@ -1684,9 +1684,9 @@
                     <p style="opacity:.8;font-size:1.05rem;" class="mb-4">
                         We always want to hear from talented people. Send us your CV and we'll be in touch.
                     </p>
-                    <a href="mailto:hello@i-ruma.com" class="btn btn-light btn-lg px-5 rounded-pill fw-bold d-inline-flex align-items-center gap-2">
+                    <button type="button" onclick="openApply('general')" class="btn btn-light btn-lg px-5 rounded-pill fw-bold d-inline-flex align-items-center gap-2">
                         <i class="fas fa-paper-plane text-primary"></i> Send your CV
-                    </a>
+                    </button>
                 </div>
             </div>
         </section>
@@ -1724,7 +1724,7 @@
                         <h6 class="mb-3">Support</h6>
                         <ul class="list-unstyled small" style="line-height:2.3; margin-bottom:0;">
                             <li>
-                                <a href="tel:+6010-3085693" class="d-flex align-items-center gap-2">
+                                <a href="https://wa.me/60103085693" class="d-flex align-items-center gap-2">
                                 <i class="fab fa-whatsapp" style="width:16px;opacity:.5;"></i> +60 10-308 5693
                             </a>
                             </li>
@@ -1760,7 +1760,7 @@
                             <a href="mailto:hello@i-ruma.com" class="d-flex align-items-center gap-2">
                                 <i class="fas fa-envelope" style="width:16px;opacity:.5;"></i> hello@i-ruma.com
                             </a>
-                            <a href="tel:+6019-399 3191" class="d-flex align-items-center gap-2">
+                            <a href="https://wa.me/60193993191" class="d-flex align-items-center gap-2">
                                 <i class="fab fa-whatsapp" style="width:16px;opacity:.5;"></i> +60 19-399 3191
                             </a>
                             <a href="mailto:hello@i-ruma.com" class="d-flex align-items-center gap-2">
@@ -1926,7 +1926,11 @@
         <div class="compose-body">
             <div class="compose-field">
                 <span class="compose-field-label">To</span>
-                <span class="field-value">noreply@i-ruma.com</span>
+                <span class="field-value">hello@i-ruma.com</span>
+            </div>
+            <div class="compose-field">
+                <span class="compose-field-label">Apply for</span>
+                <select id="composeJobSelect"></select>
             </div>
             <div class="compose-field compose-subject">
                 <span class="compose-field-label">Subject</span>
@@ -2667,13 +2671,47 @@
                 document.body.classList.remove('drawer-open');
             }
 
-            function openApply(jobId) {
-                const job = JOBS[jobId];
-                if (!job) return;
+            function buildApplyJobOptions(selectedId = 'general') {
+                const select = document.getElementById('composeJobSelect');
+                if (!select) return;
 
-                const title = job.title + (job.sub ? ` (${job.sub})` : '');
-                document.getElementById('composeJobTag').textContent = job.type || 'Position';
-                document.getElementById('composeSubject').value = `Application: ${title}`;
+                select.innerHTML = '';
+                const generalOption = document.createElement('option');
+                generalOption.value = 'general';
+                generalOption.textContent = 'General CV / Open application';
+                select.appendChild(generalOption);
+
+                Object.entries(JOBS).forEach(([id, job]) => {
+                    const opt = document.createElement('option');
+                    opt.value = id;
+                    opt.textContent = `${job.title}${job.sub ? ` (${job.sub})` : ''}`;
+                    select.appendChild(opt);
+                });
+
+                select.value = selectedId in JOBS ? selectedId : 'general';
+                select.onchange = () => updateComposeSubject(select.value);
+            }
+
+            function updateComposeSubject(jobId) {
+                const job = JOBS[jobId];
+                const subjectInput = document.getElementById('composeSubject');
+                const tag = document.getElementById('composeJobTag');
+                if (!subjectInput || !tag) return;
+
+                if (job) {
+                    const title = job.title + (job.sub ? ` (${job.sub})` : '');
+                    subjectInput.value = `Application: ${title}`;
+                    tag.textContent = job.type || 'Position';
+                } else {
+                    subjectInput.value = 'Application: General CV';
+                    tag.textContent = 'Open application';
+                }
+            }
+
+            function openApply(jobId) {
+                const selectedId = jobId in JOBS ? jobId : 'general';
+                buildApplyJobOptions(selectedId);
+                updateComposeSubject(selectedId);
 
                 document.getElementById('composeEmail').value = '';
                 document.getElementById('composeName').value = '';
