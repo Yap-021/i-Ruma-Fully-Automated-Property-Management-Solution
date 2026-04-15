@@ -13,9 +13,6 @@ const nodemailer = require('nodemailer');
 const multer     = require('multer');
 const cors       = require('cors');
 const path       = require('path');
-const { randomUUID } = require('crypto');
-const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
-const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
@@ -30,41 +27,6 @@ const s3Bucket = process.env.S3_BUCKET_NAME;
 const s3Region = process.env.AWS_REGION;
 const s3Client = s3Bucket && s3Region ? new S3Client({ region: s3Region }) : null;
 
-app.get('/api/upload-url', async (req, res) => {
-    if (!s3Client || !s3Bucket || !s3Region) {
-        return res.status(500).json({ ok: false, error: 'S3 upload is not configured.' });
-    }
-
-    const filename = String(req.query.filename || '').trim();
-    const contentType = String(req.query.contentType || '').trim();
-    if (!filename || !contentType) {
-        return res.status(400).json({ ok: false, error: 'filename and contentType are required.' });
-    }
-
-    const safeFilename = path.basename(filename)
-        .replace(/\s+/g, '-')
-        .replace(/[^a-zA-Z0-9._-]/g, '');
-    if (!safeFilename) {
-        return res.status(400).json({ ok: false, error: 'Invalid filename.' });
-    }
-
-    const key = `career-resumes/${Date.now()}-${randomUUID()}-${safeFilename}`;
-    try {
-        const command = new PutObjectCommand({
-            Bucket: s3Bucket,
-            Key: key,
-            ContentType: contentType,
-        });
-        const uploadUrl = await getSignedUrl(s3Client, command, { expiresIn: 300 });
-        const fileUrl = s3Region === 'us-east-1'
-            ? `https://${s3Bucket}.s3.amazonaws.com/${encodeURIComponent(key)}`
-            : `https://${s3Bucket}.s3.${s3Region}.amazonaws.com/${encodeURIComponent(key)}`;
-        return res.json({ ok: true, uploadUrl, fileUrl });
-    } catch (err) {
-        console.error('S3 presign error:', err);
-        return res.status(500).json({ ok: false, error: 'Failed to create upload URL.' });
-    }
-});
 
 /* ── Multer — in-memory file storage ───────────────────────── */
 const upload = multer({
@@ -304,7 +266,7 @@ app.post('/api/contact', async (req, res) => {
    FormData: { applicant_name, applicant_email, job_title, message, resume (file) }
 ══════════════════════════════════════════════════════════════ */
 app.post('/api/apply', upload.single('resume'), async (req, res) => {
-    const { applicant_name, applicant_email, job_title, message, resume_url } = req.body;
+    const { applicant_name, applicant_email, job_title, message } = req.body;
 
     if (!applicant_name || !applicant_email || !job_title) {
         return res.status(400).json({ ok: false, error: 'Missing required fields.' });
@@ -353,19 +315,12 @@ app.post('/api/apply', upload.single('resume'), async (req, res) => {
         </table>
     `;
 
-    const resumeBlock = resume_url ? `
-            <tr>
-                <td><strong>Resume:</strong></td>
-                <td><a href="${resume_url}" target="_blank" rel="noopener noreferrer">Download resume</a></td>
-            </tr>
-        ` : '';
-
     const companyMailOptions = {
         from: `"i-Ruma Careers" <${process.env.SMTP_USER}>`,
         to: process.env.MAIL_TO || 'hello@i-ruma.com',
         replyTo: applicant_email,
         subject: `[Application] ${job_title} — ${applicant_name}`,
-        html: emailShell(companyInner + resumeBlock),
+        html: emailShell(companyInner),
         attachments,
     };
 
