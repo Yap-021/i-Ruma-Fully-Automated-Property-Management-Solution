@@ -805,6 +805,21 @@
                                     <span>Please enter a valid email address.</span>
                                 </div>
                             </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    Entity Type
+                                </label>
+                                <select id="entity_type" name="entity_type" class="form-control">
+                                    <option value="" disabled selected>Select entity type...</option>
+                                    <option value="JMB">Joint Management Body (JMB)</option>
+                                    <option value="MC">Management Corporation (MC)</option>
+                                    <option value="RA">Residents Association (RA)</option>
+                                    <option value="PMC">Property Management Company (PMC)</option>
+                                    <option value="Developer">Property Developer</option>
+                                </select>
+                            </div>
+
                             <div class="mb-3">
                                 <label class="form-label" for="message">Message*</label>
                                 <textarea id="message" name="message" class="form-control" rows="6" placeholder="Tell us how we can help..." required></textarea>
@@ -1245,6 +1260,7 @@
                     from_name : document.getElementById('from_name').value.trim(),
                     phone     : document.getElementById('phone').value.trim(),
                     reply_to  : document.getElementById('reply_to').value.trim(),
+                    entity_type : document.getElementById('entity_type').value.trim(),
                     message   : document.getElementById('message').value.trim(),
                     recaptcha : recaptchaResponse
                 };
