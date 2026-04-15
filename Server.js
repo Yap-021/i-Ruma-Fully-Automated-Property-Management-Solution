@@ -365,10 +365,14 @@ app.post('/api/apply', upload.single('resume'), async (req, res) => {
 });
 
 /* ── Start server ───────────────────────────────────────────── */
-if (process.env.NODE_ENV === 'production') {
+function startServer() {
   app.listen(PORT, () => {
     console.log(`✅ i-Ruma mail server running at http://localhost:${PORT}`);
   });
+}
+
+if (require.main === module) {
+  startServer();
 }
 
 module.exports = app;
