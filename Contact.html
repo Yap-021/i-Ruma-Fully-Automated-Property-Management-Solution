@@ -1232,7 +1232,7 @@
                 } else if (!emailRegex.test(email)){
                     showError('reply_to', 'err_email', 'Please enter a valid email address.');
                     valid = false;
-                } else clearError('message', 'err_email');
+                } else clearError('reply_to', 'err_email');
 
                 const recaptchaResponse = grecaptcha.getResponse();
                 const errRecap = document.getElementById('err_recaptcha');
@@ -1271,9 +1271,17 @@
                         headers: { 'Content-Type': 'application/json' },
                         body   : JSON.stringify(payload),
                     });
-                    const data = await res.json();
+
+                    let data = {};
+                    const raw = await res.text();
+                    try {
+                        data = raw ? JSON.parse(raw) : {};
+                    } catch (jsonErr) {
+                        console.warn('Contact API returned non-JSON:', raw);
+                        data.error = 'Unexpected server response.';
+                    }
  
-                    if (data.ok) {
+                    if (res.ok && data.ok) {
                         this.reset();
                         grecaptcha.reset();
                         showToast('toastSuccess');
@@ -1481,9 +1489,16 @@
                     })
                 });
 
-                const data = await response.json();
+                let data = {};
+                const text = await response.text();
+                try {
+                    data = text ? JSON.parse(text) : {};
+                } catch (err) {
+                    console.warn('Contact API returned non-JSON response:', text);
+                    data.error = 'Unexpected server response.';
+                }
 
-                if (data.ok) {
+                if (response.ok && data.ok) {
                     showDemoToast('toastSuccess');
                     demoForm.reset();
                     clearAllDemoErrors();
@@ -1586,7 +1601,8 @@
             if (e.key === 'Escape') closeDemoModal();
         });
 
-        initPhoneFormatter('phone');
+        // Initialize Malaysia phone input auto-formatting
+        initPhoneAutoFormat();
 
         function initMap() {
                 const officeLocation = {
