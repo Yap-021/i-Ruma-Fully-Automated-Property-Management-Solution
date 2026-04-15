@@ -13,6 +13,7 @@ const nodemailer = require('nodemailer');
 const multer     = require('multer');
 const cors       = require('cors');
 const path       = require('path');
+const { handleUpload } = require('@vercel/blob/client');
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
@@ -270,13 +271,45 @@ app.post('/api/contact', async (req, res) => {
     }
 });
 
+app.post('/api/blob/upload', async (req, res) => {
+    const token = process.env.BLOB_READ_WRITE_TOKEN;
+    if (!token) {
+        console.error('Missing BLOB_READ_WRITE_TOKEN for Vercel Blob uploads.');
+        return res.status(500).json({ ok: false, error: 'Server upload token not configured.' });
+    }
+
+    try {
+        const result = await handleUpload({
+            request: req,
+            body: req.body,
+            token,
+            onBeforeGenerateToken: async (pathname, clientPayload, multipart) => ({
+                allowedContentTypes: [
+                    'application/pdf',
+                    'application/msword',
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                ],
+                maximumSizeInBytes: 20 * 1024 * 1024,
+                addRandomSuffix: true,
+                allowOverwrite: false,
+                tokenPayload: clientPayload || null,
+            }),
+        });
+
+        return res.json(result);
+    } catch (err) {
+        console.error('Blob upload handler error:', err);
+        return res.status(500).json({ ok: false, error: 'Failed to generate upload token.' });
+    }
+});
+
 /* ══════════════════════════════════════════════════════════════
-   ROUTE 2 — Job Application (with resume attachment)
+   ROUTE 2 — Job Application (with resume link)
    POST /api/apply
-   FormData: { applicant_name, applicant_email, job_title, message, resume (file) }
+   JSON: { applicant_name, applicant_email, job_title, message, resume_url, resume_filename }
 ══════════════════════════════════════════════════════════════ */
-app.post('/api/apply', upload.single('resume'), async (req, res) => {
-    const { applicant_name, applicant_email, job_title, message } = req.body;
+app.post('/api/apply', async (req, res) => {
+    const { applicant_name, applicant_email, job_title, message, resume_url, resume_filename } = req.body;
 
     if (!applicant_name || !applicant_email || !job_title) {
         return res.status(400).json({ ok: false, error: 'Missing required fields.' });
@@ -286,17 +319,16 @@ app.post('/api/apply', upload.single('resume'), async (req, res) => {
         return res.status(400).json({ ok: false, error: 'Invalid email format.' });
     }
 
-    /* ─────────────────────────────────────────────
-       📎 Attachment (resume)
-    ───────────────────────────────────────────── */
-    const attachments = [];
-    if (req.file) {
-        attachments.push({
-            filename: req.file.originalname,
-            content: req.file.buffer,
-            contentType: req.file.mimetype,
-        });
+    if (!resume_url) {
+        return res.status(400).json({ ok: false, error: 'Resume URL is required. Upload the resume to Blob first.' });
     }
+
+    /* ─────────────────────────────────────────────
+       📎 Resume link
+    ───────────────────────────────────────────── */
+    const resumeLinkHtml = resume_url
+        ? `<p style="margin:16px 0 0;font-size:14px;">Resume: <a href="${resume_url}" target="_blank" rel="noopener noreferrer">${resume_filename || 'View resume'}</a></p>`
+        : '<p style="margin:16px 0 0;font-size:14px;color:#d93025;">No resume URL provided.</p>';
 
     /* ─────────────────────────────────────────────
        📩 1️⃣ EMAIL TO COMPANY
@@ -323,6 +355,7 @@ app.post('/api/apply', upload.single('resume'), async (req, res) => {
                 <td>${message ? message.replace(/\n/g, '<br>') : '—'}</td>
             </tr>
         </table>
+        ${resumeLinkHtml}
     `;
 
     const companyMailOptions = {
@@ -345,15 +378,29 @@ app.post('/api/apply', upload.single('resume'), async (req, res) => {
         <p style="color:#5f6368;line-height:1.6;">We have successfully received your application. Our team will review it and contact you if you are shortlisted.</p>
 
         <div style="margin:24px 0;padding:16px;background:#f8f9fa;border-radius:8px;border-left:4px solid #0055bb;">
-            <p style="margin:0 0 8px;color:#5f6368;font-weight:600;">Your submission:</p>
+          <p style="margin:0 0 12px;color:#5f6368;font-weight:600;">
+            Your submission:
+          </p>
+          <p style="margin:4px 0;color:#202124;">
             <strong>Name:</strong> 
-            <p style="margin:0;color:#202124;line-height:1.6;">${applicant_name ? applicant_name.replace(/n/g, '<br>') : 'No appliciant name.'}</p>
-            <strong>Email:</strong>
-            <p style="margin:0;color:#202124;line-height:1.6;">${applicant_email ? applicant_email.replace(/n/g, '<br>') : 'No appliciant email.'}</p>
-            <strong>Job Title:</strong>
-            <p style="margin:0;color:#202124;line-height:1.6;">${job_title ? job_title.replace(/n/g, '<br>') : 'No job title.'}</p>
-            <strong>Message:</strong>
-            <p style="margin:0;color:#202124;line-height:1.6;">${message ? message.replace(/\n/g, '<br>') : 'No message provided.'}</p>
+            <span>${applicant_name ? applicant_name.replace(/\n/g, '<br>') : 'No applicant name.'}</span>
+          </p>
+          <p style="margin:4px 0;color:#202124;">
+            <strong>Email:</strong> 
+            <span>${applicant_email ? applicant_email.replace(/\n/g, '<br>') : 'No applicant email.'}</span>
+          </p>
+          <p style="margin:4px 0;color:#202124;">
+            <strong>Job Title:</strong> 
+            <span>${job_title ? job_title.replace(/\n/g, '<br>') : 'No job title.'}</span>
+          </p>
+          <p style="margin:4px 0;color:#202124;">
+            <strong>Message:</strong> 
+            <span>${message ? message.replace(/\n/g, '<br>') : 'No message provided.'}</span>
+          </p>
+          <p style="margin:4px 0;color:#202124;">
+            <strong>Resume:</strong>
+            <span><a href="${resume_url}" target="_blank" rel="noopener noreferrer">${resume_filename || 'View resume'}</a></span>
+          </p>
         </div>
 
         <p style="color:#5f6368;">Best regards,<br><strong>i-Ruma Careers Team</strong></p>

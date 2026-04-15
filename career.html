@@ -2012,6 +2012,45 @@
                 Production:  https://yourdomain.com
             ══════════════════════════════════════════════════════════ */
             const API_BASE = '';
+            const BLOB_CLIENT_URL = 'https://unpkg.com/@vercel/blob@2.3.3/dist/client.js';
+            let blobClientPromise = null;
+
+            async function loadBlobClient() {
+                if (!blobClientPromise) {
+                    blobClientPromise = import(BLOB_CLIENT_URL);
+                }
+                return blobClientPromise;
+            }
+
+            function sanitizeFilename(name) {
+                return name.replace(/[^a-zA-Z0-9._-]/g, '_');
+            }
+
+            async function uploadResumeToBlob(file) {
+                if (!file) {
+                    throw new Error('No resume file selected.');
+                }
+
+                const { upload } = await loadBlobClient();
+                const safeName = sanitizeFilename(file.name);
+                const pathname = `resumes/${Date.now()}-${safeName}`;
+
+                const blob = await upload(pathname, file, {
+                    access: 'public',
+                    handleUploadUrl: `${API_BASE}/api/blob/upload`,
+                    contentType: file.type || 'application/octet-stream',
+                    multipart: true,
+                    clientPayload: file.name,
+                    onUploadProgress: ({ percentage }) => {
+                        const sendText = document.getElementById('composeSendText');
+                        if (sendText) {
+                            sendText.textContent = `Uploading resume ${Math.round(percentage)}%...`;
+                        }
+                    },
+                });
+
+                return blob.url || blob.downloadUrl || blob.pathname;
+            }
 
             /* SCROLL REVEAL */
             const revealObs = new IntersectionObserver(
@@ -2807,14 +2846,26 @@
                     return;
                 }
  
-                /* Build multipart form data (supports file upload) */
-                const formData = new FormData();
-                formData.append('applicant_name',  name);
-                formData.append('applicant_email', email);
-                formData.append('job_title',       subject.replace('Application: ', ''));
-                formData.append('message',         message);
-                if (file) formData.append('resume', file);
- 
+                let resumeUrl = '';
+                let resumeFilename = '';
+
+                if (file) {
+                    resumeUrl = await uploadResumeToBlob(file);
+                    resumeFilename = file.name;
+                } else {
+                    showError('Please attach your resume before sending.');
+                    return;
+                }
+
+                const payload = JSON.stringify({
+                    applicant_name:  name,
+                    applicant_email: email,
+                    job_title:       subject.replace('Application: ', ''),
+                    message,
+                    resume_url:      resumeUrl,
+                    resume_filename: resumeFilename,
+                });
+
                 /* Loading state */
                 const sendBtn     = document.getElementById('composeSendBtn');
                 const sendSpinner = document.getElementById('composeSendSpinner');
@@ -2828,7 +2879,8 @@
                 try {
                     const res  = await fetch(`${API_BASE}/api/apply`, {
                         method: 'POST',
-                        body: formData   /* No Content-Type header — browser sets it with boundary */
+                        headers: { 'Content-Type': 'application/json' },
+                        body: payload
                     });
 
                     let data = {};
