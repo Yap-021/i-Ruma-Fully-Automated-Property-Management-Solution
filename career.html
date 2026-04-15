@@ -2827,21 +2827,29 @@
  
                 try {
                     const res  = await fetch(`${API_BASE}/api/apply`, {
-                    method: 'POST',
-                    body: formData   /* No Content-Type header — browser sets it with boundary */
+                        method: 'POST',
+                        body: formData   /* No Content-Type header — browser sets it with boundary */
                     });
-                    const data = await res.json();
- 
-                    if (data.ok) {
+
+                    let data = {};
+                    const raw = await res.text();
+                    try {
+                        data = raw ? JSON.parse(raw) : {};
+                    } catch (jsonErr) {
+                        console.warn('Apply API returned non-JSON:', raw);
+                        data.error = raw || `Server returned ${res.status}`;
+                    }
+
+                    if (res.ok && data.ok) {
                         closeApply();
                         /* Show success toast */
                         const toast = document.getElementById('applyToast');
                         toast.classList.add('show');
                         setTimeout(() => toast.classList.remove('show'), 5000);
                     } else {
-                        showError(data.error || 'Failed to send. Please try again.');
+                        showError(data.error || `Server error (${res.status}). Please try again.`);
                     }
- 
+
                 } catch (err) {
                     console.error('Apply error:', err);
                     showError('Cannot reach the server. Please email us directly at hello@i-ruma.com');
