@@ -2012,45 +2012,6 @@
                 Production:  https://yourdomain.com
             ══════════════════════════════════════════════════════════ */
             const API_BASE = '';
-            const BLOB_CLIENT_URL = 'https://unpkg.com/@vercel/blob@2.3.3/dist/client.js?module';
-            let blobClientPromise = null;
-
-            async function loadBlobClient() {
-                if (!blobClientPromise) {
-                    blobClientPromise = import(BLOB_CLIENT_URL);
-                }
-                return blobClientPromise;
-            }
-
-            function sanitizeFilename(name) {
-                return name.replace(/[^a-zA-Z0-9._-]/g, '_');
-            }
-
-            async function uploadResumeToBlob(file) {
-                if (!file) {
-                    throw new Error('No resume file selected.');
-                }
-
-                const { upload } = await loadBlobClient();
-                const safeName = sanitizeFilename(file.name);
-                const pathname = `resumes/${Date.now()}-${safeName}`;
-
-                const blob = await upload(pathname, file, {
-                    access: 'public',
-                    handleUploadUrl: `${API_BASE}/api/blob/upload`,
-                    contentType: file.type || 'application/octet-stream',
-                    multipart: true,
-                    clientPayload: file.name,
-                    onUploadProgress: ({ percentage }) => {
-                        const sendText = document.getElementById('composeSendText');
-                        if (sendText) {
-                            sendText.textContent = `Uploading resume ${Math.round(percentage)}%...`;
-                        }
-                    },
-                });
-
-                return blob.url || blob.downloadUrl || blob.pathname;
-            }
 
             /* SCROLL REVEAL */
             const revealObs = new IntersectionObserver(
