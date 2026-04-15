@@ -2807,25 +2807,14 @@
                     return;
                 }
  
-                let resumeUrl = '';
-                let resumeFilename = '';
-
-                if (file) {
-                    resumeUrl = await uploadResumeToBlob(file);
-                    resumeFilename = file.name;
-                } else {
-                    showError('Please attach your resume before sending.');
-                    return;
-                }
-
-                const payload = JSON.stringify({
-                    applicant_name:  name,
-                    applicant_email: email,
-                    job_title:       subject.replace('Application: ', ''),
-                    message,
-                    resume_url:      resumeUrl,
-                    resume_filename: resumeFilename,
-                });
+                /* Build multipart form data (supports file upload) */
+                const formData = new FormData();
+                formData.append('applicant_name',  name);
+                formData.append('applicant_email', email);
+                formData.append('job_title',       subject.replace('Application: ', ''));
+                formData.append('message',         message);
+                if (file) formData.append('resume', file);
+ 
 
                 /* Loading state */
                 const sendBtn     = document.getElementById('composeSendBtn');
@@ -2841,7 +2830,7 @@
                     const res  = await fetch(`${API_BASE}/api/apply`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: payload
+                        body: formData
                     });
 
                     let data = {};
