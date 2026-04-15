@@ -363,16 +363,3 @@ app.post('/api/apply', upload.single('resume'), async (req, res) => {
         return res.status(500).json({ ok: false, error: 'Failed to send application.' });
     }
 });
-
-/* ── Start server ───────────────────────────────────────────── */
-function startServer() {
-  app.listen(PORT, () => {
-    console.log(`✅ i-Ruma mail server running at http://localhost:${PORT}`);
-  });
-}
-
-if (require.main === module) {
-  startServer();
-}
-
-module.exports = app;
