@@ -1968,7 +1968,7 @@
             <div class="compose-attach-area">
                 <button type="button" class="compose-attach-btn" onclick="document.getElementById('resumeInput').click()">
                     <i class="fas fa-paperclip"></i> 
-                    Attach Resume (PDF or Word, max 10 MB)
+                    Attach Resume (PDF or Word, max 5 MB)
                 </button>
                 <input type="file" id="resumeInput" accept=".pdf,.doc,.docx" onchange="handleFileSelect(this)">
                     <div class="file-preview" id="filePreview">
@@ -2751,8 +2751,8 @@
                 const file = input.files[0];
                 if (!file) return;
 
-                if (file.size > 10 * 1024 * 1024) {
-                    showError('File too large — maximum size is 10 MB.');
+                if (file.size > 5 * 1024 * 1024) {
+                    showError('File too large — maximum size is 5 MB.');
                     input.value = '';
                     return;
                 }
