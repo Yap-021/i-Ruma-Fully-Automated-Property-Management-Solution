@@ -216,7 +216,48 @@
                     transform: translateY(-3px);
                     box-shadow: 0 12px 30px rgba(59, 130, 246, 0.45);
                 }
-
+                .btn-group-custom {
+                    display: flex;
+                    gap: 12px;
+                }
+                .btn-group-custom a {
+                    flex: 1;
+                    justify-content: center;
+                    text-align: center;
+                    padding: 12px 28px;     
+                    font-size: .88rem;      
+                    font-weight: 700;       
+                    border-radius: 999px;   
+                }
+                .btn-group-custom .btn-book, .btn-group-custom .btn-accent {
+                    flex: 1;
+                    justify-content: center;
+                    text-align: center;
+                }
+                .btn-book, .btn-accent {
+                    padding: 12px 28px;
+                    font-size: .88rem;
+                }
+                .btn-secondary-custom {
+                    background: transparent;
+                    color: #333;
+                    border: 2px solid #ddd;
+                    padding: 12px 28px;
+                    font-weight: 700;
+                    font-size: .88rem;
+                    border-radius: 999px;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+                    text-decoration: none;
+                }
+                .btn-secondary-custom:hover {
+                    background: rgba(255,255,255,.15);
+                    border-color: rgba(255,255,255,.8);
+                    transform: translateY(-2px);
+                }
+                
               /* ── Section label ───────────────────────────── */
               .section-label {
                   display: inline-flex;
@@ -1393,6 +1434,21 @@
                 transform: scale(1.12); 
                 box-shadow: 0 0 0 16px rgba(0,85,187,.14), 0 0 0 32px rgba(0,85,187,.06); 
             }
+
+            .badge-group {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                align-items: flex-end;
+            }
+
+            .badge-group .badge {
+                width: 100%;
+                max-width: 300px;
+                display: flex;
+                justify-content: center;
+            }
+
         </style>
     </head>
     <body>
@@ -1440,8 +1496,8 @@
                             Successfully manage over <strong>300 strata properties</strong> &amp; empower
                             <strong>3,500+ property managers</strong> across Malaysia.
                         </p>
-                        <div class="mt-5 d-flex flex-wrap gap-3">
-                            <button onclick="openDemoModal()" class="btn-book" style="padding:11px 24px;font-size:.85rem;">
+                        <div class="mt-5 d-flex flex-wrap gap-3 btn-group-custom">
+                            <button onclick="openDemoModal()" class="btn-book">
                                 <i class="fas fa-calendar-check" style="font-size:.8rem;"></i> Book a demo — it's free
                             </button>
                             <a href="#services" class="btn-accent">
@@ -1531,7 +1587,7 @@
                             </p>
                         </div>
                         <div class="col-lg-5">
-                            <div class="d-flex flex-column gap-2 align-items-lg-end">
+                            <div class="d-flex flex-column gap-2 align-items-lg-end badge-group">
                                 <span class="badge fs-6 px-4 py-2" style="background:var(--primary);border-radius:var(--r-sm);">
                                     ⭐ Rated #1 PropTech Platform
                                 </span>
@@ -1865,11 +1921,11 @@
                         <p class="text-muted mb-4">
                             All our support options are included in your monthly subscription — no hidden fees.
                         </p>
-                        <div class="d-flex flex-wrap gap-3">
+                        <div class="d-flex flex-wrap gap-3 btn-group-custom">
                             <a href="https://wa.me/60103085693" class="btn-primary-custom">
                                 <i class="fab fa-whatsapp"></i> WhatsApp Us
                             </a>
-                            <a href="mailto:hello@i-ruma.com" class="btn btn-outline-secondary rounded-pill px-4 fw-semibold d-inline-flex align-items-center gap-2">
+                            <a href="mailto:hello@i-ruma.com" class="btn-secondary-custom">
                                 <i class="fas fa-envelope"></i> Email Us
                             </a>
                         </div>

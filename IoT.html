@@ -187,6 +187,40 @@
                       transform: translateY(-3px);
                       box-shadow: 0 12px 30px rgba(255, 77, 77, 0.45);
                   }
+                .btn-group-custom a, .btn-group-custom button {
+                    flex: 1;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 12px 28px;
+                    font-size: .88rem;
+                    font-weight: 700;
+                    border-radius: 999px;
+                    gap: 8px;
+                }
+                .btn-light-custom {
+                    background: rgba(255,255,255,0.95);
+                    color: #111;
+                    border: 1px solid rgba(0,0,0,0.06);
+                    padding: 12px 28px;
+                    font-family: 'Plus Jakarta Sans', sans-serif;
+                    font-weight: 700;
+                    font-size: .88rem;
+                    border-radius: var(--r-pill);
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+                    text-decoration: none;
+                    transition: all 0.25s ease;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+                }
+
+                .btn-light-custom:hover {
+                    background: #ffffff;
+                    transform: translateY(-2px);
+                    box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+                }
 
                 /* ══════════════════════════════════════════════
                     SECTION LABEL
@@ -544,6 +578,25 @@
                             flex-shrink: 0;
                             margin-top: 1px;
                         }
+                .tab-group-custom {
+                    display: flex;
+                    gap: 12px;
+                    flex-wrap: wrap; /
+                }
+                .tab-group-custom .ftab {
+                    flex: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+                    text-align: center;
+                }
+                @media (max-width: 768px) {
+                    .tab-group-custom .ftab {
+                        flex: 1 1 calc(50% - 12px); /* 一行2個 */
+                        max-width: calc(50% - 12px);
+                    }
+                }
 
                 /* Spec chips under feature lists */
                 .spec-chip {
@@ -1277,8 +1330,8 @@
                             </a>
                         </div>
 
-                        <div class="mt-5 d-flex flex-wrap gap-3">
-                            <button onclick="alert('📅 Book an IoT consultation')" class="btn btn-light btn-lg px-5 rounded-pill fw-bold d-inline-flex align-items-center gap-2">
+                        <div class="mt-5 d-flex flex-wrap gap-3 btn-group-custom">
+                            <button onclick="alert('📅 Book an IoT consultation')" class="btn-light-custom">
                                 <i class="fas fa-calendar-check text-primary"></i> Book a consultation
                             </button>
                             <a href="#integrations" class="btn-outline-white btn-lg">See integrations →</a>
@@ -1381,7 +1434,7 @@
                 </div>
 
                 <!-- Tab navigation — selected categories only -->
-                <div class="feature-tabs-nav mb-5 reveal">
+                <div class="feature-tabs-nav mb-5 reveal tab-group-custom">
                     <button class="ftab active" onclick="switchTab('lift')" id="tab-lift">
                         <span class="ftab-icon" style="color:#a855f7;"><i class="fas fa-elevator"></i></span>
                         Lift Access
