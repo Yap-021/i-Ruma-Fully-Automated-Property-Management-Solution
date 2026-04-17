@@ -1680,10 +1680,10 @@
                     cursor:pointer;background:#000;aspect-ratio:16/9;" id="ytWrap" onclick="loadYT()">
 
                     <img id="ytThumb"
-                         src="https://img.youtube.com/vi/Bj5gvr5x_a8/maxresdefault.jpg"
-                         alt="i-Ruma Platform Overview"
-                         style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;"
-                         onerror="this.src='https://img.youtube.com/vi/Bj5gvr5x_a8/hqdefault.jpg'">
+                        src="https://img.youtube.com/vi/0-b04wBN214/maxresdefault.jpg"
+                        alt="i-Ruma Platform Overview"
+                        style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;"
+                        onerror="this.src='https://img.youtube.com/vi/0-b04wBN214/hqdefault.jpg'">
 
                     <div id="ytOverlay" style="position:absolute;inset:0;background:rgba(0,0,0,.30);transition:background .3s;"></div>
                     <div id="ytPlayBtn" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:2;">
@@ -1716,14 +1716,14 @@
                             Whether it's assigning tasks, sending updates, or progressing checklists, everything
                             runs exactly the way you've set it — consistently, reliably, hands-free.
                         </p>
-                        <button onclick="alert('Explore automations')" class="btn-accent">
+                        <button onclick="openDemoModal()" class="btn-accent">
                             Explore Automations →
                         </button>
                     </div>
                     <div class="col-lg-6 reveal" style="transition-delay:.15s">
-                        <div class="section-img-wrap">
+                        <div class="section-img-wrap" style="display:flex;align-items:center;justify-content: center;height: 420px;">
                             <img src="image/Automation_Say_Goodbye.png" alt="i-Ruma Automation — Say Goodbye to Admin Fatigue"
-                                class="section-img" style="max-height:420px;object-position:center;"
+                                class="section-img" style="max-height:420px;height:100%;object-fit:contain;object-position:center;"
                                 onerror="this.parentElement.innerHTML='<div class=\'gradient-card\'><p class=\'gradient-card-text\'>Streamlined.</p></div>'">
                         </div>
                     </div>
@@ -2649,7 +2649,7 @@
                 var iframeDiv = document.getElementById('ytIframe');
                 
                 iframeDiv.style.display = 'block';
-                iframeDiv.innerHTML = '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/Bj5gvr5x_a8?autoplay=1&rel=0&modestbranding=1" title="i-Ruma Platform Overview" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="width:100%;height:100%;border:0;"></iframe>';
+                iframeDiv.innerHTML = '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/0-b04wBN214?autoplay=1&rel=0&modestbranding=1" title="i-Ruma Platform Overview" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="width:100%;height:100%;border:0;"></iframe>';
             }
         </script>
     </body>

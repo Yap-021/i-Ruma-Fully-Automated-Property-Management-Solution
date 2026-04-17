@@ -344,6 +344,7 @@
                 .hero-chip {
                     display: inline-flex;
                     align-items: center;
+                    justify-content: center;   /* ← add this */
                     gap: 8px;
                     background: rgba(255,255,255,.08);
                     border: 1px solid rgba(255,255,255,.14);
@@ -355,6 +356,9 @@
                     font-weight: 600;
                     text-decoration: none;
                     transition: var(--ease);
+                    flex: 1 1 calc(50% - 6px);   
+                    min-width: 0;
+                    box-sizing: border-box;
                 }
 
                     .hero-chip:hover {
@@ -1304,7 +1308,7 @@
                         </p>
 
                         <!-- Category quick-jump chips -->
-                        <div class="d-flex flex-wrap gap-2 mt-5">
+                        <div class="d-flex flex-wrap gap-3 mt-5" style="max-width: 480px;">
                             <a href="#features" onclick="switchTab('lift')" class="hero-chip">
                                 <span class="chip-icon" style="background:rgba(168,85,247,.2);color:#d8b4fe;">
                                     <i class="fas fa-elevator"></i>
@@ -1332,7 +1336,7 @@
                         </div>
 
                         <div class="mt-5 d-flex flex-wrap gap-3 btn-group-custom">
-                            <button onclick="alert('📅 Book an IoT consultation')" class="btn-light-custom">
+                            <button onclick="openDemoModal()" class="btn-light-custom">
                                 <i class="fas fa-calendar-check text-primary"></i> Book a consultation
                             </button>
                             <a href="#integrations" class="btn-outline-white btn-lg">See integrations →</a>
@@ -1808,7 +1812,7 @@
                                 a transparent implementation timeline and cost estimate.
                             </p>
                             <div class="d-flex flex-column gap-3">
-                                <button onclick="alert('📅 Book an IoT consultation')" class="btn btn-light btn-lg px-5 rounded-pill fw-bold d-inline-flex align-items-center gap-2">
+                                <button onclick="openDemoModal()" class="btn btn-light btn-lg px-5 rounded-pill fw-bold d-inline-flex align-items-center gap-2 text-align-center">
                                     <i class="fas fa-calendar-check text-primary"></i> Book consultation — free
                                 </button>
                                 <a href="Contact.html" class="btn-outline-white" style="justify-content:center;">
