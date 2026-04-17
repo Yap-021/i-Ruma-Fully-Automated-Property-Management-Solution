@@ -354,6 +354,27 @@
             font-weight: 600; 
         }
 
+        /* ── Nested List Styles (a, b, c / i, ii, iii) ── */
+        .section-card-body ol {
+            margin: 10px 0 16px 1.4rem;
+            padding-left: 0;
+            color: var(--text-2);
+        }
+        .section-card-body ol.alpha-list {
+            list-style-type: lower-alpha;
+        }
+        .section-card-body ol.roman-list {
+            list-style-type: lower-roman;
+            margin-top: 0.5rem;
+        }
+        .section-card-body ol > li {
+            margin-bottom: 0.85rem;
+            line-height: 1.6;
+        }
+        .section-card-body ol.roman-list > li {
+            padding-left: 0.45rem;
+        }
+
         /* ── FOOTER ── */
         footer {
             background: var(--white);
@@ -801,16 +822,24 @@
                     <span class="chevron">▼</span>
                 </button>
                 <div class="section-card-body">
-                    <p>This section describes how we provide and develop our services. 
-                        I-Ruma Sdn Bhd is committed to offering an intelligent property 
-                        management solution that includes communication, security, management, 
-                        accountancy, marketplace and convenience features.
+                    <p>
+                        This section describes how we provide and develop our services. 
                     </p>
-                    <p>We continuously work to improve and expand our services to deliver 
-                        the best experience to our users. Any changes to our services or 
-                        these terms will be communicated to you in accordance with our 
-                        applicable policies.
-                    </p>
+                    <ol class="alpha-list">
+                        <li>
+                            We provide a broad range of services that are subject to these terms, including:
+                            <ol class="roman-list">
+                                <li>Visitor Management System</li>
+                                <li>Billing and Collection Software</li>
+                                <li>Accounting System</li>
+                                <li>Feedback Management System</li>
+                                <li>Integrated Services</li>
+                            </ol>
+                        </li>
+                        <li>
+                            Our services are constantly evolving to serve you better by automation and usage of artificial intelligence.
+                        </li>
+                    </ol>
                 </div>
             </div>
 
@@ -826,6 +855,24 @@
                         laws and regulations. If you do not agree with any part of these terms, 
                         you must <strong>discontinue use</strong> of our services.
                     </p>
+                    <ol class="alpha-list">
+                        <li>
+                            The permission we give you to use our services continues as long as you
+                            meet your responsibilities in:
+                            <ol class="romam-list">
+                                <li>The Policy and Privacy</li>
+                                <li>Additional terms, which would be informed to you</li>
+                            </ol>
+                        </li>
+                        <li>
+                            For more information of our Policy and Privacy, further information can
+                            be obtained from i-Ruma Sdn Bhd's website.
+                        </li>
+                        <li>
+                            Although we give you permission to use our services, we retain any intellectual
+                            property rights we have in the services.
+                        </li>
+                    </ol>
                 </div>
             </div>
 
@@ -836,23 +883,35 @@
                     <span class="chevron">▼</span>
                 </button>
                 <div class="section-card-body">
-                    <p>These Terms of Service are to be read in conjunction with i-Ruma's 
-                        other policies, including:
+                    <p>
+                        Content in i-Ruma Sdn Bhd's services, which describes the intellectual property 
+                        rights to the content you find in our services:
                     </p>
-                        <ul>
-                            <li><strong>Privacy Policy</strong> — governing the collection 
-                                and use of your Personal Data
-                            </li>
-                            <li><strong>Refund Policy</strong> — governing returns, refunds, 
-                                and exchanges
-                            </li>
-                            <li><strong>i-Ruma Policy</strong> — governing the scope and 
-                                applicability of our policies
-                            </li>
-                        </ul>
-                    <p>All of the above policies are incorporated into and form part of these 
-                        Terms of Service.
-                    </p>
+                    <ol class="alpha-list">
+                        <li>
+                            Some of our services are designed to let you upload, submit, store, send, receive, 
+                            or share your content. You have no obligation to provide any content to our services 
+                            and you're free to choose the content that you want to provide. If you choose to upload 
+                            or share content, please make sure you have the necessary rights to do so and that the 
+                            content is lawful.
+                        </li>
+                        <li>
+                            If we reasonably believe that any of your content:
+                            <ol class="roman-list">
+                                <li>Breaches these terms, additional terms or policies</li>
+                                <li>Violates applicable law</li>
+                                <li>
+                                    Could harm our users, third parties, or i-Ruma Sdn Bhd, then we reserve the
+                                    right to take down some or all of that content in accordance with applicable
+                                    law
+                                </li>
+                                <li>
+                                    Examples include child pornography, content that facilitates human trafficking 
+                                    or harassment, and content that infringes someone else's intellectual property rights.
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
                 </div>
             </div>
 
