@@ -86,20 +86,25 @@
                   max-width: 180px;
               }
 
-              .nav-link {
-                  font-family: 'Plus Jakarta Sans', sans-serif;
-                  font-weight: 600;
-                  font-size: .88rem;
-                  color: var(--text-2) !important;
-                  padding: .4rem .65rem !important;
-                  border-radius: var(--r-sm);
-                  transition: var(--ease);
-              }
+            .nav-link {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-weight: 600;
+                font-size: .88rem;
+                color: var(--text-2) !important;
+                padding: .4rem .65rem !important;
+                border-radius: var(--r-sm);
+                transition: var(--ease);
+            }
 
-                  .nav-link:hover {
-                      color: var(--primary) !important;
-                      background: var(--primary-xlight);
-                  }
+                .nav-link:hover {
+                    color: var(--primary) !important;
+                    background: var(--primary-xlight);
+                }
+
+                .nav-link.active {
+                    color: var(--primary) !important;
+                    background: var(--primary-xlight);
+                }
 
               /* ── Buttons ─────────────────────────────────── */
               .btn-primary-custom {
@@ -3030,6 +3035,27 @@
                 }
                 resetTimer();
             })();
+
+            /* ── Active nav link on scroll ── */
+            const sections = document.querySelectorAll('#services, #about');
+            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+
+            const sectionObs = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => link.classList.remove('active'));
+
+                        const id = entry.target.getAttribute('id');
+                        const activeLink = document.querySelector(`.navbar-nav a[href="#${id}"]`);
+                        if (activeLink) activeLink.classList.add('active');
+                    }
+                });
+            }, {
+                threshold: 0.3,
+                rootMargin: '-80px 0px 0px 0px'
+            });
+
+            sections.forEach(section => sectionObs.observe(section));
         </script>
     </body>
 </html>
