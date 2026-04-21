@@ -1384,11 +1384,13 @@
 
                     const propLabel = document.getElementById('propLabel');
                     const propHidden = document.getElementById('prop_type_hidden');
+                    const propTrigger = document.getElementById('propTrigger'); 
 
                     if (propLabel) propLabel.textContent = 'Select entity type...';
                     if (propHidden) propHidden.value = '';
+                    if (propTrigger) propTrigger.classList.remove('has-value');
 
-                    document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+                    document.querySelectorAll('#propSelect .option').forEach(o => o.classList.remove('selected'));
                     setTimeout(closeDemoModal, 2000);
                 } else {
                     document.getElementById('toastErrorMsg').textContent = data.error || 'Failed to send request.';

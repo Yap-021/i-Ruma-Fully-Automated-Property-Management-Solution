@@ -1281,6 +1281,15 @@
                     if (res.ok && data.ok) {
                         this.reset();
                         grecaptcha.reset();
+                        // Reset contact entity type custom select
+                        const contactLabel = document.getElementById('contactEntityLabel');
+                        const contactHidden = document.getElementById('entity_type');
+                        const contactTrigger = document.getElementById('contactEntityTrigger');
+                        if (contactLabel) contactLabel.textContent = 'Select entity type...';
+                        if (contactHidden) contactHidden.value = '';
+                        if (contactTrigger) contactTrigger.classList.remove('has-value');
+                        document.querySelectorAll('#contactEntitySelect .option')
+                            .forEach(o => o.classList.remove('selected'));
                         showToast('toastSuccess');
                     } else {
                         document.getElementById('toastErrorMsg').textContent = data.error || 'Something went wrong.';
@@ -1502,11 +1511,13 @@
 
                     const propLabel = document.getElementById('propLabel');
                     const propHidden = document.getElementById('prop_type_hidden');
+                    const propTrigger = document.getElementById('propTrigger');
 
                     if (propLabel) propLabel.textContent = 'Select entity type...';
                     if (propHidden) propHidden.value = '';
+                    if (propTrigger) propTrigger.classList.remove('has-value');
 
-                    document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+                    document.querySelectorAll('#propSelect .option').forEach(o => o.classList.remove('selected'));
                     setTimeout(closeDemoModal, 2000);
                 } else {
                     document.getElementById('toastErrorMsg').textContent = data.error || 'Failed to send request.';
