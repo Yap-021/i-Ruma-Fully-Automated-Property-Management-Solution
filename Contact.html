@@ -811,14 +811,37 @@
                                 <label class="form-label">
                                     Entity Type
                                 </label>
-                                <select id="entity_type" name="entity_type" class="form-control">
-                                    <option value="" disabled selected>Select entity type...</option>
-                                    <option value="JMB">Joint Management Body (JMB)</option>
-                                    <option value="MC">Management Corporation (MC)</option>
-                                    <option value="RA">Residents Association (RA)</option>
-                                    <option value="PMC">Property Management Company (PMC)</option>
-                                    <option value="Developer">Property Developer</option>
-                                </select>
+                                <div class="custom-select" id="contactEntitySelect">
+                                    <div class="select-trigger" id="contactEntityTrigger" tabindex="0" role="combobox" 
+                                        aria-haspopup="listbox" aria-expanded="false">
+                                    
+                                        <span id="contactEntityLabel">Select entity type...</span>
+                                        <i class="fas fa-chevron-down cs-chevron"></i>
+                                    </div>
+                                    <div class="select-options" role="listbox">
+                                        <div class="option" data-value="JMB" role="option">
+                                            Joint Management Body (JMB)
+                                            <i class="fas fa-check opt-check"></i>
+                                        </div>
+                                        <div class="option" data-value="MC" role="option">
+                                            Management Corporation (MC)
+                                            <i class="fas fa-check opt-check"></i>
+                                        </div>
+                                        <div class="option" data-value="RA" role="option">
+                                            Residents Association (RA)
+                                            <i class="fas fa-check opt-check"></i>
+                                        </div>
+                                        <div class="option" data-value="PMC" role="option">
+                                            Property Management Company (PMC)
+                                            <i class="fas fa-check opt-check"></i>
+                                        </div>
+                                        <div class="option" data-value="Developer" role="option">
+                                            Property Developer
+                                            <i class="fas fa-check opt-check"></i>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="entity_type" name="entity_type">
+                                </div>
                             </div>
 
                             <div class="mb-3">
@@ -1095,6 +1118,50 @@
                     if (phoneEl.value !== next) phoneEl.value = next;
                 });
             }
+
+            (function () {
+                const cs      = document.getElementById('contactEntitySelect');
+                const trigger = document.getElementById('contactEntityTrigger');
+                const label   = document.getElementById('contactEntityLabel');
+                const hidden  = document.getElementById('entity_type');
+
+                const options = cs.querySelectorAll('.option');
+
+                function closeSelect() {
+                    cs.classList.remove('active');
+                    trigger.setAttribute('aria-expanded', 'false');
+                }
+                function openSelect() {
+                    cs.classList.add('active');
+                    trigger.setAttribute('aria-expanded', 'true');
+                }
+
+                trigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    cs.classList.contains('active') ? closeSelect() : openSelect();
+                });
+
+                trigger.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); cs.classList.contains('active') ? closeSelect() : openSelect(); }
+                    if (e.key === 'Escape') closeSelect();
+                });
+
+                options.forEach(opt => {
+                    opt.addEventListener('click', () => {
+                        options.forEach(o => o.classList.remove('selected'));
+                        opt.classList.add('selected');
+                        label.textContent = opt.textContent.trim().replace(/\s+/g, ' ');
+                        hidden.value = opt.dataset.value;
+                        trigger.classList.add('has-value');
+                        closeSelect();
+                        trigger.focus();
+                    });
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!cs.contains(e.target)) closeSelect();
+                });
+            })();
  
             /* ── Toast helper ── */
             function showToast(id, duration = 5000) {
