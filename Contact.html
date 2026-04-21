@@ -1370,6 +1370,14 @@
                 if (err) err.classList.remove('show');
             }
 
+            function markDemoValid(inputId) {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.classList.remove('is-invalid');
+                    input.classList.add('is-valid');
+                }
+            }
+
             function clearAllDemoErrors() {
                 ['demo_name','demo_phone','demo_email'].forEach(id => {
                     const el = document.getElementById(id);
