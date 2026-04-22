@@ -1019,7 +1019,36 @@
 
             @media (max-width: 992px) {
                 .icon-grid-wrap {
+                    display: flex;
+                    position: absolute;
+                    right: -20px;
+                    left: -20px;
+                    top: 0;
+                    bottom: 0;
+                    width: auto;
+                    height: 100%;
+                    align-items: center;
+                    justify-content: center;
+                    opacity: 0.25;
+                    z-index: 0;
+                }
+
+                .icon-grid-wrap::before {
                     display: none;
+                }
+
+                .icon-grid {
+                    grid-template-columns: repeat(3, 90px);
+                    gap: 14px;
+                }
+
+                .icon-card {
+                    width: 90px;
+                    height: 90px;
+                }
+
+                .icon-card i {
+                    font-size: 22px;
                 }
             }
 
@@ -2074,7 +2103,7 @@
             <div class="container">
                 <div class="row align-items-center" style="min-height: 360px; position: relative;">
 
-                    <div class="col-lg-7">
+                    <div class="col-lg-7 col-12" style="position: relative; z-index: 1;">
                         <h2 style="color: #fff; font-size: clamp(1.9rem, 5vw, 3.4rem); line-height: 1.15; font-weight: 800; margin-bottom: .8rem;">
                             <span style="font-weight:900;">Automate</span> your portfolio.<br>
                             <span style="font-weight:900;">Drive</span> your profit.<br>
