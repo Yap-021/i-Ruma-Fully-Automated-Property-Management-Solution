@@ -344,25 +344,39 @@
                     }
                 }
 
-                /* Hero category quick-jump chips */
+                /* Hero category quick-jump chips — grid layout */
+                .hero-chips-grid {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 10px;
+                }
+
+                /* Mobile: 2×2 grid */
+                @media (max-width: 575px) {
+                    .hero-chips-grid {
+                        grid-template-columns: repeat(2, 1fr);
+                    }
+                }
+
                 .hero-chip {
-                    display: inline-flex;
+                    display: flex;
                     align-items: center;
-                    justify-content: flex-start;   /* ← add this */
+                    justify-content: flex-start;
                     gap: 8px;
                     background: rgba(255,255,255,.08);
                     border: 1px solid rgba(255,255,255,.14);
                     border-radius: 12px;
-                    padding: 10px 16px;
+                    padding: 10px 14px;
                     color: rgba(255,255,255,.85);
                     font-family: 'Plus Jakarta Sans', sans-serif;
                     font-size: .82rem;
                     font-weight: 600;
                     text-decoration: none;
                     transition: var(--ease);
-                    flex: 1 1 calc(50% - 6px);   
                     min-width: 0;
                     box-sizing: border-box;
+                    white-space: nowrap;
+                    overflow: hidden;
                 }
 
                     .hero-chip:hover {
@@ -1373,7 +1387,7 @@
                         </p>
 
                         <!-- Category quick-jump chips -->
-                        <div class="d-flex flex-wrap gap-3 mt-5" style="max-width: 480px;">
+                        <div class="hero-chips-grid mt-5">
                             <a href="#features" onclick="switchTab('lift')" class="hero-chip">
                                 <span class="chip-icon" style="background:rgba(168,85,247,.2);color:#d8b4fe;">
                                     <i class="fas fa-elevator"></i>
