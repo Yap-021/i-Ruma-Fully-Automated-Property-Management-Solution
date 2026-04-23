@@ -2832,6 +2832,7 @@
 
                 document.getElementById('applyOverlay').classList.add('open');
                 document.getElementById('applyCompose').classList.add('open');
+                document.body.style.overflow = 'hidden'
 
                 setTimeout(() => document.getElementById('composeEmail').focus(), 350);
             }
@@ -2839,6 +2840,7 @@
             function closeApply(){
                 document.getElementById('applyOverlay').classList.remove('open');
                 document.getElementById('applyCompose').classList.remove('open');
+                document.body.style.overflow = '';
             }
 
             // Close on ESC
