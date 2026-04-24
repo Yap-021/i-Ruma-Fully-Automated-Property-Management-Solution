@@ -396,106 +396,6 @@
                         font-size: .75rem;
                     }
 
-                /* Hero right panel — floating device card */
-                .hero-device-card {
-                    background: rgba(255,255,255,.06);
-                    backdrop-filter: blur(16px);
-                    border: 1px solid rgba(255,255,255,.12);
-                    border-radius: var(--r-xl);
-                    padding: 2rem;
-                }
-
-                .device-row {
-                    display: flex;
-                    align-items: center;
-                    gap: 12px;
-                    padding: 12px 14px;
-                    background: rgba(255,255,255,.06);
-                    border: 1px solid rgba(255,255,255,.08);
-                    border-radius: 14px;
-                    transition: var(--ease);
-                }
-
-                    .device-row:hover {
-                        background: rgba(255,255,255,.12);
-                    }
-
-                .device-icon-wrap {
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 10px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    flex-shrink: 0;
-                    font-size: .9rem;
-                }
-
-                .status-pill {
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 5px;
-                    padding: 3px 10px;
-                    border-radius: var(--r-pill);
-                    font-size: .7rem;
-                    font-weight: 700;
-                    font-family: 'Plus Jakarta Sans', sans-serif;
-                }
-
-                .status-online {
-                    background: rgba(34,197,94,.15);
-                    color: #4ade80;
-                }
-
-                .status-alert {
-                    background: rgba(249,115,22,.15);
-                    color: #fb923c;
-                }
-
-                .status-offline {
-                    background: rgba(100,116,139,.15);
-                    color: #94a3b8;
-                }
-
-                /* ══════════════════════════════════════════════
-               STATS BAR
-            ══════════════════════════════════════════════ */
-                .stats-bar {
-                    background: var(--white);
-                    border-bottom: 1px solid var(--border);
-                    padding: 0;
-                }
-
-                .stat-item {
-                    padding: 1.6rem 2rem;
-                    border-right: 1px solid var(--border);
-                    text-align: center;
-                    transition: var(--ease);
-                }
-
-                    .stat-item:last-child {
-                        border-right: 0;
-                    }
-
-                    .stat-item:hover {
-                        background: var(--primary-xlight);
-                    }
-
-                    .stat-item .num {
-                        font-family: 'Plus Jakarta Sans', sans-serif;
-                        font-size: 2.2rem;
-                        font-weight: 800;
-                        color: var(--primary);
-                        line-height: 1;
-                        letter-spacing: -.5px;
-                    }
-
-                    .stat-item .lbl {
-                        font-size: .8rem;
-                        color: var(--muted);
-                        margin-top: 4px;
-                    }
-
                 /* ══════════════════════════════════════════════
                FEATURE TABS
             ══════════════════════════════════════════════ */
@@ -1378,7 +1278,7 @@
                     <div class="col-lg-6 reveal">
                         <div class="hero-badge">
                             <span class="live-dot"></span>
-                            Smart Technology · 4 IoT Categories · 80+ Integrations
+                            Smart Technology · 4 IoT Categories
                         </div>
                         <h1 class="text-white">IoT-Powered<br>Property Management</h1>
                         <p class="mt-4" style="font-size:1.05rem;opacity:.82;max-width:480px;line-height:1.75;">
@@ -1424,40 +1324,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- ═══════════════════════════════════════════════════════════
-             STATS BAR
-        ═══════════════════════════════════════════════════════════ -->
-        <div class="stats-bar">
-            <div class="container px-0">
-                <div class="row g-0">
-                    <div class="col-6 col-md-3">
-                        <div class="stat-item">
-                            <div class="num count-up" data-target="80">0</div>
-                            <div class="lbl">Hardware integrations<span style="color:var(--primary);font-weight:700;">+</span></div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <div class="stat-item">
-                            <div class="num count-up" data-target="300">0</div>
-                            <div class="lbl">Connected properties<span style="color:var(--primary);font-weight:700;">+</span></div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <div class="stat-item">
-                            <div class="num">99.9<span style="font-size:1.2rem;">%</span></div>
-                            <div class="lbl">Platform uptime SLA</div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <div class="stat-item">
-                            <div class="num">24/7</div>
-                            <div class="lbl">Real-time monitoring</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- ═══════════════════════════════════════════════════════════
              FEATURE TABS
